@@ -1,0 +1,37 @@
+@startuml
+
+class TournamentRepository{
++ Register(int accountID) : void
++ Deregister(int accountID) : void
++ GetTournament(int tournamentID) : Tournament
++ GetAll() : IList<Tournament>
++ CreateTournament(string name, int minEntrants, int maxEntrants, string startDate, string endDate) : void
+}
+
+class MatchRepository{
++ GetMatch(int matchID) : Match
++ SaveMatchResult(int matchID, string result)
+}
+
+class AccountRepository{
++ Register(string name, string email, string role, string password, string salt) : void
++ FindEmail(string email) : bool
+}
+
+class Match{
+- int id
+- int description
+- int homeScore
+- int awayScore
+- int homePlayer
+- int awayPlayer
+}
+
+class Tournament{
+- int id
+- int title
+- string tournamentType
+- 
+}
+
+@enduml

@@ -1,37 +1,125 @@
 @startuml
-
 class TournamentRepository{
-+ Register(int accountID) : void
-+ Deregister(int accountID) : void
-+ GetTournament(int tournamentID) : Tournament
+- 
+
 + GetAll() : IList<Tournament>
-+ CreateTournament(string name, int minEntrants, int maxEntrants, string startDate, string endDate) : void
++ GetByID(id : int) : Tournament
+
++ CreateTournament(tournament : Tournament) : void
++ UpdateTournament(tournament : Tournament) : void
++ DeleteTournament(id: int) : void
+
++ GetLeaderboard(id : int) : IList<Contestant>
 }
 
 class MatchRepository{
-+ GetMatch(int matchID) : Match
-+ SaveMatchResult(int matchID, string result)
++ GetAll() : IList<Match>
++ GetByID(id : int) : Match
+
+
++ SaveMatchResult(Match) : void
 }
 
-class AccountRepository{
-+ Register(string name, string email, string role, string password, string salt) : void
+class UserRepository{
++ GetAll() : IList<User>
++ GetByID(id : int) : User
+
++ Register() : void
 + FindEmail(string email) : bool
+}
+
+class ContestantRepository{
++ GetAll() : IList<Contestant>
++ GetByID(id : int) : Contestant
+
++ GetContestantInfo(userID : int) : User
++ GetTournamentContestants(tournamentID : int) : IList<Contestant>
+
++ RegisterContestant(tournamentID : int, userID : int) : bool
++ DeregisterContestant(tournamentID : int, userID : int) : bool
+}
+
+
+
+interface IFetchObject<T>{
++ GetAll() : IList<T>
++ GetByID(int id) : T
+}
+
+interface ILoginRepository{
++ GetBy
+}
+
+
+class TournamentRegistry{
++ GetAll() : IList<Tournament>
++ GetByID(id : int) : Tournament
+
++ CreateTournament(name : string, minEntrants : int, maxEntrants : int, startDate : string, endDate : string) : void
+
+}
+
+class UserRegistry{
++ GetAll() : IList<User>
++ GetByID(id : int) : User
+
++ SearchForExistingEmai
+
++ Register(firstName : string, lastName : string, email : string, role : string, password : string) : bool
+}
+
+class LoginHandler{
+
+}
+
+enum TournamentSystem{
+RoundRobin,
+SingleElimination
+}
+
+enum UserRoles{
+Administrator,
+Staff,
+Player
 }
 
 class Match{
 - int id
-- int description
+- string sport
+- bool isFinished
 - int homeScore
 - int awayScore
-- int homePlayer
-- int awayPlayer
+- int homePlayerID
+- int awayPlayerID
 }
 
-class Tournament{
-- int id
-- int title
-- string tournamentType
-- 
+abstract class Tournament{
++ ID { get; private set; } : int
++ Title { get; private set; } : string
++ AllowRegistration { get; private set; } : bool
++ MinContestants { get; private set; } : int
++ MaxContestants { get; private set; } : int
++ StartDate { get; private set; } : string
++ EndDate { get; private set; } : string
+- tournamentSystem : string
+- matches : List<Match>
+}
+
+class User {
++ ID { get; private set; } : int
+- FirstName
+- LastName
+- Password
+- Email
+- Role
+}
+
+class Contestant {
+- UserID : int
+- TournamentID : int
++ Wins { get; } : int
++ Losses { get; } : int
++ Draws { get; } : int
 }
 
 @enduml

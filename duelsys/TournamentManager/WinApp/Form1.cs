@@ -1,4 +1,4 @@
-namespace TM.FormsApp
+namespace WinApp
 {
     public partial class Form1 : Form
     {

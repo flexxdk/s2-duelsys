@@ -1,4 +1,4 @@
-namespace TM.FormsApp
+namespace WinApp
 {
     internal static class Program
     {

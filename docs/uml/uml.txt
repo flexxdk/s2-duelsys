@@ -1,76 +1,108 @@
 @startuml
-class TournamentRepository{
-- 
 
+class TournamentRepository{
 + GetAll() : IList<Tournament>
 + GetByID(id : int) : Tournament
-
 + CreateTournament(tournament : Tournament) : void
 + UpdateTournament(tournament : Tournament) : void
 + DeleteTournament(id: int) : void
-
 + GetLeaderboard(id : int) : IList<Contestant>
 }
 
 class MatchRepository{
-+ GetAll() : IList<Match>
 + GetByID(id : int) : Match
-
-
-+ SaveMatchResult(Match) : void
++ GetMatches(tournamentID : int) : IList<Match>
++ Create(match : Match) : void
++ Update(match : Match) : void
 }
 
 class UserRepository{
 + GetAll() : IList<User>
 + GetByID(id : int) : User
-
-+ Register() : void
++ Register(User : user) : void
 + FindEmail(string email) : bool
 }
 
 class ContestantRepository{
 + GetAll() : IList<Contestant>
 + GetByID(id : int) : Contestant
-
 + GetContestantInfo(userID : int) : User
 + GetTournamentContestants(tournamentID : int) : IList<Contestant>
-
 + RegisterContestant(tournamentID : int, userID : int) : bool
 + DeregisterContestant(tournamentID : int, userID : int) : bool
 }
 
+TournamentRepository ..|> ITournamentRepository : implements
+MatchRepository ..|> IMatchRepository : implements
+UserRepository ..|> IUserRepository : implements
+ContestantRepository ..|> IContestantRepository : implements
 
-
-interface IFetchObject<T>{
+interface IObjectLoader<T>{
 + GetAll() : IList<T>
 + GetByID(int id) : T
 }
 
-interface ILoginRepository{
-+ GetBy
+interface IObjectManipulator<T>{
++ Create(object : T) : void
++ Update(object : T) : void
 }
 
+interface ITournamentRepository{
++ DeleteTournament(id : int) : void
++ GetLeaderboard(id : int) : IList<Contestant>
+}
+
+interface IMatchRepository{
++ GetMatches(tournamentID : int)
+}
+
+interface IUserRepository{
++ Register(user : User) : void
+}
+
+interface IContestantRepository{
++ GetContestantInfo(userID : int) : User
++ GetTournamentContestants(tournamentID : int) : IList<Contestant>
++ Register(tournamentID : int, userID : int) : void 
++ Deregister(tournamentID : int, userID : int) : void
+}
+
+interface ILoginRepository{
++ VerifyCredentials(email : string, password : string) : bool
++ CheckIfEmailUsed(email : string) : bool
+}
+
+ITournamentRepository ..|> IObjectManipulator: implements
+IMatchRepository ..|> IObjectManipulator: implements
+IObjectManipulator ..|> IObjectLoader : implements
+IUserRepository ..|> IObjectLoader : implements
+IContestantRepository ..|> IObjectLoader : implements
 
 class TournamentRegistry{
 + GetAll() : IList<Tournament>
 + GetByID(id : int) : Tournament
++ CreateTournament(name : string, minEntrants : int,\n maxEntrants : int, startDate : string, endDate : string) : void
+}
 
-+ CreateTournament(name : string, minEntrants : int, maxEntrants : int, startDate : string, endDate : string) : void
-
+class MatchScheduler{
++ GetMatch(id : int) : Match
++ GetMatches(tournamentID : int) : IList<Match>
++ GenerateMatches(tournament : Tournament) : void
++ SaveResults(match : Match) : void
 }
 
 class UserRegistry{
 + GetAll() : IList<User>
 + GetByID(id : int) : User
-
-+ SearchForExistingEmai
-
-+ Register(firstName : string, lastName : string, email : string, role : string, password : string) : bool
++ Register(firstName : string, lastName : string,\n email : string, role : string, password : string) : bool
 }
 
 class LoginHandler{
-
 }
+
+TournamentRegistry --> ITournamentRepository
+MatchScheduler --> IMatchRepository
+UserRegistry --> IUserRepository
 
 enum TournamentSystem{
 RoundRobin,
@@ -93,7 +125,7 @@ class Match{
 - int awayPlayerID
 }
 
-abstract class Tournament{
+class Tournament{
 + ID { get; private set; } : int
 + Title { get; private set; } : string
 + AllowRegistration { get; private set; } : bool

@@ -57,6 +57,7 @@ interface IMatchRepository{
 }
 
 interface IUserRepository{
++ CheckIfEmailUsed(email : string) : bool
 + Register(user : User) : void
 }
 
@@ -69,7 +70,6 @@ interface IContestantRepository{
 
 interface ILoginRepository{
 + VerifyCredentials(email : string, password : string) : bool
-+ CheckIfEmailUsed(email : string) : bool
 }
 
 ITournamentRepository ..|> IObjectManipulator: implements
@@ -94,6 +94,7 @@ class MatchScheduler{
 class UserRegistry{
 + GetAll() : IList<User>
 + GetByID(id : int) : User
++ CheckIfEmailUsed(email : string) : bool
 + Register(firstName : string, lastName : string,\n email : string, role : string, password : string) : bool
 }
 

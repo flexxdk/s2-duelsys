@@ -20,12 +20,11 @@ class UserRepository{
 + GetAll() : IList<User>
 + GetByID(id : int) : User
 + Register(User : user) : void
-+ FindEmail(string email) : bool
++ CheckfIfEmailExists(email : string)
 }
 
 class ContestantRepository{
 + GetAll() : IList<Contestant>
-+ GetByID(id : int) : Contestant
 + GetContestantInfo(userID : int) : User
 + GetTournamentContestants(tournamentID : int) : IList<Contestant>
 + RegisterContestant(tournamentID : int, userID : int) : bool
@@ -39,7 +38,6 @@ ContestantRepository ..|> IContestantRepository : implements
 
 interface IObjectLoader<T>{
 + GetAll() : IList<T>
-+ GetByID(int id) : T
 }
 
 interface IObjectManipulator<T>{
@@ -57,7 +55,6 @@ interface IMatchRepository{
 }
 
 interface IUserRepository{
-+ CheckIfEmailUsed(email : string) : bool
 + Register(user : User) : void
 }
 
@@ -69,7 +66,8 @@ interface IContestantRepository{
 }
 
 interface ILoginRepository{
-+ VerifyCredentials(email : string, password : string) : bool
++ CheckfIfEmailExists(email : string) : bool
++ VerifyCredentials(creds : Credentials) : bool
 }
 
 ITournamentRepository ..|> IObjectManipulator: implements
@@ -94,8 +92,17 @@ class MatchScheduler{
 class UserRegistry{
 + GetAll() : IList<User>
 + GetByID(id : int) : User
-+ CheckIfEmailUsed(email : string) : bool
 + Register(firstName : string, lastName : string,\n email : string, role : string, password : string) : bool
+}
+
+
+class ContestantRegistry{
++ GetAll() : IList<Contestant>
++ GetByID(id : int) : Contestant
++ GetContestantInfo(userID : int) : User
++ GetTournamentContestants(tournamentID : int) : IList<Contestant>
++ RegisterContestant(tournamentID : int, userID : int) : bool
++ DeregisterContestant(tournamentID : int, userID : int) : bool
 }
 
 class LoginHandler{
@@ -104,6 +111,7 @@ class LoginHandler{
 TournamentRegistry --> ITournamentRepository
 MatchScheduler --> IMatchRepository
 UserRegistry --> IUserRepository
+ContestantRegistry --> IContestantRepository
 
 enum TournamentSystem{
 RoundRobin,
@@ -114,16 +122,6 @@ enum UserRoles{
 Administrator,
 Staff,
 Player
-}
-
-class Match{
-- int id
-- string sport
-- bool isFinished
-- int homeScore
-- int awayScore
-- int homePlayerID
-- int awayPlayerID
 }
 
 class Tournament{
@@ -138,13 +136,23 @@ class Tournament{
 - matches : List<Match>
 }
 
+class Match{
+- int id
+- string sport
+- bool isFinished
+- int homeScore
+- int awayScore
+- int homePlayerID
+- int awayPlayerID
+}
+
 class User {
 + ID { get; private set; } : int
 - FirstName
 - LastName
-- Password
-- Email
-- Role
+- Password { get; private set; } : Password
+- Email { get; private set; } : string
+- Role { get; private set; } : UserRole
 }
 
 class Contestant {
@@ -154,5 +162,10 @@ class Contestant {
 + Losses { get; } : int
 + Draws { get; } : int
 }
+
+TournamentRegistry --> Tournament
+MatchScheduler --> Match
+UserRegistry --> User
+ContestantRegistry --> Contestant
 
 @enduml

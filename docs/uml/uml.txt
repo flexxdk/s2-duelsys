@@ -1,41 +1,4 @@
 @startuml
-
-class TournamentRepository{
-+ GetAll() : IList<Tournament>
-+ GetByID(id : int) : Tournament
-+ CreateTournament(tournament : Tournament) : void
-+ UpdateTournament(tournament : Tournament) : void
-+ DeleteTournament(id: int) : void
-+ GetLeaderboard(id : int) : IList<Contestant>
-}
-
-class MatchRepository{
-+ GetByID(id : int) : Match
-+ GetMatches(tournamentID : int) : IList<Match>
-+ Create(match : Match) : void
-+ Update(match : Match) : void
-}
-
-class UserRepository{
-+ GetAll() : IList<User>
-+ GetByID(id : int) : User
-+ Register(User : user) : void
-+ CheckfIfEmailExists(email : string)
-}
-
-class ContestantRepository{
-+ GetAll() : IList<Contestant>
-+ GetContestantInfo(userID : int) : User
-+ GetTournamentContestants(tournamentID : int) : IList<Contestant>
-+ RegisterContestant(tournamentID : int, userID : int) : bool
-+ DeregisterContestant(tournamentID : int, userID : int) : bool
-}
-
-TournamentRepository ..|> ITournamentRepository : implements
-MatchRepository ..|> IMatchRepository : implements
-UserRepository ..|> IUserRepository : implements
-ContestantRepository ..|> IContestantRepository : implements
-
 interface IObjectLoader<T>{
 + GetAll() : IList<T>
 }
@@ -75,6 +38,43 @@ IMatchRepository ..|> IObjectManipulator: implements
 IObjectManipulator ..|> IObjectLoader : implements
 IUserRepository ..|> IObjectLoader : implements
 IContestantRepository ..|> IObjectLoader : implements
+ILoginRepository ..|> IObjectLoader : implements
+
+class TournamentRepository{
++ GetAll() : IList<Tournament>
++ GetByID(id : int) : Tournament
++ CreateTournament(tournament : Tournament) : void
++ UpdateTournament(tournament : Tournament) : void
++ DeleteTournament(id: int) : void
++ GetLeaderboard(id : int) : IList<Contestant>
+}
+
+class MatchRepository{
++ GetByID(id : int) : Match
++ GetMatches(tournamentID : int) : IList<Match>
++ Create(match : Match) : void
++ Update(match : Match) : void
+}
+
+class UserRepository{
++ GetAll() : IList<User>
++ GetByID(id : int) : User
++ Register(User : user) : void
++ CheckfIfEmailExists(email : string)
+}
+
+class ContestantRepository{
++ GetAll() : IList<Contestant>
++ GetContestantInfo(userID : int) : User
++ GetTournamentContestants(tournamentID : int) : IList<Contestant>
++ RegisterContestant(tournamentID : int, userID : int) : bool
++ DeregisterContestant(tournamentID : int, userID : int) : bool
+}
+
+TournamentRepository ..|> ITournamentRepository : implements
+MatchRepository ..|> IMatchRepository : implements
+UserRepository ..|> IUserRepository : implements
+ContestantRepository ..|> IContestantRepository : implements
 
 class TournamentRegistry{
 + GetAll() : IList<Tournament>
@@ -108,10 +108,10 @@ class ContestantRegistry{
 class LoginHandler{
 }
 
-TournamentRegistry --> ITournamentRepository
-MatchScheduler --> IMatchRepository
-UserRegistry --> IUserRepository
-ContestantRegistry --> IContestantRepository
+TournamentRegistry -----> ITournamentRepository
+MatchScheduler -----> IMatchRepository
+UserRegistry -----> IUserRepository
+ContestantRegistry -----> IContestantRepository
 
 enum TournamentSystem{
 RoundRobin,
@@ -132,7 +132,7 @@ class Tournament{
 + MaxContestants { get; private set; } : int
 + StartDate { get; private set; } : string
 + EndDate { get; private set; } : string
-- tournamentSystem : string
+- System : TournamentSystem 
 - matches : List<Match>
 }
 
@@ -163,9 +163,11 @@ class Contestant {
 + Draws { get; } : int
 }
 
-TournamentRegistry --> Tournament
-MatchScheduler --> Match
-UserRegistry --> User
-ContestantRegistry --> Contestant
+TournamentRegistry ----> Tournament
+MatchScheduler ----> Match
+UserRegistry ----> User
+ContestantRegistry ----> Contestant
 
+Tournament ..> TournamentSystem
+User ..> UserRoles
 @enduml

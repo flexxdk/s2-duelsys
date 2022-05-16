@@ -1,8 +1,8 @@
-﻿using BLL.Interfaces.Generic;
+﻿using DAL.Interfaces.Generics;
 using DTO;
 using DTO.Users;
 
-namespace BLL.Interfaces
+namespace DAL.Interfaces
 {
     public interface ITournamentRepository : IObjectManipulator<TournamentDTO>
     {

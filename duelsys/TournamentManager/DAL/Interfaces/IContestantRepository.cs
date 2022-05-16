@@ -1,7 +1,7 @@
-﻿using BLL.Interfaces.Generic;
+﻿using DAL.Interfaces.Generics;
 using DTO.Users;
 
-namespace BLL.Interfaces
+namespace DAL.Interfaces
 {
     public interface IContestantRepository : IObjectLoader<ContestantDTO>
     {

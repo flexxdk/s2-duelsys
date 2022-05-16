@@ -1,9 +1,9 @@
-﻿using BLL.Interfaces.Generic;
+﻿using DAL.Interfaces.Generics;
 using DTO.Users;
 
-namespace BLL.Interfaces
+namespace DAL.Interfaces
 {
-    public interface ILoginRepository
+    public interface ILoginRepository : IObjectLoader<UserDTO>
     {
         public bool CheckIfEmailExists(string email);
         public bool VerifyCredentials(CredentialsDTO credentials);

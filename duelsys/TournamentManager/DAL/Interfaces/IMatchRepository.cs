@@ -1,7 +1,7 @@
-﻿using BLL.Interfaces.Generic;
+﻿using DAL.Interfaces.Generics;
 using DTO;
 
-namespace BLL.Interfaces
+namespace DAL.Interfaces
 {
     public interface IMatchRepository : IObjectManipulator<MatchDTO>
     {

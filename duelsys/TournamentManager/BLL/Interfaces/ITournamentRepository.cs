@@ -1,12 +1,12 @@
 ﻿using BLL.Interfaces.Generic;
-using BLL.Objects;
-using BLL.Objects.Users;
+using DTO;
+using DTO.Users;
 
 namespace BLL.Interfaces
 {
-    public interface ITournamentRepository : IObjectManipulator<Tournament>
+    public interface ITournamentRepository : IObjectManipulator<TournamentDTO>
     {
-        public void DeleteTournament(int id);
-        public IList<Contestant> GetLeaderboard(int id);
+        public void DeleteTournament(int tournamentID);
+        public IList<ContestantDTO> GetLeaderboard(int tournamentID);
     }
 }

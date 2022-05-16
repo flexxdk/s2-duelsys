@@ -33,12 +33,12 @@ interface ILoginRepository{
 + VerifyCredentials(creds : Credentials) : bool
 }
 
-ITournamentRepository ..|> IObjectManipulator: implements
-IMatchRepository ..|> IObjectManipulator: implements
-IObjectManipulator ..|> IObjectLoader : implements
 IUserRepository ..|> IObjectLoader : implements
+IMatchRepository  ...|> IObjectManipulator : implements
+IObjectLoader ...|> IObjectManipulator : implements
 IContestantRepository ..|> IObjectLoader : implements
-ILoginRepository ..|> IObjectLoader : implements
+ITournamentRepository ...|> IObjectManipulator : implements
+ILoginRepository ...|> IObjectLoader : implements
 
 class TournamentRepository{
 + GetAll() : IList<Tournament>
@@ -71,7 +71,7 @@ class ContestantRepository{
 + DeregisterContestant(tournamentID : int, userID : int) : bool
 }
 
-TournamentRepository ..|> ITournamentRepository : implements
+TournamentRepository ..|> ITournamentRepository  : implements
 MatchRepository ..|> IMatchRepository : implements
 UserRepository ..|> IUserRepository : implements
 ContestantRepository ..|> IContestantRepository : implements
@@ -108,10 +108,10 @@ class ContestantRegistry{
 class LoginHandler{
 }
 
-TournamentRegistry -----> ITournamentRepository
-MatchScheduler -----> IMatchRepository
-UserRegistry -----> IUserRepository
-ContestantRegistry -----> IContestantRepository
+IUserRepository <-- UserRegistry
+IContestantRepository <-- ContestantRegistry  
+IMatchRepository <-- MatchScheduler 
+ITournamentRepository <-- TournamentRegistry
 
 enum TournamentSystem{
 RoundRobin,
@@ -163,10 +163,10 @@ class Contestant {
 + Draws { get; } : int
 }
 
-TournamentRegistry ----> Tournament
-MatchScheduler ----> Match
-UserRegistry ----> User
-ContestantRegistry ----> Contestant
+TournamentRegistry ---> Tournament
+MatchScheduler ---> Match
+UserRegistry ---> User
+ContestantRegistry ---> Contestant
 
 Tournament ..> TournamentSystem
 User ..> UserRoles

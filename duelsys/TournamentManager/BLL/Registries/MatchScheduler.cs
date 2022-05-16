@@ -1,4 +1,4 @@
-﻿using BLL.Interfaces;
+﻿using DAL.Interfaces;
 
 namespace BLL.Registries
 {

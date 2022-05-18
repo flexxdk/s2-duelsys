@@ -3,7 +3,7 @@ using BLL.Enums;
 
 namespace BLL.Objects.Users
 {
-    public abstract class User : Account
+    public class User : Account
     {
         public UserRole Role { get; private set; }
         public string Email { get; private set; }

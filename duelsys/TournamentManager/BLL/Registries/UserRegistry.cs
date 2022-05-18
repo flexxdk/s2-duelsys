@@ -1,5 +1,6 @@
-﻿using DAL.Interfaces;
-using BLL.Objects.Users;
+﻿using BLL.Objects.Users;
+using BLL.Encryption;
+using DAL.Interfaces;
 using DTO.Users;
 
 namespace BLL.Registries
@@ -13,6 +14,7 @@ namespace BLL.Registries
         {
             this.repository = repository;
             users = new Dictionary<int, User>();
+            LoadUsers();
         }
 
         public void LoadUsers()
@@ -28,6 +30,15 @@ namespace BLL.Registries
         {
             if (users.Count == 0) LoadUsers();
             return users.Values.ToList();
+        }
+
+        public User? GetByID(int id)
+        {
+            if (users.ContainsKey(id))
+            {
+                return users[id];
+            }
+            return null;
         }
     }
 }

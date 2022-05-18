@@ -1,4 +1,4 @@
-﻿using DAL.Interfaces.Generics;
+﻿using DAL.Interfaces.Generic;
 using DTO;
 
 namespace DAL.Interfaces

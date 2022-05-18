@@ -5,6 +5,6 @@ namespace DAL.Interfaces
 {
     public interface IUserRepository : IObjectLoader<UserDTO>
     {
-        public void Register(UserDTO userDTO);
+        public int Register(UserDTO userDTO);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 
 using BLL.Objects.Users;
 using BLL.Registries;
+using BLL.Enums;
 using UnitTests.Mocks;
 
 namespace UnitTests.RegistryTests
@@ -41,11 +42,35 @@ namespace UnitTests.RegistryTests
         }
 
         [TestMethod]
-        public void TestRegisterNewUser()
+        public void TestRegisterNewAccount()
         {
             UserRegistry userRegistry = new UserRegistry(new MockUsers());
+            string firstName = "Fontys";
+            string lastName = "Man";
+            string role = UserRole.Administrator.ToString();
+            string email = "fontys_man@fontys.nl";
+            string password = "fontysman";
 
+            bool result = userRegistry.RegisterAccount(firstName, lastName, role, email, password);
 
+            Assert.IsTrue(result);
+            Assert.AreEqual(5, userRegistry.GetAll().Last().ID);
+            Assert.AreEqual(email, userRegistry.GetAll().Last().Email);
+        }
+
+        [TestMethod]
+        public void TestRegisterNewAccountWithNonUniqueEmail()
+        {
+            UserRegistry userRegistry = new UserRegistry(new MockUsers());
+            string firstName = "Fontys";
+            string lastName = "Man";
+            string role = UserRole.Administrator.ToString();
+            string email = "devops@gmail.com";
+            string password = "fontysman";
+
+            bool result = userRegistry.RegisterAccount(firstName, lastName, role, email, password);
+
+            Assert.IsFalse(result);
         }
     }
 }

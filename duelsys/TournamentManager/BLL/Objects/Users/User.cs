@@ -17,5 +17,13 @@ namespace BLL.Objects.Users
             Password = dto.Password;
             Salt = dto.Salt;
         }
+
+        public User(UserDTO dto, int id) : base(id, dto.FirstName, dto.LastName)
+        {
+            Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role);
+            Email = dto.Email;
+            Password = dto.Password;
+            Salt = dto.Salt;
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Register(UserDTO userDTO)
+        public int Register(UserDTO userDTO)
         {
             throw new NotImplementedException();
         }

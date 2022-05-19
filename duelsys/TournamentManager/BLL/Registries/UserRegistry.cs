@@ -1,7 +1,11 @@
-﻿using BLL.Objects.Users;
-using BLL.Encryption;
+﻿using BLL.Encryption;
+using BLL.Validation;
+using BLL.Enums;
+using BLL.Objects.Users;
 using DAL.Interfaces;
 using DTO.Users;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace BLL.Registries
 {
@@ -24,7 +28,14 @@ namespace BLL.Registries
             users.Clear();
             foreach(UserDTO dto in repository.Load())
             {
-                users.Add(dto.ID, new User(dto));
+                users.Add(dto.ID, new User(){
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName,
+                    Email = dto.Email,
+                    Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
+                    Password = dto.Password,
+                    Salt = dto.Salt
+                });
             }
         }
 
@@ -43,16 +54,43 @@ namespace BLL.Registries
             return null;
         }
 
-        public bool RegisterAccount(string firstName, string lastName, string role, string email, string password)
+        public bool RegisterAccount(User user)
         {
-            if (CheckIfEmailUnique(email))
+            try
             {
-                SaltKey hashed = encryptor.Hash(password);
-                UserDTO dto = new UserDTO(0, firstName, lastName, role, email, hashed.Key, hashed.Salt);
-                int newUserID = repository.Register(dto);
-                return users.TryAdd(newUserID, new User(dto, newUserID));
+                List<string> results = Validate.AsModel(user).ToList();
+                if (!results.Any())
+                {
+                    if (CheckIfEmailUnique(user.Email!))
+                    {
+                        SaltKey hashed = encryptor.Hash(user.Password!);
+                        user.Password = hashed.Key;
+                        user.Salt = hashed.Salt;
+                        UserDTO dto = new UserDTO(0, user.FirstName!, user.LastName!, user.Role.ToString(), user.Email!, user.Password, user.Salt);
+                        user.ID = repository.Register(dto);
+                        return users.TryAdd(user.ID, user);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    StringBuilder sbMessage = new StringBuilder();
+                    sbMessage.AppendLine("The following errors have occurred: ");
+                    foreach(string error in results)
+                    {
+                        sbMessage.Append("- ");
+                        sbMessage.AppendLine(error);
+                    }
+                    throw new ValidationException(sbMessage.ToString());
+                }
             }
-            return false;
+            catch
+            {
+                throw;
+            }
         }
 
         public bool CheckIfEmailUnique(string email)

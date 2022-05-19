@@ -1,29 +1,28 @@
-﻿using DTO.Users;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+using DTO.Users;
 using BLL.Enums;
 
 namespace BLL.Objects.Users
 {
     public class User : Account
     {
-        public UserRole Role { get; private set; }
-        public string Email { get; private set; }
-        public string Password { get; private set; }
-        public string Salt { get; private set; }
+        [Required(ErrorMessage = "No role selected")]
+        [Display(Name = "Role")]
+        public UserRole Role { get; set; }
 
-        public User(UserDTO dto)  : base(dto.ID, dto.FirstName, dto.LastName)
-        {
-            Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role);
-            Email = dto.Email;
-            Password = dto.Password;
-            Salt = dto.Salt;
-        }
+        [Required(ErrorMessage = "Invalid email address")]
+        [EmailAddress]
+        [Display(Name = "Email address")]
+        public String? Email { get; set; }
 
-        public User(UserDTO dto, int id) : base(id, dto.FirstName, dto.LastName)
-        {
-            Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role);
-            Email = dto.Email;
-            Password = dto.Password;
-            Salt = dto.Salt;
-        }
+        [Required(ErrorMessage = "A password is required")]
+        [DataType(DataType.Password)]
+        [Browsable(false)]
+        public string? Password { get; set; }
+
+        [Browsable(false)]
+        public string? Salt { get; set; }
     }
 }

@@ -5,6 +5,7 @@ namespace BLL.Objects
 {
     public class Tournament
     {
+
         public int ID { get; set; }
         public string Name { get; set; }
         public bool AllowRegistration { get; private set; }

@@ -6,6 +6,8 @@ using BLL.Objects.Users;
 using BLL.Registries;
 using BLL.Enums;
 using UnitTests.Mocks;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace UnitTests.RegistryTests
 {
@@ -47,11 +49,18 @@ namespace UnitTests.RegistryTests
             UserRegistry userRegistry = new UserRegistry(new MockUsers());
             string firstName = "Fontys";
             string lastName = "Man";
-            string role = UserRole.Administrator.ToString();
+            UserRole role = UserRole.Administrator;
             string email = "fontys_man@fontys.nl";
             string password = "fontysman";
 
-            bool result = userRegistry.RegisterAccount(firstName, lastName, role, email, password);
+            bool result = userRegistry.RegisterAccount(new User()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Role = role,
+                Email = email,
+                Password = password
+            });
 
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetAll().Last().ID);
@@ -64,13 +73,42 @@ namespace UnitTests.RegistryTests
             UserRegistry userRegistry = new UserRegistry(new MockUsers());
             string firstName = "Fontys";
             string lastName = "Man";
-            string role = UserRole.Administrator.ToString();
+            UserRole role = UserRole.Administrator;
             string email = "devops@gmail.com";
             string password = "fontysman";
 
-            bool result = userRegistry.RegisterAccount(firstName, lastName, role, email, password);
+            bool result = userRegistry.RegisterAccount(new User()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Role = role,
+                Email = email,
+                Password = password
+            });
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestRegisterNewAccountWithInvalidInput()
+        {
+            UserRegistry userRegistry = new UserRegistry(new MockUsers());
+            string firstName = "";
+            string lastName = "";
+            UserRole role = UserRole.Administrator;
+            string email = "";
+            string password = "";
+
+            Assert.ThrowsException<ValidationException>(() => 
+                userRegistry.RegisterAccount(new User()
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Role = role,
+                    Email = email,
+                    Password = password
+                }) 
+            );
         }
     }
 }

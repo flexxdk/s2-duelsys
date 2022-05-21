@@ -6,7 +6,6 @@ using System;
 using BLL.Objects;
 using BLL.Registries;
 using BLL.Enums;
-using DTO.Users;
 using BLL.Objects.Users;
 using UnitTests.Mocks;
 using System.ComponentModel.DataAnnotations;

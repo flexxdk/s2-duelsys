@@ -10,12 +10,13 @@ namespace BLL.Objects.Users
     {
         [Required(ErrorMessage = "No role selected")]
         [Display(Name = "Role")]
+        [EnumDataType(typeof(UserRole))]
         public UserRole Role { get; set; }
 
         [Required(ErrorMessage = "Invalid email address")]
-        [EmailAddress]
         [Display(Name = "Email address")]
-        public String? Email { get; set; }
+        [EmailAddress]
+        public string? Email { get; set; }
 
         [Required(ErrorMessage = "A password is required")]
         [DataType(DataType.Password)]

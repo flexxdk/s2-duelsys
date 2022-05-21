@@ -7,7 +7,6 @@ using BLL.Registries;
 using BLL.Enums;
 using UnitTests.Mocks;
 using System.ComponentModel.DataAnnotations;
-using System;
 
 namespace UnitTests.RegistryTests
 {

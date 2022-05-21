@@ -7,7 +7,7 @@ namespace DAL.Repositories
     {
         public MatchRepository(DbContext dbContext) : base(dbContext) { }
 
-        public void Create(MatchDTO obj)
+        public int Create(MatchDTO obj)
         {
             throw new NotImplementedException();
         }
@@ -22,7 +22,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(MatchDTO obj)
+        public int Update(MatchDTO obj)
         {
             throw new NotImplementedException();
         }

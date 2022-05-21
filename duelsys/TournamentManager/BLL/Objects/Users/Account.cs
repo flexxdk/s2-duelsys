@@ -5,8 +5,8 @@ namespace BLL.Objects.Users
 {
     public abstract class Account
     {
-        [Required]
         [Key]
+        [Required]
         [Browsable(false)]
         public int ID { get; set; }
 

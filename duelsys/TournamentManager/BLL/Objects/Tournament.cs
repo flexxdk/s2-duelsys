@@ -1,30 +1,37 @@
-﻿using DTO;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 using BLL.Enums;
 
 namespace BLL.Objects
 {
     public class Tournament
     {
-
+        [Key]
+        [Required]
+        [Browsable(false)]
         public int ID { get; set; }
-        public string Name { get; set; }
-        public bool AllowRegistration { get; private set; }
-        public int MinContestants { get; private set; }
-        public int MaxContestants { get; private set; }
-        public string StartDate { get; private set; }
-        public string EndDate { get; private set; }
-        public TournamentSystem System { get; private set; }
 
-        public Tournament(TournamentDTO dto)
-        {
-            ID = dto.ID;
-            Name = dto.Name;
-            AllowRegistration = dto.AllowRegistration;
-            MinContestants = dto.MinContestants;
-            MaxContestants = dto.MaxContestants;
-            StartDate = dto.StartDate;
-            EndDate = dto.EndDate;
-            System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System);
-        }
+        [Required(ErrorMessage = "No name was entered")]
+        public string? Name { get; set; }
+
+        public bool AllowRegistration { get; set; }
+
+        [Required(ErrorMessage = "Minimum contestants needs to be set")]
+        [Range(2, int.MaxValue, ErrorMessage = "Minimum contestants needs to be at least 2")]
+        public int MinContestants { get; set; }
+
+        [Required(ErrorMessage = "No start date was entered")]
+        [Range(2, int.MaxValue, ErrorMessage = "Maximum contestants needs to be at least 2")]
+        public int MaxContestants { get; set; }
+
+        [Required(ErrorMessage = "No start date was entered")]
+        public DateTime? StartDate { get; set; }
+
+        [Required(ErrorMessage = "No end date was entered")]
+        public DateTime? EndDate { get; set; }
+
+        [Required(ErrorMessage = "No tournament system was given")]
+        public TournamentSystem System { get; set; }
     }
 }

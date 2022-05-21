@@ -18,8 +18,8 @@ namespace BLL.Registries
         public UserRegistry(IUserRepository repository)
         {
             this.repository = repository;
-            users = new Dictionary<int, User>();
-            encryptor = new Encryptor();
+            this.users = new Dictionary<int, User>();
+            this.encryptor = new Encryptor();
             LoadUsers();
         }
 
@@ -58,33 +58,19 @@ namespace BLL.Registries
         {
             try
             {
-                List<string> results = Validate.AsModel(user).ToList();
-                if (!results.Any())
+                ValidateModel(user);
+                if (CheckIfEmailUnique(user.Email!))
                 {
-                    if (CheckIfEmailUnique(user.Email!))
-                    {
-                        SaltKey hashed = encryptor.Hash(user.Password!);
-                        user.Password = hashed.Key;
-                        user.Salt = hashed.Salt;
-                        UserDTO dto = new UserDTO(0, user.FirstName!, user.LastName!, user.Role.ToString(), user.Email!, user.Password, user.Salt);
-                        user.ID = repository.Register(dto);
-                        return users.TryAdd(user.ID, user);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    SaltKey hashed = encryptor.Hash(user.Password!);
+                    user.Password = hashed.Key;
+                    user.Salt = hashed.Salt;
+                    UserDTO dto = new UserDTO(0, user.FirstName!, user.LastName!, user.Role.ToString(), user.Email!, user.Password, user.Salt);
+                    user.ID = repository.Register(dto);
+                    return users.TryAdd(user.ID, user);
                 }
                 else
                 {
-                    StringBuilder sbMessage = new StringBuilder();
-                    sbMessage.AppendLine("The following errors have occurred: ");
-                    foreach(string error in results)
-                    {
-                        sbMessage.Append("- ");
-                        sbMessage.AppendLine(error);
-                    }
-                    throw new ValidationException(sbMessage.ToString());
+                    return false;
                 }
             }
             catch
@@ -96,6 +82,23 @@ namespace BLL.Registries
         public bool CheckIfEmailUnique(string email)
         {
             return !users.Values.Any(user => user.Email == email);
+        }
+
+        private void ValidateModel(User user)
+        {
+            List<string> results = Validate.AsModel(user).ToList();
+
+            if (results.Any())
+            {
+                StringBuilder sbMessage = new StringBuilder();
+                sbMessage.AppendLine("The following errors have occurred: ");
+                foreach (string error in results)
+                {
+                    sbMessage.Append("- ");
+                    sbMessage.AppendLine(error);
+                }
+                throw new ValidationException(sbMessage.ToString());
+            }
         }
     }
 }

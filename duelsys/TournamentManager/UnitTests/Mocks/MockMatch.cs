@@ -7,7 +7,7 @@ namespace UnitTests.Mocks
 {
     public class MockMatch : IMatchRepository
     {
-        public void Create(MatchDTO obj)
+        public int Create(MatchDTO obj)
         {
             throw new System.NotImplementedException();
         }
@@ -22,7 +22,7 @@ namespace UnitTests.Mocks
             throw new System.NotImplementedException();
         }
 
-        public void Update(MatchDTO obj)
+        public int Update(MatchDTO obj)
         {
             throw new System.NotImplementedException();
         }

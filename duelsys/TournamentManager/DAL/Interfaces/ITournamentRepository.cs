@@ -6,7 +6,7 @@ namespace DAL.Interfaces
 {
     public interface ITournamentRepository : IObjectManipulator<TournamentDTO>
     {
-        public void DeleteTournament(int tournamentID);
-        public IList<ContestantDTO> GetLeaderboard(int tournamentID);
+        public bool Delete(int tournamentID);
+        public IList<ContestantDTO> GetStandings(int tournamentID);
     }
 }

@@ -8,17 +8,17 @@ namespace DAL.Repositories
     {
         public TournamentRepository(DbContext dbContext) : base(dbContext) { }
 
-        public void Create(TournamentDTO obj)
+        public int Create(TournamentDTO obj)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteTournament(int tournamentID)
+        public bool Delete(int tournamentID)
         {
             throw new NotImplementedException();
         }
 
-        public IList<ContestantDTO> GetLeaderboard(int tournamentID)
+        public IList<ContestantDTO> GetStandings(int tournamentID)
         {
             throw new NotImplementedException();
         }
@@ -28,7 +28,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(TournamentDTO obj)
+        public int Update(TournamentDTO obj)
         {
             throw new NotImplementedException();
         }

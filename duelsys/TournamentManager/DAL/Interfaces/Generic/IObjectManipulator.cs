@@ -2,7 +2,7 @@
 {
     public interface IObjectManipulator<T> : IObjectLoader<T>
     {
-        public void Create(T obj);
-        public void Update(T obj);
+        public int Create(T obj);
+        public int Update(T obj);
     }
 }

@@ -20,9 +20,50 @@ namespace BLL.Registries
             this.repository = repository;
         }
 
+        public Contestant? GetContestant(int tournamentID, int contestantID)
+        {
+            ContestantDTO? dto = repository.GetContestant(tournamentID, contestantID);
+            if(dto != null)
+            {
+                return new Contestant()
+                {
+                    ID = dto.ID,
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName,
+                    TournamentID = dto.TournamentID,
+                    Wins = dto.Wins,
+                    Losses = dto.Losses
+                };
+            }
+            return null;
+        }
+
         public IList<Contestant> GetRegistrants(int tournamentID)
         {
+            List<Contestant> contestants = new List<Contestant>();
+            foreach(ContestantDTO cont in repository.GetRegistrants(tournamentID))
+            {
+                contestants.Add(new Contestant()
+                {
+                    ID = cont.ID,
+                    FirstName = cont.FirstName,
+                    LastName = cont.LastName,
+                    TournamentID = cont.TournamentID,
+                    Wins = cont.Wins,
+                    Losses = cont.Losses
+                });
+            }
+            return contestants;
+        }
 
+        public bool Register(int userID, int tournamentID)
+        {
+            return repository.Register(userID, tournamentID);
+        }
+
+        public bool Deregister(int userID, int tournamentID)
+        {
+            return repository.Deregister(userID, tournamentID);
         }
     }
 }

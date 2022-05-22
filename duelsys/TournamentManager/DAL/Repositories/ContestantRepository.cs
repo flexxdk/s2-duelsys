@@ -7,27 +7,22 @@ namespace DAL.Repositories
     {
         public ContestantRepository(DbContext dbContext) : base(dbContext) { }
 
-        public void Deregister(ContestantDTO contestantDTO)
+        public bool Deregister(int userID, int tournamentID)
         {
             throw new NotImplementedException();
         }
 
-        public ContestantDTO GetContestant(int contestantID)
+        public ContestantDTO? GetContestant(int tournamentID, int contestantID)
         {
             throw new NotImplementedException();
         }
 
-        public IList<ContestantDTO> GetContestantsInTournament(int tournamentID)
+        public IList<ContestantDTO> GetRegistrants(int tournamentID)
         {
             throw new NotImplementedException();
         }
 
-        public IList<ContestantDTO> Load()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Register(ContestantDTO contestantDTO)
+        public bool Register(int userID, int tournamentID)
         {
             throw new NotImplementedException();
         }

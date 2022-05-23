@@ -55,7 +55,7 @@ namespace BLL.Registries
 
         public void GenerateMatches(Tournament tournament)
         {
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament, repository.GetTournamentContestants(tournament.ID).ToList()).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, repository.GetTournamentContestants(tournament.ID)).ToList();
             foreach(MatchDTO match in matches)
             {
                 repository.Create(match);

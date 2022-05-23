@@ -45,7 +45,7 @@ namespace UnitTests
                 new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
 
             Assert.AreEqual(28, matches.Count);
         }
@@ -79,7 +79,7 @@ namespace UnitTests
                 new ContestantDTO(9, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
 
             Assert.AreEqual(36, matches.Count);
         }
@@ -112,7 +112,7 @@ namespace UnitTests
                 new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
 
             Assert.AreEqual(4, matches.Count);
         }
@@ -150,7 +150,7 @@ namespace UnitTests
                 new ContestantDTO(12, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
 
             Assert.AreEqual(4, matches.Count);
         }
@@ -183,7 +183,7 @@ namespace UnitTests
                 new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 1)
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
 
             Assert.AreEqual(2, matches.Count);
         }

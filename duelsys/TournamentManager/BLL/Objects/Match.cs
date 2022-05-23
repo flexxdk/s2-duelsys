@@ -10,27 +10,22 @@ namespace BLL.Objects
         [Required]
         [Key]
         [Browsable(false)]
-        public int ID { get; private set; }
-        [Required]
-        public string Sport { get; private set; }
-        public int HomeScore { get; private set; }
-        public int AwayScore { get; private set; }
-        [Required]
-        public int HomeContestantID { get; private set; }
-        [Required]
-        public int AwayContestantID { get; private set; }
-        [Required]
-        public bool IsFinished { get; private set; }
+        public int ID { get; set; }
 
-        public Match(MatchDTO dto)
-        {
-            ID = dto.ID;
-            Sport = dto.Sport;
-            IsFinished = dto.IsFinished;
-            HomeScore = dto.HomeScore;
-            AwayScore = dto.AwayScore;
-            HomeContestantID = dto.HomeContestantID;
-            AwayContestantID = dto.AwayContestantID;
-        }
+        [Required]
+        public int TournamentID { get; set; }
+
+        public int HomeScore { get; set; }
+
+        public int AwayScore { get; set; }
+
+        [Required]
+        public int HomeContestantID { get; set; }
+
+        [Required]
+        public int AwayContestantID { get; set; }
+
+        [Required]
+        public bool IsFinished { get; set; }
     }
 }

@@ -12,10 +12,20 @@ namespace BLL.Objects
         [Browsable(false)]
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "No name was entered")]
-        public string? Name { get; set; }
+        [Required(ErrorMessage = "No title was given")]
+        public string? Title { get; set; }
 
-        public bool AllowRegistration { get; set; }
+        [Required(ErrorMessage = "No sport was given")]
+        public string? Sport { get; set; }
+
+        [Required(ErrorMessage = "Specify a scoring system")]
+        public string? Scoring { get; set; }
+
+        [Required(ErrorMessage = "Specify the city of the event")]
+        public string? City { get; set; }
+
+        [Required(ErrorMessage = "Specify the address of the event")]
+        public string? Address { get; set; }
 
         [Required(ErrorMessage = "Minimum contestants needs to be set")]
         [Range(2, int.MaxValue, ErrorMessage = "Minimum contestants needs to be at least 2")]
@@ -30,6 +40,9 @@ namespace BLL.Objects
 
         [Required(ErrorMessage = "No end date was entered")]
         public DateTime? EndDate { get; set; }
+
+        [Required(ErrorMessage = "The status is invalid")]
+        public TournamentStatus Status { get; set; }
 
         [Required(ErrorMessage = "No tournament system was given")]
         public TournamentSystem System { get; set; }

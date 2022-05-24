@@ -52,12 +52,16 @@ namespace UnitTests.RegistryTests
             int beforeCount = tournamentRegistry.GetAll().Count;
             tournamentRegistry.CreateTournament(new Tournament()
             {
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Points",
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.RoundRobin
             });
             int afterCount = tournamentRegistry.GetAll().Count;
@@ -74,12 +78,17 @@ namespace UnitTests.RegistryTests
             Assert.ThrowsException<ValidationException>(() =>
                 tournamentRegistry.CreateTournament(new Tournament()
                 {
-                    Name = "Ayy",
-                    AllowRegistration = true,
+                    ID = 0,
+                    Title = "Mario Kart Grand Prix",
+                    Sport = "eGames",
+                    Scoring = "Points",
+                    City = "Eindhoven",
+                    Address = "Eindhovense Straat 1",
                     MinContestants = 8,
                     MaxContestants = 2,
                     StartDate = DateTime.UtcNow.Date,
                     EndDate = DateTime.UtcNow.AddDays(7).Date,
+                    Status = TournamentStatus.Planned,
                     System = TournamentSystem.RoundRobin
                 }), "All input is correct"
             );
@@ -94,23 +103,32 @@ namespace UnitTests.RegistryTests
             tournamentRegistry.UpdateTournament(new Tournament()
             {
                 ID = tournament!.ID,
-                Name = "Mario Kart Grand Prix",
-                AllowRegistration = true,
+                Title = "Mario Kart Grand Prix",
+                Sport = "eGames",
+                Scoring = "Cups",
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
                 MinContestants = 4,
                 MaxContestants = 8,
                 StartDate = DateTime.UtcNow.Date.AddDays(1),
                 EndDate = DateTime.UtcNow.Date.AddDays(2),
+                Status = TournamentStatus.Finished,
                 System = TournamentSystem.RoundRobin
-            }); ;
+            });
             Tournament? updatedTournament = tournamentRegistry.GetByID(1);
 
             Assert.IsNotNull(updatedTournament);
             Assert.AreEqual(updatedTournament.ID, tournament!.ID);
-            Assert.AreNotEqual(updatedTournament.Name, tournament!.Name);
+            Assert.AreNotEqual(updatedTournament.Title, tournament!.Title);
+            Assert.AreNotEqual(updatedTournament.Sport, tournament!.Sport);
+            Assert.AreNotEqual(updatedTournament.Scoring, tournament!.Scoring);
+            Assert.AreNotEqual(updatedTournament.City, tournament!.City);
+            Assert.AreNotEqual(updatedTournament.Address, tournament!.Address);
             Assert.AreNotEqual(updatedTournament.MinContestants, tournament!.MinContestants);
             Assert.AreNotEqual(updatedTournament.MaxContestants, tournament!.MaxContestants);
             Assert.AreNotEqual(updatedTournament.StartDate, tournament!.StartDate);
             Assert.AreNotEqual(updatedTournament.EndDate, tournament!.EndDate);
+            Assert.AreNotEqual(updatedTournament.Status, tournament!.Status);
             Assert.AreNotEqual(updatedTournament.System, tournament!.System);
         }
 
@@ -125,15 +143,19 @@ namespace UnitTests.RegistryTests
                 tournamentRegistry.UpdateTournament(new Tournament()
                 {
                     ID = tournament!.ID,
-                    Name = "",
-                    AllowRegistration = true,
+                    Title = "",
+                    Sport = "",
+                    Scoring = "",
+                    City = "",
+                    Address = "",
                     MinContestants = 0,
                     MaxContestants = -1,
                     StartDate = DateTime.UtcNow.Date,
                     EndDate = DateTime.UtcNow.Date,
+                    Status = TournamentStatus.Planned,
                     System = TournamentSystem.RoundRobin
                 })
-            );
+            ); ;
         }
 
         [TestMethod]

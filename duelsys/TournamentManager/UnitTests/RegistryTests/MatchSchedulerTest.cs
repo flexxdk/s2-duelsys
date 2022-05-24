@@ -56,12 +56,16 @@ namespace UnitTests.RegistryTests
             Tournament tournament = new Tournament()
             {
                 ID = 2,
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Points",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.RoundRobin
             };
 

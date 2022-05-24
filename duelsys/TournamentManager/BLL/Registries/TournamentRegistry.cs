@@ -31,12 +31,16 @@ namespace BLL.Registries
                 tournaments.Add(dto.ID, new Tournament()
                 {
                     ID = dto.ID,
-                    Name = dto.Name,
-                    AllowRegistration = dto.AllowRegistration,
+                    Title = dto.Title,
+                    Sport = dto.Sport,
+                    Scoring = dto.Scoring,
+                    City = dto.City,
+                    Address = dto.Address,
                     MinContestants = dto.MinContestants,
                     MaxContestants = dto.MaxContestants,
                     StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
                     EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
+                    Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
                     System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
                 });
             }
@@ -62,7 +66,7 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(tournament);
-                TournamentDTO dto = new TournamentDTO(0, tournament.Name!, tournament.AllowRegistration, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.System.ToString());
+                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Sport!, tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.Status.ToString(), tournament.System.ToString());
                 tournament.ID = repository.Create(dto);
                 return tournaments.TryAdd(tournament.ID, tournament);
                 

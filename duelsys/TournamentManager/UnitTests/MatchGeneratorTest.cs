@@ -25,12 +25,16 @@ namespace UnitTests
             Tournament tournament = new Tournament()
             {
                 ID = 1,
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Sets",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.RoundRobin
             };
 
@@ -58,12 +62,16 @@ namespace UnitTests
             Tournament tournament = new Tournament()
             {
                 ID = 1,
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Sets",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.RoundRobin
             };
 
@@ -92,12 +100,16 @@ namespace UnitTests
             Tournament tournament = new Tournament()
             {
                 ID = 1,
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Sets",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.SingleElimination
             };
 
@@ -125,12 +137,16 @@ namespace UnitTests
             Tournament tournament = new Tournament()
             {
                 ID = 1,
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Sets",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.SingleElimination
             };
 
@@ -163,12 +179,16 @@ namespace UnitTests
             Tournament tournament = new Tournament()
             {
                 ID = 1,
-                Name = "Average-Minton",
-                AllowRegistration = true,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Sets",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
                 System = TournamentSystem.SingleElimination
             };
 

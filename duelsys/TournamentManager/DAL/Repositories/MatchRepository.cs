@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using DTO;
+using DTO.Users;
 
 namespace DAL.Repositories
 {
@@ -7,7 +8,12 @@ namespace DAL.Repositories
     {
         public MatchRepository(DbContext dbContext) : base(dbContext) { }
 
-        public void Create(MatchDTO obj)
+        public MatchDTO? GetByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Create(MatchDTO obj)
         {
             throw new NotImplementedException();
         }
@@ -22,7 +28,12 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(MatchDTO obj)
+        public int Update(MatchDTO obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ContestantDTO> GetTournamentContestants(int tournamentID)
         {
             throw new NotImplementedException();
         }

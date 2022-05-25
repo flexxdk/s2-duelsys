@@ -9,23 +9,33 @@ namespace DTO
     public class TournamentDTO
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public bool AllowRegistration { get; private set; }
+        public string Title { get; private set; }
+        public string Sport { get; private set; }
+        public string Type { get; set; }
+        public string Scoring { get; private set; }
+        public string City { get; private set; }
+        public string Address { get; private set; }
         public int MinContestants { get; private set; }
         public int MaxContestants { get; private set; }
         public string StartDate { get; private set; }
         public string EndDate { get; private set; }
+        public string Status { get; private set; }
         public string System { get; private set; }
 
-        public TournamentDTO(int id, string name, bool allowRegistration, int minContestants, int maxContestants, string startDate, string endDate, string system)
+        public TournamentDTO(int id, string title, string sport, string type, string scoring, string city, string address, int minContestants, int maxContestants, string startDate, string endDate, string status, string system)
         {
             ID = id;
-            Name = name;
-            AllowRegistration = allowRegistration;
+            Title = title;
+            Sport = sport;
+            Type = type;
+            Scoring = scoring;
+            City = city;
+            Address = address;
             MinContestants = minContestants;
             MaxContestants = maxContestants;
             StartDate = startDate;
             EndDate = endDate;
+            Status = status;
             System = system;
         }
     }

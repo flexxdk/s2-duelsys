@@ -1,26 +1,40 @@
-﻿using DTO;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+using DTO;
 
 namespace BLL.Objects
 {
     public class Match
     {
-        public int ID { get; private set; }
-        public string Sport { get; private set; }
-        public bool IsFinished { get; private set; }
-        public int HomeScore { get; private set; }
-        public int AwayScore { get; private set; }
-        public int HomeContestantID { get; private set; }
-        public int AwayContestantID { get; private set; }
+        [Required]
+        [Key]
+        [Browsable(false)]
+        public int ID { get; set; }
 
-        public Match(MatchDTO dto)
-        {
-            ID = dto.ID;
-            Sport = dto.Sport;
-            IsFinished = dto.IsFinished;
-            HomeScore = dto.HomeScore;
-            AwayScore = dto.AwayScore;
-            HomeContestantID = dto.HomeContestantID;
-            AwayContestantID = dto.AwayContestantID;
-        }
+        [Required (ErrorMessage = "No tournament was assigned to the match.")]
+        [Browsable(false)]
+        public int TournamentID { get; set; }
+
+        [Browsable(false)]
+        public int HomeID { get; set; }
+
+        [Required]
+        public string? HomeName { get; set; }
+
+        [Required]
+        public int HomeScore { get; set; }
+
+        [Browsable(false)]
+        public int AwayID { get; set; }
+
+        [Required]
+        public string? AwayName { get; set; }
+
+        [Required]
+        public int AwayScore { get; set; }
+
+        [Required]
+        public bool IsFinished { get; set; }
     }
 }

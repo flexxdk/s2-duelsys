@@ -1,16 +1,18 @@
-﻿namespace BLL.Objects.Users
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace BLL.Objects.Users
 {
     public abstract class Account
     {
-        public int ID { get; protected set; }
-        public string FirstName { get; protected set; }
-        public string LastName { get; protected set; }
+        [Key]
+        [Required]
+        [Browsable(false)]
+        public int ID { get; set; }
 
-        public Account(int id, string firstName, string lastName)
-        {
-            ID = id;
-            FirstName = firstName;
-            LastName = lastName;
-        }
+        [Required(ErrorMessage = "You must enter a first name")]
+        public string? Name { get; set; }
+
+        public string? SurName { get; set; }
     }
 }

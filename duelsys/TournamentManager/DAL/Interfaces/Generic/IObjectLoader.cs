@@ -1,4 +1,4 @@
-﻿namespace DAL.Interfaces.Generics
+﻿namespace DAL.Interfaces.Generic
 {
     public interface IObjectLoader<T>
     {

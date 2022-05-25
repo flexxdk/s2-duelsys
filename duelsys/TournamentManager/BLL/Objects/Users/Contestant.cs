@@ -1,18 +1,20 @@
-﻿using DTO.Users;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Objects.Users
 {
     public class Contestant : Account
     {
-        public int TournamentID { get; private set; }
-        public int Wins { get; private set; }
-        public int Losses { get; private set; }
+        [Required]
+        [Browsable(false)]
+        public int TournamentID { get; set; }
 
-        public Contestant(ContestantDTO dto) : base(dto.ID, dto.FirstName, dto.LastName)
-        {
-            TournamentID = dto.TournamentID;
-            Wins = dto.Wins;
-            Losses = dto.Losses;
-        }
+        public int Rank { get; set; }
+
+        [Required]
+        public int Wins { get; set; }
+
+        [Required]
+        public int Losses { get; set; }
     }
 }

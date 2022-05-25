@@ -7,14 +7,29 @@ namespace UnitTests.Mocks
 {
     public class MockUsers : IUserRepository
     {
-        public IList<UserDTO> Load()
+        private List<UserDTO> users;
+        private int idSeeder = 0;
+
+        public MockUsers()
         {
-            throw new System.NotImplementedException();
+            users = new List<UserDTO>()
+            {
+                new UserDTO(++idSeeder, "Lex", "de Kort", "Administrator", "Solo", "lexdekort@gmail.com", "1234", "1234"),
+                new UserDTO(++idSeeder, "Nick", "Blom", "Player", "Solo", "nickmeister@gmail.com", "abcd", "abcd"),
+                new UserDTO(++idSeeder, "Sem", "Storms", "Staff", "Solo", "localcoholic@gmail.com", "hello", "world"),
+                new UserDTO(++idSeeder, "Emilia", "Stoyanova", "Staff", "Solo", "devops@gmail.com", "linux", "rules")
+            };
         }
 
-        public void Register(UserDTO userDTO)
+        public IList<UserDTO> Load()
         {
-            throw new System.NotImplementedException();
+            return users;
+        }
+
+        public int Register(UserDTO dto)
+        {
+            users.Add(new UserDTO(++idSeeder, dto.Name, dto.SurName, dto.Role, dto.Type, dto.Email, dto.Password, dto.Salt));
+            return idSeeder;
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using DAL.Interfaces.Generics;
+﻿using DAL.Interfaces.Generic;
 using DTO.Users;
 
 namespace DAL.Interfaces
 {
     public interface IUserRepository : IObjectLoader<UserDTO>
     {
-        public void Register(UserDTO userDTO);
+        public int Register(UserDTO userDTO);
     }
 }

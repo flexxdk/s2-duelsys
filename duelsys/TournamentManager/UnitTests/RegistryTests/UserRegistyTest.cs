@@ -49,7 +49,7 @@ namespace UnitTests.RegistryTests
             string firstName = "Fontys";
             string lastName = "Man";
             UserRole role = UserRole.Administrator;
-            TeamType type = TeamType.Solo;
+            ContestantType type = ContestantType.Solo;
             string email = "fontys_man@fontys.nl";
             string password = "fontysman";
 
@@ -66,7 +66,7 @@ namespace UnitTests.RegistryTests
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetAll().Last().ID);
             Assert.AreEqual(email, userRegistry.GetAll().Last().Email);
-            Assert.AreEqual(TeamType.Solo, userRegistry.GetAll().Last().Type);
+            Assert.AreEqual(ContestantType.Solo, userRegistry.GetAll().Last().Type);
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace UnitTests.RegistryTests
             string firstName = "Fontys";
             string lastName = "Man";
             UserRole role = UserRole.Administrator;
-            TeamType type = TeamType.Team;
+            ContestantType type = ContestantType.Team;
             string email = "fontys_man@fontys.nl";
             string password = "fontysman";
 
@@ -93,7 +93,7 @@ namespace UnitTests.RegistryTests
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetAll().Last().ID);
             Assert.AreEqual(email, userRegistry.GetAll().Last().Email);
-            Assert.AreEqual(TeamType.Team, userRegistry.GetAll().Last().Type);
+            Assert.AreEqual(ContestantType.Team, userRegistry.GetAll().Last().Type);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace UnitTests.RegistryTests
             string firstName = "Fontys";
             string lastName = "Man";
             UserRole role = UserRole.Administrator;
-            TeamType type = TeamType.Solo;
+            ContestantType type = ContestantType.Solo;
             string email = "devops@gmail.com";
             string password = "fontysman";
 
@@ -127,7 +127,7 @@ namespace UnitTests.RegistryTests
             string firstName = "";
             string lastName = "";
             UserRole role = UserRole.Administrator;
-            TeamType type = TeamType.Solo;
+            ContestantType type = ContestantType.Solo;
             string email = "";
             string password = "";
 

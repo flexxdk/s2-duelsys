@@ -15,11 +15,14 @@ namespace BLL.Objects
         [Required(ErrorMessage = "No title was given")]
         public string? Title { get; set; }
 
+        [Required(ErrorMessage = "No description was given")]
+        public string? Description { get; set; }
+
         [Required(ErrorMessage = "No sport was given")]
         public string? Sport { get; set; }
 
         [Required(ErrorMessage = "Invalid team type")]
-        public TeamType Type { get; set; }
+        public ContestantType Type { get; set; }
 
         [Required(ErrorMessage = "Specify a scoring system")]
         public string? Scoring { get; set; }

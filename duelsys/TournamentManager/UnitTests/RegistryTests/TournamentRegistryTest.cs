@@ -53,6 +53,7 @@ namespace UnitTests.RegistryTests
             tournamentRegistry.CreateTournament(new Tournament()
             {
                 Title = "Average-Minton",
+                Description = "It's also badminton!",
                 Sport = "Badminton",
                 Scoring = "Points",
                 City = "Eindhoven",
@@ -104,6 +105,7 @@ namespace UnitTests.RegistryTests
             {
                 ID = tournament!.ID,
                 Title = "Mario Kart Grand Prix",
+                Description = "Now it's karting!",
                 Sport = "eGames",
                 Scoring = "Cups",
                 City = "Eindhoven",

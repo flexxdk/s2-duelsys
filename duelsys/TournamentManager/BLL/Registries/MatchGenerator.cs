@@ -35,7 +35,7 @@ namespace BLL.Registries
                 ContestantDTO contestantHome = contestantQueue.Dequeue();
                 foreach(ContestantDTO contestant in contestantQueue)
                 {
-                    generated.Add(new MatchDTO(0, tournamentID, false, 0, 0, contestantHome.ID, contestant.ID));
+                    generated.Add(new MatchDTO(0, tournamentID, false, contestantHome.ID, contestantHome.Name, 0, contestant.ID, contestant.Name, 0));
                 }
             }
 
@@ -63,8 +63,8 @@ namespace BLL.Registries
                 if (i < validCount - 1)
                 {
                     ContestantDTO home = validContestants.ElementAt(i);
-                    ContestantDTO away = validContestants.ElementAt(i + 1);
-                    generated.Add(new MatchDTO(0, tournamentID, false, 0, 0, home.ID, away.ID));
+                    ContestantDTO away = validContestants.ElementAt(i + 1); 
+                    generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name, 0, away.ID, away.Name, 0));
                 }
             }
 

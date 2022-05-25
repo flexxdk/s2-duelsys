@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace BLL.Registries
 {
-    public class TournamentRegistry
+    public class TournamentRegistry : BaseRegistry
     {
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
@@ -66,7 +66,7 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(tournament);
-                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Sport!, tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.Status.ToString(), tournament.System.ToString());
+                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.Status.ToString(), tournament.System.ToString());
                 tournament.ID = repository.Create(dto);
                 return tournaments.TryAdd(tournament.ID, tournament);
                 
@@ -123,8 +123,8 @@ namespace BLL.Registries
                 contestants.Add(new Contestant()
                 {
                     ID = dto.ID,
-                    FirstName = dto.FirstName,
-                    LastName = dto.LastName,
+                    Name = dto.Name,
+                    SurName = dto.SurName,
                     TournamentID = dto.TournamentID,
                     Wins = dto.Wins,
                     Losses = dto.Losses,
@@ -136,12 +136,12 @@ namespace BLL.Registries
 
         private void CalculateRankings(List<Contestant> contestants)
         {
-            for(int i = 0; i < contestants.Count; i++)
+            for (int i = 0; i < contestants.Count; i++)
             {
                 contestants[i].Rank = i + 1;
                 if (i > 0)
                 {
-                    if(contestants[i].Wins == contestants[i - 1].Wins && contestants[i].Losses == contestants[i - 1].Losses)
+                    if (contestants[i].Wins == contestants[i - 1].Wins && contestants[i].Losses == contestants[i - 1].Losses)
                     {
                         contestants[i].Rank = contestants[i - 1].Rank;
                     }
@@ -149,32 +149,18 @@ namespace BLL.Registries
             }
         }
 
-        private void ValidateModel(Tournament tournament)
+        private void ValidateModel(Tournament model)
         {
-            List<string> results = Validate.AsModel(tournament).ToList();
-
-            //Since there's no Data Annotation that checks against other properties,
-            // perform any property-against-property checks here instead
-            if (tournament.MaxContestants < tournament.MinContestants)
+            IList<string> errors = new List<string>();
+            if (model.MaxContestants < model.MinContestants)
             {
-                results.Add("The maximum contestants needs to be at least equal to the minimum contestants");
+                errors.Add("The maximum contestants needs to be at least equal to the minimum contestants");
             }
-            if(tournament.StartDate > tournament.EndDate)
+            if (model.StartDate > model.EndDate)
             {
-                results.Add("Cannot set start date after end date");
+                errors.Add("Cannot set start date after end date");
             }
-
-            if (results.Any())
-            {
-                StringBuilder sbMessage = new StringBuilder();
-                sbMessage.AppendLine("The following errors have occurred: ");
-                foreach (string error in results)
-                {
-                    sbMessage.Append("- ");
-                    sbMessage.AppendLine(error);
-                }
-                throw new ValidationException(sbMessage.ToString());
-            }
+            base.ValidateModel(model, errors);
         }
     }
 }

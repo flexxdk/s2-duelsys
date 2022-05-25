@@ -16,12 +16,12 @@ namespace UnitTests.Mocks
         {
             matches = new List<MatchDTO>()
             {
-                new MatchDTO(++idSeeder, 1, false, 0, 0, 1, 2),
-                new MatchDTO(++idSeeder, 1, false, 0, 0, 4, 3),
-                new MatchDTO(++idSeeder, 1, false, 0, 0, 1, 3),
-                new MatchDTO(++idSeeder, 1, false, 0, 0, 2, 4),
-                new MatchDTO(++idSeeder, 1, false, 0, 0, 1, 3),
-                new MatchDTO(++idSeeder, 1, false, 0, 0, 4, 2),
+                new MatchDTO(++idSeeder, 1, false, 1, "Lex", 0, 2, "Nick", 0),
+                new MatchDTO(++idSeeder, 1, false, 4, "Emilia", 0, 3, "Sem", 0),
+                new MatchDTO(++idSeeder, 1, false, 1, "Lex", 0, 3, "Sem", 0),
+                new MatchDTO(++idSeeder, 1, false, 2, "Nick", 0, 4, "Emilia", 0),
+                new MatchDTO(++idSeeder, 1, false, 1, "Lex", 0, 3, "Sem", 0),
+                new MatchDTO(++idSeeder, 1, false, 4, "Emilia", 0, 2, "Nick", 0)
             };
 
             contestants = new List<ContestantDTO>() {
@@ -52,7 +52,7 @@ namespace UnitTests.Mocks
 
         public int Create(MatchDTO obj)
         {
-            matches.Add(new MatchDTO(++idSeeder, obj.TournamentID, obj.IsFinished, obj.HomeScore, obj.AwayScore, obj.HomeContestantID, obj.AwayContestantID));
+            matches.Add(new MatchDTO(++idSeeder, obj.TournamentID, obj.IsFinished, obj.HomeID, obj.HomeName, obj.HomeScore, obj.AwayID, obj.AwayName, obj.AwayScore));
             return idSeeder;
         }
 
@@ -71,9 +71,14 @@ namespace UnitTests.Mocks
             throw new System.NotImplementedException();
         }
 
-        public int Update(MatchDTO obj)
+        public int Update(MatchDTO dto)
         {
-            throw new System.NotImplementedException();
+            int index = matches.IndexOf(matches.Find(matches => matches.ID == dto.ID)!);
+            if(index > -1)
+            {
+                matches[index] = dto;
+            }
+            return 1;
         }
     }
 }

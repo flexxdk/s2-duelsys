@@ -18,6 +18,9 @@ namespace BLL.Objects
         [Required(ErrorMessage = "No sport was given")]
         public string? Sport { get; set; }
 
+        [Required(ErrorMessage = "Invalid team type")]
+        public TeamType Type { get; set; }
+
         [Required(ErrorMessage = "Specify a scoring system")]
         public string? Scoring { get; set; }
 

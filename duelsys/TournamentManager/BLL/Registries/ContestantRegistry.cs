@@ -28,8 +28,8 @@ namespace BLL.Registries
                 return new Contestant()
                 {
                     ID = dto.ID,
-                    FirstName = dto.FirstName,
-                    LastName = dto.LastName,
+                    Name = dto.Name,
+                    SurName = dto.SurName,
                     TournamentID = dto.TournamentID,
                     Wins = dto.Wins,
                     Losses = dto.Losses
@@ -38,16 +38,16 @@ namespace BLL.Registries
             return null;
         }
 
-        public IList<Contestant> GetRegistrants(int tournamentID)
+        public IList<Contestant> GetContestants(int tournamentID)
         {
             List<Contestant> contestants = new List<Contestant>();
-            foreach(ContestantDTO cont in repository.GetRegistrants(tournamentID))
+            foreach(ContestantDTO cont in repository.GetContestants(tournamentID))
             {
                 contestants.Add(new Contestant()
                 {
                     ID = cont.ID,
-                    FirstName = cont.FirstName,
-                    LastName = cont.LastName,
+                    Name = cont.Name,
+                    SurName = cont.SurName,
                     TournamentID = cont.TournamentID,
                     Wins = cont.Wins,
                     Losses = cont.Losses
@@ -56,14 +56,33 @@ namespace BLL.Registries
             return contestants;
         }
 
-        public bool Register(int userID, int tournamentID)
+        public bool Register(int userID, string userType, int tournamentID)
         {
-            return repository.Register(userID, tournamentID);
+            if (Validate.AsEnum<TeamType>(userType))
+            {
+                TournamentDTO? dto = repository.GetTournament(tournamentID);
+                if (dto != null && dto.Type == userType)
+                {
+                    if (GetContestant(userID, tournamentID) == null)
+                    {
+                        return repository.Register(userID, tournamentID);
+                    }
+                }
+            }
+            return false;
         }
 
         public bool Deregister(int userID, int tournamentID)
         {
-            return repository.Deregister(userID, tournamentID);
+            TournamentDTO? dto = repository.GetTournament(tournamentID);
+            if(dto != null)
+            {
+                if (GetContestant(userID, tournamentID) != null)
+                {
+                    return repository.Deregister(userID, tournamentID);
+                }
+            }
+            return false;
         }
     }
 }

@@ -13,6 +13,11 @@ namespace BLL.Objects.Users
         [EnumDataType(typeof(UserRole))]
         public UserRole Role { get; set; }
 
+        [Required(ErrorMessage = "Specify team type")]
+        [Display(Name = "Team Type")]
+        [EnumDataType(typeof(TeamType))]
+        public TeamType Type { get; set; }
+
         [Required(ErrorMessage = "Invalid email address")]
         [Display(Name = "Email address")]
         [EmailAddress]

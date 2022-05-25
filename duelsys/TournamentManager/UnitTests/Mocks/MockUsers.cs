@@ -14,10 +14,10 @@ namespace UnitTests.Mocks
         {
             users = new List<UserDTO>()
             {
-                new UserDTO(++idSeeder, "Lex", "de Kort", "Administrator", "lexdekort@gmail.com", "1234", "1234"),
-                new UserDTO(++idSeeder, "Nick", "Blom", "Player", "nickmeister@gmail.com", "abcd", "abcd"),
-                new UserDTO(++idSeeder, "Sem", "Storms", "Staff", "localcoholic@gmail.com", "hello", "world"),
-                new UserDTO(++idSeeder, "Emilia", "Stoyanova", "Staff", "devops@gmail.com", "linux", "rules")
+                new UserDTO(++idSeeder, "Lex", "de Kort", "Administrator", "Solo", "lexdekort@gmail.com", "1234", "1234"),
+                new UserDTO(++idSeeder, "Nick", "Blom", "Player", "Solo", "nickmeister@gmail.com", "abcd", "abcd"),
+                new UserDTO(++idSeeder, "Sem", "Storms", "Staff", "Solo", "localcoholic@gmail.com", "hello", "world"),
+                new UserDTO(++idSeeder, "Emilia", "Stoyanova", "Staff", "Solo", "devops@gmail.com", "linux", "rules")
             };
         }
 
@@ -28,7 +28,7 @@ namespace UnitTests.Mocks
 
         public int Register(UserDTO dto)
         {
-            users.Add(new UserDTO(++idSeeder, dto.FirstName, dto.LastName, dto.Role, dto.Email, dto.Password, dto.Salt));
+            users.Add(new UserDTO(++idSeeder, dto.Name, dto.SurName, dto.Role, dto.Type, dto.Email, dto.Password, dto.Salt));
             return idSeeder;
         }
     }

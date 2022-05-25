@@ -12,18 +12,27 @@ namespace BLL.Objects
         [Browsable(false)]
         public int ID { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "No tournament was assigned to the match.")]
+        [Browsable(false)]
         public int TournamentID { get; set; }
 
+        [Browsable(false)]
+        public int HomeID { get; set; }
+
+        [Required]
+        public string? HomeName { get; set; }
+
+        [Required]
         public int HomeScore { get; set; }
 
+        [Browsable(false)]
+        public int AwayID { get; set; }
+
+        [Required]
+        public string? AwayName { get; set; }
+
+        [Required]
         public int AwayScore { get; set; }
-
-        [Required]
-        public int HomeContestantID { get; set; }
-
-        [Required]
-        public int AwayContestantID { get; set; }
 
         [Required]
         public bool IsFinished { get; set; }

@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using DTO.Users;
+using DTO;
 
 namespace DAL.Repositories
 {
@@ -17,12 +18,17 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public IList<ContestantDTO> GetRegistrants(int tournamentID)
+        public IList<ContestantDTO> GetContestants(int tournamentID)
         {
             throw new NotImplementedException();
         }
 
         public bool Register(int userID, int tournamentID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TournamentDTO GetTournament(int tournamentID)
         {
             throw new NotImplementedException();
         }

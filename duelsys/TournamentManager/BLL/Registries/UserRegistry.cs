@@ -29,8 +29,8 @@ namespace BLL.Registries
             foreach(UserDTO dto in repository.Load())
             {
                 users.Add(dto.ID, new User(){
-                    FirstName = dto.FirstName,
-                    LastName = dto.LastName,
+                    Name = dto.Name,
+                    SurName = dto.SurName,
                     Email = dto.Email,
                     Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
                     Password = dto.Password,
@@ -64,7 +64,7 @@ namespace BLL.Registries
                     SaltKey hashed = encryptor.Hash(user.Password!);
                     user.Password = hashed.Key;
                     user.Salt = hashed.Salt;
-                    UserDTO dto = new UserDTO(0, user.FirstName!, user.LastName!, user.Role.ToString(), user.Email!, user.Password, user.Salt);
+                    UserDTO dto = new UserDTO(0, user.Name!, user.SurName!, user.Role.ToString(), user.Type.ToString(), user.Email!, user.Password, user.Salt);
                     user.ID = repository.Register(dto);
                     return users.TryAdd(user.ID, user);
                 }

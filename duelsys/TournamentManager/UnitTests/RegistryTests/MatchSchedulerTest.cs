@@ -18,7 +18,7 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetMatchByID()
         {
-            MatchScheduler scheduler = new MatchScheduler(new MockMatch());
+            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
             int matchID = 1;
 
             Match? match = scheduler.GetByID(matchID);
@@ -30,7 +30,7 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetMatchWithNonexistentID()
         {
-            MatchScheduler scheduler = new MatchScheduler(new MockMatch());
+            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
             int matchID = 12;
 
             Match? match = scheduler.GetByID(matchID);
@@ -41,7 +41,7 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetTournamentMatches()
         {
-            MatchScheduler scheduler = new MatchScheduler(new MockMatch());
+            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
 
             List<Match> matches = scheduler.GetMatches(1).ToList();
 
@@ -51,7 +51,7 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGenerateMatchesRoundRobin()
         {
-            MatchScheduler scheduler = new MatchScheduler(new MockMatch());
+            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
 
             Tournament tournament = new Tournament()
             {
@@ -73,6 +73,57 @@ namespace UnitTests.RegistryTests
             List<Match> matches = scheduler.GetMatches(tournament.ID).ToList();
 
             Assert.AreEqual(28, matches.Count);
+        }
+
+        [TestMethod]
+        public void TestGenerateMatchesSingleElimination()
+        {
+            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+
+            Tournament tournament = new Tournament()
+            {
+                ID = 2,
+                Title = "Average-Minton",
+                Sport = "Badminton",
+                Scoring = "Points",
+                City = "Helmond",
+                Address = "Wethouder Ebbenlaan 30",
+                MinContestants = 8,
+                MaxContestants = 14,
+                StartDate = DateTime.UtcNow.Date,
+                EndDate = DateTime.UtcNow.AddDays(7).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.SingleElimination
+            };
+
+            scheduler.GenerateMatches(tournament);
+            List<Match> matches = scheduler.GetMatches(tournament.ID).ToList();
+
+            Assert.AreEqual(4, matches.Count);
+        }
+
+        [TestMethod]
+        public void TestSaveMatchResults()
+        {
+            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+            Match? match = scheduler.GetByID(1);
+
+            scheduler.SaveResults(new Match()
+            {
+                ID = match!.ID,
+                TournamentID = match!.TournamentID,
+                IsFinished = true,
+                HomeID = match!.HomeID,
+                HomeName = match!.HomeName,
+                HomeScore = 2,
+                AwayID = match!.AwayID,
+                AwayName = match!.AwayName,
+                AwayScore = 1
+            });
+            Match? updatedMatch = scheduler.GetByID(1);
+
+            Assert.IsNotNull(updatedMatch);
+            Assert.AreEqual(updatedMatch.ID, match!.ID);
         }
     }
 }

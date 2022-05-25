@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-
+using System;
 using DAL.Interfaces;
 using DTO.Users;
+using DTO;
 
 namespace UnitTests.Mocks
 {
@@ -9,17 +10,18 @@ namespace UnitTests.Mocks
     {
         private List<ContestantDTO> contestants;
         private List<UserDTO> users;
-        private int idSeeder = 0;
+        private List<TournamentDTO> tournaments;
 
         public MockContestant()
         {
             users = new List<UserDTO>()
             {
-                new UserDTO(1, "Lex", "de Kort", "Administrator", "lexdekort@gmail.com", "1234", "1234"),
-                new UserDTO(2, "Nick", "Blom", "Player", "nickmeister@gmail.com", "abcd", "abcd"),
-                new UserDTO(3, "Sem", "Storms", "Staff", "localcoholic@gmail.com", "hello", "world"),
-                new UserDTO(4, "Emilia", "Stoyanova", "Staff", "devops@gmail.com", "linux", "rules"),
-                new UserDTO(5, "John", "Doe", "Player", "johndoe@gmail.com", "leave her johnny", "sea shanty")
+                new UserDTO(1, "Lex", "de Kort", "Administrator", "Solo", "lexdekort@gmail.com", "1234", "1234"),
+                new UserDTO(2, "Nick", "Blom", "Player", "Solo", "nickmeister@gmail.com", "abcd", "abcd"),
+                new UserDTO(3, "Sem", "Storms", "Staff", "Solo", "localcoholic@gmail.com", "hello", "world"),
+                new UserDTO(4, "Emilia", "Stoyanova", "Staff", "Solo", "devops@gmail.com", "linux", "rules"),
+                new UserDTO(5, "John", "Doe", "Player", "Solo", "johndoe@gmail.com", "leave her johnny", "sea shanty"),
+                new UserDTO(6, "Pepe", "Silvia", "Player", "Solo", "pepesilvia@gmail.com", "it's always sunny", "iasip")
             };
 
             contestants = new List<ContestantDTO>()
@@ -36,6 +38,11 @@ namespace UnitTests.Mocks
                 new ContestantDTO(4, "Emilia", "Stoyanova", 3, 2, 2),
                 new ContestantDTO(2, "Nick", "Blom",  3, 1, 2),
             };
+
+            tournaments = new List<TournamentDTO>()
+            {
+                new TournamentDTO(1, "BAD!-Minton Championship", "Badminton", "Solo", "Points", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.UtcNow.ToString("d"), DateTime.UtcNow.AddDays(7).ToString("d"), "Planned", "SingleElimination")
+            };
         }
 
         public ContestantDTO? GetContestant(int tournamentID, int contestantID)
@@ -43,9 +50,14 @@ namespace UnitTests.Mocks
             return contestants.Find(cont => cont.TournamentID == tournamentID && cont.ID == contestantID);
         }
 
-        public IList<ContestantDTO> GetRegistrants(int tournamentID)
+        public IList<ContestantDTO> GetContestants(int tournamentID)
         {
             return contestants.FindAll(cont => cont.TournamentID == tournamentID);
+        }
+
+        public TournamentDTO? GetTournament(int tournamentID)
+        {
+            return tournaments.Find(trn => trn.ID == tournamentID);
         }
 
         public bool Register(int userID, int tournamentID)
@@ -54,7 +66,7 @@ namespace UnitTests.Mocks
             UserDTO? user = users.Find(user => user.ID == userID);
             if (contestant == null && user != null)
             {
-                contestants.Add(new ContestantDTO(userID, user.FirstName, user.LastName, tournamentID, 0, 0));
+                contestants.Add(new ContestantDTO(userID, user.Name, user.SurName, tournamentID, 0, 0));
                 return true;
             }
             return false;

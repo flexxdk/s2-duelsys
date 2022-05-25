@@ -11,9 +11,8 @@ namespace BLL.Objects.Users
         public int ID { get; set; }
 
         [Required(ErrorMessage = "You must enter a first name")]
-        public string? FirstName { get; set; }
+        public string? Name { get; set; }
 
-        [Required(ErrorMessage = "You must enter a last name")]
-        public string? LastName { get; set; }
+        public string? SurName { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace UnitTests.RegistryTests
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
 
-            List<Contestant> contestants = registry.GetRegistrants(tournamentID).ToList();
+            List<Contestant> contestants = registry.GetContestants(tournamentID).ToList();
 
             Assert.IsNotNull(contestants);
             Assert.AreNotEqual(0, contestants.Count);
@@ -51,12 +51,12 @@ namespace UnitTests.RegistryTests
         }
 
         [TestMethod]
-        public void TestGetRegistrantsOfNonexistentTournament()
+        public void TestGetContestantsOfNonexistentTournament()
         {
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 7;
 
-            List<Contestant> contestants = registry.GetRegistrants(tournamentID).ToList();
+            List<Contestant> contestants = registry.GetContestants(tournamentID).ToList();
 
             Assert.IsNotNull(contestants);
             Assert.AreEqual(0, contestants.Count);
@@ -68,11 +68,12 @@ namespace UnitTests.RegistryTests
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
             int userID = 5;
+            string userType = "Solo";
 
-            bool result = registry.Register(userID, tournamentID);
+            bool result = registry.Register(userID, userType, tournamentID);
             
             Assert.IsTrue(result);
-            Assert.AreEqual(userID, registry.GetRegistrants(tournamentID).Last().ID);
+            Assert.AreEqual(userID, registry.GetContestants(tournamentID).Last().ID);
         }
 
         [TestMethod]
@@ -81,8 +82,22 @@ namespace UnitTests.RegistryTests
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
             int userID = 3;
+            string userType = "Solo";
 
-            bool result = registry.Register(userID, tournamentID);
+            bool result = registry.Register(userID, userType, tournamentID);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestRegisterUserOfDifferentTeamType()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+            int tournamentID = 1;
+            int userID = 3;
+            string userType = "Solo";
+
+            bool result = registry.Register(userID, userType, tournamentID);
 
             Assert.IsFalse(result);
         }
@@ -93,11 +108,12 @@ namespace UnitTests.RegistryTests
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
             int userID = 6;
+            string userType = "Duo";
 
-            bool result = registry.Register(userID, tournamentID);
+            bool result = registry.Register(userID, userType, tournamentID);
 
             Assert.IsFalse(result);
-            Assert.AreNotEqual(userID, registry.GetRegistrants(tournamentID).Last().ID);
+            Assert.AreNotEqual(userID, registry.GetContestants(tournamentID).Last().ID);
         }
 
         [TestMethod]

@@ -16,11 +16,11 @@ namespace BLL.Registries
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
 
-        public TournamentRegistry(ITournamentRepository repository)
+        public TournamentRegistry(ITournamentRepository repository, bool preload)
         {
             this.repository = repository;
             this.tournaments = new Dictionary<int, Tournament>();
-            LoadTournaments();
+            if(preload) LoadTournaments();
         }
 
         public void LoadTournaments()
@@ -28,21 +28,7 @@ namespace BLL.Registries
             tournaments.Clear();
             foreach (TournamentDTO dto in repository.Load())
             {
-                tournaments.Add(dto.ID, new Tournament()
-                {
-                    ID = dto.ID,
-                    Title = dto.Title,
-                    Sport = dto.Sport,
-                    Scoring = dto.Scoring,
-                    City = dto.City,
-                    Address = dto.Address,
-                    MinContestants = dto.MinContestants,
-                    MaxContestants = dto.MaxContestants,
-                    StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
-                    EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
-                    Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
-                    System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
-                });
+                AddToDictionary(dto);
             }
         }
 
@@ -57,6 +43,15 @@ namespace BLL.Registries
             if (tournaments.ContainsKey(id))
             {
                 return tournaments[id];
+            }
+            else
+            {
+                TournamentDTO? dto = repository.GetByID(id);
+                if(dto != null)
+                {
+                    AddToDictionary(dto);
+                    return tournaments[dto.ID];
+                }
             }
             return null;
         }
@@ -147,6 +142,26 @@ namespace BLL.Registries
                     }
                 }
             }
+        }
+
+        private bool AddToDictionary(TournamentDTO dto)
+        {
+            return tournaments.TryAdd(dto.ID, new Tournament()
+            {
+                ID = dto.ID,
+                Title = dto.Title,
+                Description = dto.Description,
+                Sport = dto.Sport,
+                Scoring = dto.Scoring,
+                City = dto.City,
+                Address = dto.Address,
+                MinContestants = dto.MinContestants,
+                MaxContestants = dto.MaxContestants,
+                StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
+                EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
+                Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
+                System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
+            });
         }
 
         private void ValidateModel(Tournament model)

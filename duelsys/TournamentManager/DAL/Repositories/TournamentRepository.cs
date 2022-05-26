@@ -32,5 +32,10 @@ namespace DAL.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public TournamentDTO? GetByID(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

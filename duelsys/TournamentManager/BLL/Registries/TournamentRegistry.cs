@@ -28,13 +28,13 @@ namespace BLL.Registries
             tournaments.Clear();
             foreach (TournamentDTO dto in repository.Load())
             {
-                AddToDictionary(dto);
+                AddToDictionary(InstantiateTournament(dto));
             }
         }
 
-        public IList<Tournament> GetAll()
+        public IList<Tournament> GetAll(bool refresh)
         {
-            if (tournaments.Count == 0) LoadTournaments();
+            if (refresh) LoadTournaments();
             return tournaments.Values.ToList();
         }
 
@@ -49,8 +49,8 @@ namespace BLL.Registries
                 TournamentDTO? dto = repository.GetByID(id);
                 if(dto != null)
                 {
-                    AddToDictionary(dto);
-                    return tournaments[dto.ID];
+                    AddToDictionary(InstantiateTournament(dto));
+                    return tournaments[id];
                 }
             }
             return null;
@@ -63,7 +63,7 @@ namespace BLL.Registries
                 ValidateModel(tournament);
                 TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.Status.ToString(), tournament.System.ToString());
                 tournament.ID = repository.Create(dto);
-                return tournaments.TryAdd(tournament.ID, tournament);
+                return AddToDictionary(tournament);
                 
             }
             catch
@@ -144,9 +144,9 @@ namespace BLL.Registries
             }
         }
 
-        private bool AddToDictionary(TournamentDTO dto)
+        private Tournament InstantiateTournament(TournamentDTO dto)
         {
-            return tournaments.TryAdd(dto.ID, new Tournament()
+            return new Tournament()
             {
                 ID = dto.ID,
                 Title = dto.Title,
@@ -161,7 +161,11 @@ namespace BLL.Registries
                 EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
                 Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
                 System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
-            });
+            };
+        }
+        private bool AddToDictionary(Tournament tournament)
+        {
+            return tournaments.TryAdd(tournament.ID, tournament);
         }
 
         private void ValidateModel(Tournament model)

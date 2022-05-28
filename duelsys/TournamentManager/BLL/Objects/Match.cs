@@ -9,7 +9,6 @@ namespace BLL.Objects
     {
         [Required]
         [Key]
-        [Browsable(false)]
         public int ID { get; set; }
 
         [Required (ErrorMessage = "No tournament was assigned to the match.")]

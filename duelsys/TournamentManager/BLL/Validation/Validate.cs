@@ -46,7 +46,7 @@ namespace BLL.Validation
             List<string> strings = new List<string>();
             List<ValidationResult> errors = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(model);
-            if (!Validator.TryValidateObject(model, context, errors))
+            if (!Validator.TryValidateObject(model, context, errors, true))
             {
                 foreach(ValidationResult validationResult in errors)
                 {

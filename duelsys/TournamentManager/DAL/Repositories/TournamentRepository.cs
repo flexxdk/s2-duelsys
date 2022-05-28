@@ -11,9 +11,39 @@ namespace DAL.Repositories
     {
         public TournamentRepository(DbContext dbContext) : base(dbContext) { }
 
-        public int Create(TournamentDTO obj)
+        public int Create(TournamentDTO dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"INSERT INTO syn_tournaments (
+                                    title, description, sport, contestant_type, scoring, city, address, 
+                                    min_contestants, max_contestants, start_date, end_date, status, system
+                                ) 
+                                VALUES (
+                                    @Title, @Description, @Sport, @Type, @Scoring, @City, @Address,
+                                    @MinContestants, @MaxContestants, @StartDate, @EndDate, @Status, @System
+                                );";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@Title", dto.Title);
+                cmd.Parameters.AddWithValue("@Description", dto.Description);
+                cmd.Parameters.AddWithValue("@Sport", dto.Sport);
+                cmd.Parameters.AddWithValue("@Type", dto.Type);
+                cmd.Parameters.AddWithValue("@Scoring", dto.Scoring);
+                cmd.Parameters.AddWithValue("@City", dto.City);
+                cmd.Parameters.AddWithValue("@Address", dto.Address);
+                cmd.Parameters.AddWithValue("@MinContestants", dto.MinContestants);
+                cmd.Parameters.AddWithValue("@MaxContestants", dto.MaxContestants);
+                cmd.Parameters.AddWithValue("@StartDate", dto.StartDate);
+                cmd.Parameters.AddWithValue("@EndDate", dto.EndDate);
+                cmd.Parameters.AddWithValue("@Status", dto.Status);
+                cmd.Parameters.AddWithValue("@System", dto.System);
+                ExecuteNonQuery(cmd);
+                return Convert.ToInt32(cmd.LastInsertedId);
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         public bool Delete(int tournamentID)

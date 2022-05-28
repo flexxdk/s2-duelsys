@@ -61,10 +61,15 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(tournament);
-                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.Status.ToString(), tournament.System.ToString());
-                tournament.ID = repository.Create(dto);
+                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString("d"), tournament.EndDate.ToString("d"), tournament.Status.ToString(), tournament.System.ToString());
+                int ID = repository.Create(dto);
+                if(ID == 0)
+                {
+                    return false;
+                }
+                tournament.ID = ID;
                 return AddToDictionary(tournament);
-                
+
             }
             catch
             {
@@ -177,7 +182,7 @@ namespace BLL.Registries
             }
             if (model.StartDate > model.EndDate)
             {
-                errors.Add("Cannot set start date after end date");
+                errors.Add("End date must be set after start date");
             }
             base.ValidateModel(model, errors);
         }

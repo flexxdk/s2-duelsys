@@ -108,6 +108,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.inputPassword = new System.Windows.Forms.TextBox();
             this.comboTypes = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.navPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabsControl.SuspendLayout();
@@ -123,11 +125,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).BeginInit();
             this.tabAccounts.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // navPanel
             // 
             this.navPanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.navPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.navPanel.Controls.Add(this.label22);
+            this.navPanel.Controls.Add(this.pictureBox1);
             this.navPanel.Controls.Add(this.panel1);
             this.navPanel.Controls.Add(this.button1);
             this.navPanel.Controls.Add(this.NavRegistration);
@@ -1025,6 +1031,26 @@
             this.comboTypes.Size = new System.Drawing.Size(149, 23);
             this.comboTypes.TabIndex = 5;
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Franklin Gothic Book", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label22.Location = new System.Drawing.Point(3, 121);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(199, 24);
+            this.label22.TabIndex = 7;
+            this.label22.Text = "Tournament Manager";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::WinApp.Properties.Resources.logo;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(52, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1036,6 +1062,7 @@
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.navPanel.ResumeLayout(false);
+            this.navPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabsControl.ResumeLayout(false);
@@ -1054,6 +1081,7 @@
             this.tabAccounts.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1141,5 +1169,7 @@
         private Button button1;
         private Panel panel1;
         private Label label21;
+        private Label label22;
+        private PictureBox pictureBox1;
     }
 }

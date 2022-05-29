@@ -12,46 +12,31 @@ namespace BLL.Registries
     public class UserRegistry
     {
         private readonly IUserRepository repository;
-        private Dictionary<int, User> users;
         private Encryptor encryptor;
 
         public UserRegistry(IUserRepository repository)
         {
             this.repository = repository;
-            this.users = new Dictionary<int, User>();
             this.encryptor = new Encryptor();
-            LoadUsers();
-        }
-
-        public void LoadUsers()
-        {
-            users.Clear();
-            foreach(UserDTO dto in repository.Load())
-            {
-                users.Add(dto.ID, new User(){
-                    Name = dto.Name,
-                    SurName = dto.SurName,
-                    Email = dto.Email,
-                    Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
-                    Password = dto.Password,
-                    Salt = dto.Salt
-                });
-            }
-        }
-
-        public IList<User> GetAll()
-        {
-            if (users.Count == 0) LoadUsers();
-            return users.Values.ToList();
         }
 
         public User? GetByID(int id)
         {
-            if (users.ContainsKey(id))
+            UserDTO? dto = repository.GetByID(id);
+            if(dto == null)
             {
-                return users[id];
+                return null;
             }
-            return null;
+            return new User()
+            {
+                ID = dto.ID,
+                Name = dto.Name,
+                Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
+                Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
+                Email = dto.Email,
+                Password = dto.Password,
+                Salt = dto.Salt
+            };
         }
 
         public bool RegisterAccount(User user)
@@ -59,14 +44,13 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(user);
-                if (CheckIfEmailUnique(user.Email!))
+                if (repository.CheckIfEmailExists(user.Email!))
                 {
                     SaltKey hashed = encryptor.Hash(user.Password!);
                     user.Password = hashed.Key;
                     user.Salt = hashed.Salt;
                     UserDTO dto = new UserDTO(0, user.Name!, user.SurName!, user.Role.ToString(), user.Type.ToString(), user.Email!, user.Password, user.Salt);
-                    user.ID = repository.Register(dto);
-                    return users.TryAdd(user.ID, user);
+                    return repository.Register(dto);
                 }
                 else
                 {
@@ -77,11 +61,6 @@ namespace BLL.Registries
             {
                 throw;
             }
-        }
-
-        public bool CheckIfEmailUnique(string email)
-        {
-            return !users.Values.Any(user => user.Email == email);
         }
 
         private void ValidateModel(User user)

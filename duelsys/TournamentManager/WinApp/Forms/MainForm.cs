@@ -13,7 +13,7 @@ namespace WinApp.Forms
     public partial class MainForm : Form
     {
         private TournamentRegistry tournamentRegistry;
-
+        private UserRegistry userRegistry;
         public MainForm()
         {
             InitializeComponent();
@@ -26,6 +26,7 @@ namespace WinApp.Forms
             pickEndDate.MinDate = DateTime.Now;
 
             tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()), true);
+            userRegistry = new UserRegistry(new UserRepository(new DbContext()));
             RefreshTournaments();
         }
 
@@ -35,8 +36,6 @@ namespace WinApp.Forms
             tabsControl.Appearance = TabAppearance.FlatButtons;
             tabsControl.ItemSize = new Size(0, 1);
             tabsControl.SizeMode = TabSizeMode.Fixed;
-
-            //Change button borders
         }
 
         private void SetupComboBoxes()
@@ -148,8 +147,8 @@ namespace WinApp.Forms
         {
             if (dgvTournaments.SelectedRows[0] != null)
             {
-                int id = GetIDFromDataGridView(dgvTournaments, "iDDataGridViewTextColumn");
-                Tournament tournament = tournamentRegistry.GetByID(id)!;
+                int id = GetIDFromDataGridView(dgvTournaments, "TournamentID");
+                ToggleTournamentStatusButtons(tournamentRegistry.GetByID(id)!.Status);
             }
             else
             {
@@ -164,7 +163,7 @@ namespace WinApp.Forms
         {
             if (dgvTournaments.SelectedRows[0] != null)
             {
-                int id = GetIDFromDataGridView(dgvTournaments, "iDDataGridViewTextColumn");
+                int id = GetIDFromDataGridView(dgvTournaments, "TournamentID");
                 Tournament tournament = tournamentRegistry.GetByID(id)!;
                 tournament.Status = TournamentStatus.Running;
                 tournamentRegistry.UpdateTournament(tournament);
@@ -184,9 +183,48 @@ namespace WinApp.Forms
             btnDeleteTournament.Enabled = status == TournamentStatus.Planned;
         }
 
-        private void tabHome_Click(object sender, EventArgs e)
+        private void btnRegisterAccount_Click(object sender, EventArgs e)
         {
+            string name = inputName.Text;
+            string surname = inputSurname.Text;
+            string email = inputEmail.Text;
+            string password = inputPassword.Text;
 
+            try
+            {
+                UserRole role = (UserRole)Enum.Parse(typeof(UserRole), comboRoles.Text);
+                ContestantType type = (ContestantType)Enum.Parse(typeof(ContestantType), comboTypes.Text);
+
+                bool result = userRegistry.RegisterAccount(new User()
+                {
+                    Name = name,
+                    SurName = surname,
+                    Email = email,
+                    Password = password,
+                    Role = role,
+                    Type = type
+                });
+                if (result)
+                {
+                    MessageBox.Show("Account successfully registered!");
+                }
+                else
+                {
+                    MessageBox.Show("Couldn't register account with given email.");
+                }
+            }
+            catch (ValidationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("One of the dropdown boxes contained an invalid value, please enter a valid value.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "An unknown error occured:");
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DAL.Interfaces;
+﻿using MySql.Data.MySqlClient;
+
+using DAL.Interfaces;
 using DTO.Users;
 
 namespace DAL.Repositories
@@ -9,12 +11,17 @@ namespace DAL.Repositories
 
         public bool CheckIfEmailExists(string email)
         {
-            throw new NotImplementedException();
-        }
-
-        public IList<UserDTO> Load()
-        {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "SELECT * FROM syn_accounts WHERE email = @Email;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@Email", email);
+                return ExecuteScalar(cmd) != null;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public bool VerifyCredentials(CredentialsDTO credentials)

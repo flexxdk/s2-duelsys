@@ -43,6 +43,7 @@
             this.tabHome = new System.Windows.Forms.TabPage();
             this.tabTournaments = new System.Windows.Forms.TabPage();
             this.dgvTournaments = new System.Windows.Forms.DataGridView();
+            this.TournamentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -150,7 +151,7 @@
             // 
             this.pictureBox2.BackgroundImage = global::WinApp.Properties.Resources.logo;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(31, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(31, 4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(144, 127);
             this.pictureBox2.TabIndex = 7;
@@ -299,7 +300,6 @@
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "Home";
             this.tabHome.UseVisualStyleBackColor = true;
-            this.tabHome.Click += new System.EventHandler(this.tabHome_Click);
             // 
             // tabTournaments
             // 
@@ -321,6 +321,7 @@
             this.dgvTournaments.AutoGenerateColumns = false;
             this.dgvTournaments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTournaments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TournamentID,
             this.titleDataGridViewTextBoxColumn,
             this.sportDataGridViewTextBoxColumn,
             this.cityDataGridViewTextBoxColumn,
@@ -336,6 +337,14 @@
             this.dgvTournaments.Size = new System.Drawing.Size(565, 383);
             this.dgvTournaments.TabIndex = 3;
             this.dgvTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTournaments_CellClick);
+            // 
+            // TournamentID
+            // 
+            this.TournamentID.DataPropertyName = "ID";
+            this.TournamentID.HeaderText = "ID";
+            this.TournamentID.Name = "TournamentID";
+            this.TournamentID.ReadOnly = true;
+            this.TournamentID.Visible = false;
             // 
             // titleDataGridViewTextBoxColumn
             // 
@@ -948,6 +957,7 @@
             this.btnRegisterAccount.TabIndex = 24;
             this.btnRegisterAccount.Text = "Register Account";
             this.btnRegisterAccount.UseVisualStyleBackColor = false;
+            this.btnRegisterAccount.Click += new System.EventHandler(this.btnRegisterAccount_Click);
             // 
             // label13
             // 
@@ -1129,11 +1139,6 @@
         private Button btnCreateTournament;
         private DataGridView dgvTournaments;
         private DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn sportDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
         private BindingSource tournamentBindingSource;
         private Button btnDeleteTournament;
         private Button btnStartTournament;
@@ -1173,5 +1178,11 @@
         private Label label21;
         private Label label22;
         private PictureBox pictureBox2;
+        private DataGridViewTextBoxColumn TournamentID;
+        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn sportDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
     }
 }

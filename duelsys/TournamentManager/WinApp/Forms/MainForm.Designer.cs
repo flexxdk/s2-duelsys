@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.navPanel = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.NavRegistration = new System.Windows.Forms.Button();
             this.NavMatches = new System.Windows.Forms.Button();
@@ -107,6 +109,7 @@
             this.inputPassword = new System.Windows.Forms.TextBox();
             this.comboTypes = new System.Windows.Forms.ComboBox();
             this.navPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.tabTournaments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).BeginInit();
@@ -125,6 +128,7 @@
             // navPanel
             // 
             this.navPanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.navPanel.Controls.Add(this.panel1);
             this.navPanel.Controls.Add(this.button1);
             this.navPanel.Controls.Add(this.NavRegistration);
             this.navPanel.Controls.Add(this.NavMatches);
@@ -136,79 +140,115 @@
             this.navPanel.Size = new System.Drawing.Size(204, 684);
             this.navPanel.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.LightSlateGray;
+            this.panel1.Controls.Add(this.label21);
+            this.panel1.Location = new System.Drawing.Point(0, 624);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(204, 60);
+            this.panel1.TabIndex = 5;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label21.ForeColor = System.Drawing.Color.Black;
+            this.label21.Location = new System.Drawing.Point(12, 9);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(144, 42);
+            this.label21.TabIndex = 6;
+            this.label21.Text = "DuelSys, inc.\r\n© 2022 Copyright\r\n";
+            // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.SkyBlue;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.button1.Image = global::WinApp.Properties.Resources.logout;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.Location = new System.Drawing.Point(0, 604);
+            this.button1.Location = new System.Drawing.Point(0, 531);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(204, 80);
+            this.button1.Size = new System.Drawing.Size(204, 93);
             this.button1.TabIndex = 4;
             this.button1.Text = "Log Out";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // NavRegistration
             // 
+            this.NavRegistration.BackColor = System.Drawing.Color.SkyBlue;
+            this.NavRegistration.FlatAppearance.BorderSize = 0;
+            this.NavRegistration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NavRegistration.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.NavRegistration.Image = global::WinApp.Properties.Resources.registration;
             this.NavRegistration.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NavRegistration.Location = new System.Drawing.Point(0, 441);
+            this.NavRegistration.Location = new System.Drawing.Point(0, 438);
+            this.NavRegistration.Margin = new System.Windows.Forms.Padding(0);
             this.NavRegistration.Name = "NavRegistration";
-            this.NavRegistration.Size = new System.Drawing.Size(204, 80);
+            this.NavRegistration.Size = new System.Drawing.Size(204, 93);
             this.NavRegistration.TabIndex = 3;
             this.NavRegistration.Text = "Account Registration";
             this.NavRegistration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.NavRegistration.UseVisualStyleBackColor = true;
+            this.NavRegistration.UseVisualStyleBackColor = false;
             this.NavRegistration.Click += new System.EventHandler(this.NavRegistration_Click);
             // 
             // NavMatches
             // 
+            this.NavMatches.BackColor = System.Drawing.Color.SkyBlue;
+            this.NavMatches.FlatAppearance.BorderSize = 0;
+            this.NavMatches.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NavMatches.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.NavMatches.Image = global::WinApp.Properties.Resources.matches;
             this.NavMatches.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NavMatches.Location = new System.Drawing.Point(0, 355);
+            this.NavMatches.Location = new System.Drawing.Point(0, 345);
+            this.NavMatches.Margin = new System.Windows.Forms.Padding(0);
             this.NavMatches.Name = "NavMatches";
-            this.NavMatches.Size = new System.Drawing.Size(204, 80);
+            this.NavMatches.Size = new System.Drawing.Size(204, 93);
             this.NavMatches.TabIndex = 2;
             this.NavMatches.Text = "Matches";
             this.NavMatches.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.NavMatches.UseVisualStyleBackColor = true;
+            this.NavMatches.UseVisualStyleBackColor = false;
             this.NavMatches.Click += new System.EventHandler(this.NavMatches_Click);
             // 
             // NavTournaments
             // 
+            this.NavTournaments.BackColor = System.Drawing.Color.SkyBlue;
             this.NavTournaments.FlatAppearance.BorderSize = 0;
             this.NavTournaments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NavTournaments.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.NavTournaments.Image = global::WinApp.Properties.Resources.tournaments;
             this.NavTournaments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NavTournaments.Location = new System.Drawing.Point(0, 242);
+            this.NavTournaments.Location = new System.Drawing.Point(0, 252);
             this.NavTournaments.Margin = new System.Windows.Forms.Padding(0);
             this.NavTournaments.Name = "NavTournaments";
-            this.NavTournaments.Size = new System.Drawing.Size(204, 80);
+            this.NavTournaments.Size = new System.Drawing.Size(204, 93);
             this.NavTournaments.TabIndex = 1;
             this.NavTournaments.Text = "Tournaments";
             this.NavTournaments.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.NavTournaments.UseVisualStyleBackColor = true;
+            this.NavTournaments.UseVisualStyleBackColor = false;
             this.NavTournaments.Click += new System.EventHandler(this.NavTournaments_Click);
             // 
             // NavHome
             // 
+            this.NavHome.BackColor = System.Drawing.Color.SkyBlue;
             this.NavHome.FlatAppearance.BorderSize = 0;
             this.NavHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NavHome.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.NavHome.Image = global::WinApp.Properties.Resources.home;
             this.NavHome.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NavHome.Location = new System.Drawing.Point(0, 162);
+            this.NavHome.Location = new System.Drawing.Point(0, 159);
             this.NavHome.Margin = new System.Windows.Forms.Padding(0);
             this.NavHome.Name = "NavHome";
-            this.NavHome.Size = new System.Drawing.Size(204, 80);
+            this.NavHome.Size = new System.Drawing.Size(204, 93);
             this.NavHome.TabIndex = 0;
             this.NavHome.Text = "Home";
             this.NavHome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.NavHome.UseVisualStyleBackColor = true;
+            this.NavHome.UseVisualStyleBackColor = false;
             this.NavHome.Click += new System.EventHandler(this.NavHome_Click);
             // 
             // tabsControl
@@ -996,6 +1036,8 @@
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.navPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tabsControl.ResumeLayout(false);
             this.tabTournaments.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).EndInit();
@@ -1097,5 +1139,7 @@
         private Label label20;
         private Label label19;
         private Button button1;
+        private Panel panel1;
+        private Label label21;
     }
 }

@@ -183,5 +183,10 @@ namespace WinApp.Forms
             btnCancelTournament.Enabled = status != TournamentStatus.Cancelled && status != TournamentStatus.Finished;
             btnDeleteTournament.Enabled = status == TournamentStatus.Planned;
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

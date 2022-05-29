@@ -38,7 +38,6 @@
             this.tabHome = new System.Windows.Forms.TabPage();
             this.tabTournaments = new System.Windows.Forms.TabPage();
             this.dgvTournaments = new System.Windows.Forms.DataGridView();
-            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,21 +77,34 @@
             this.inputTitle = new System.Windows.Forms.TextBox();
             this.pickStartDate = new System.Windows.Forms.DateTimePicker();
             this.tabMatches = new System.Windows.Forms.TabPage();
-            this.tabAccounts = new System.Windows.Forms.TabPage();
+            this.btnPlayMatch = new System.Windows.Forms.Button();
+            this.btnGenerateMatches = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.dgvTournamentMatches = new System.Windows.Forms.DataGridView();
-            this.matchBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.iDDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.homeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.awayNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.matchBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tabAccounts = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnGeneratePassword = new System.Windows.Forms.Button();
+            this.btnRegisterAccount = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.inputName = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.inputSurname = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.inputEmail = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.comboRoles = new System.Windows.Forms.ComboBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.inputPassword = new System.Windows.Forms.TextBox();
             this.comboTypes = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.navPanel.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.tabTournaments.SuspendLayout();
@@ -103,9 +115,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).BeginInit();
             this.tabMatches.SuspendLayout();
-            this.tabAccounts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournamentMatches)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).BeginInit();
+            this.tabAccounts.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // navPanel
@@ -207,7 +220,6 @@
             this.dgvTournaments.AutoGenerateColumns = false;
             this.dgvTournaments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTournaments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.iDDataGridViewTextBoxColumn,
             this.titleDataGridViewTextBoxColumn,
             this.sportDataGridViewTextBoxColumn,
             this.cityDataGridViewTextBoxColumn,
@@ -223,14 +235,6 @@
             this.dgvTournaments.Size = new System.Drawing.Size(565, 383);
             this.dgvTournaments.TabIndex = 3;
             this.dgvTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTournaments_CellClick);
-            // 
-            // iDDataGridViewTextBoxColumn
-            // 
-            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
-            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
-            this.iDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.iDDataGridViewTextBoxColumn.Visible = false;
             // 
             // titleDataGridViewTextBoxColumn
             // 
@@ -428,6 +432,7 @@
             // 
             // pickEndDate
             // 
+            this.pickEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.pickEndDate.Location = new System.Drawing.Point(190, 334);
             this.pickEndDate.Name = "pickEndDate";
             this.pickEndDate.Size = new System.Drawing.Size(159, 23);
@@ -618,6 +623,7 @@
             // 
             // pickStartDate
             // 
+            this.pickStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.pickStartDate.Location = new System.Drawing.Point(6, 334);
             this.pickStartDate.Name = "pickStartDate";
             this.pickStartDate.Size = new System.Drawing.Size(161, 23);
@@ -625,6 +631,11 @@
             // 
             // tabMatches
             // 
+            this.tabMatches.Controls.Add(this.label20);
+            this.tabMatches.Controls.Add(this.label19);
+            this.tabMatches.Controls.Add(this.btnPlayMatch);
+            this.tabMatches.Controls.Add(this.btnGenerateMatches);
+            this.tabMatches.Controls.Add(this.listView1);
             this.tabMatches.Controls.Add(this.dgvTournamentMatches);
             this.tabMatches.Location = new System.Drawing.Point(4, 24);
             this.tabMatches.Name = "tabMatches";
@@ -633,62 +644,81 @@
             this.tabMatches.Text = "Matches";
             this.tabMatches.UseVisualStyleBackColor = true;
             // 
-            // tabAccounts
+            // btnPlayMatch
             // 
-            this.tabAccounts.Controls.Add(this.comboTypes);
-            this.tabAccounts.Controls.Add(this.textBox4);
-            this.tabAccounts.Controls.Add(this.comboRoles);
-            this.tabAccounts.Controls.Add(this.textBox3);
-            this.tabAccounts.Controls.Add(this.textBox2);
-            this.tabAccounts.Controls.Add(this.textBox1);
-            this.tabAccounts.Location = new System.Drawing.Point(4, 24);
-            this.tabAccounts.Name = "tabAccounts";
-            this.tabAccounts.Size = new System.Drawing.Size(938, 632);
-            this.tabAccounts.TabIndex = 3;
-            this.tabAccounts.Text = "Accounts";
-            this.tabAccounts.UseVisualStyleBackColor = true;
+            this.btnPlayMatch.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnPlayMatch.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnPlayMatch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnPlayMatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPlayMatch.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnPlayMatch.ForeColor = System.Drawing.Color.Green;
+            this.btnPlayMatch.Location = new System.Drawing.Point(517, 422);
+            this.btnPlayMatch.Name = "btnPlayMatch";
+            this.btnPlayMatch.Size = new System.Drawing.Size(277, 75);
+            this.btnPlayMatch.TabIndex = 4;
+            this.btnPlayMatch.Text = "Play Match";
+            this.btnPlayMatch.UseVisualStyleBackColor = false;
+            // 
+            // btnGenerateMatches
+            // 
+            this.btnGenerateMatches.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnGenerateMatches.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnGenerateMatches.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnGenerateMatches.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGenerateMatches.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnGenerateMatches.ForeColor = System.Drawing.Color.Green;
+            this.btnGenerateMatches.Location = new System.Drawing.Point(39, 422);
+            this.btnGenerateMatches.Name = "btnGenerateMatches";
+            this.btnGenerateMatches.Size = new System.Drawing.Size(277, 75);
+            this.btnGenerateMatches.TabIndex = 3;
+            this.btnGenerateMatches.Text = "Generate Matches";
+            this.btnGenerateMatches.UseVisualStyleBackColor = false;
+            // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(3, 35);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(367, 381);
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // dgvTournamentMatches
             // 
             this.dgvTournamentMatches.AllowUserToAddRows = false;
             this.dgvTournamentMatches.AllowUserToDeleteRows = false;
             this.dgvTournamentMatches.AutoGenerateColumns = false;
+            this.dgvTournamentMatches.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTournamentMatches.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvTournamentMatches.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTournamentMatches.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.iDDataGridViewTextBoxColumn1,
             this.homeNameDataGridViewTextBoxColumn,
-            this.homeScoreDataGridViewTextBoxColumn,
             this.awayNameDataGridViewTextBoxColumn,
+            this.homeScoreDataGridViewTextBoxColumn,
             this.awayScoreDataGridViewTextBoxColumn,
             this.isFinishedDataGridViewCheckBoxColumn});
             this.dgvTournamentMatches.DataSource = this.matchBindingSource;
-            this.dgvTournamentMatches.Location = new System.Drawing.Point(391, 3);
+            this.dgvTournamentMatches.Location = new System.Drawing.Point(376, 35);
             this.dgvTournamentMatches.MultiSelect = false;
             this.dgvTournamentMatches.Name = "dgvTournamentMatches";
             this.dgvTournamentMatches.ReadOnly = true;
             this.dgvTournamentMatches.RowTemplate.Height = 25;
             this.dgvTournamentMatches.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTournamentMatches.Size = new System.Drawing.Size(544, 381);
+            this.dgvTournamentMatches.Size = new System.Drawing.Size(559, 381);
             this.dgvTournamentMatches.TabIndex = 0;
-            // 
-            // matchBindingSource
-            // 
-            this.matchBindingSource.DataSource = typeof(BLL.Objects.Match);
-            // 
-            // iDDataGridViewTextBoxColumn1
-            // 
-            this.iDDataGridViewTextBoxColumn1.DataPropertyName = "ID";
-            this.iDDataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.iDDataGridViewTextBoxColumn1.Name = "iDDataGridViewTextBoxColumn1";
-            this.iDDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.iDDataGridViewTextBoxColumn1.Visible = false;
             // 
             // homeNameDataGridViewTextBoxColumn
             // 
             this.homeNameDataGridViewTextBoxColumn.DataPropertyName = "HomeName";
-            this.homeNameDataGridViewTextBoxColumn.HeaderText = "Home Contestant";
+            this.homeNameDataGridViewTextBoxColumn.HeaderText = "Home Player";
             this.homeNameDataGridViewTextBoxColumn.Name = "homeNameDataGridViewTextBoxColumn";
             this.homeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // awayNameDataGridViewTextBoxColumn
+            // 
+            this.awayNameDataGridViewTextBoxColumn.DataPropertyName = "AwayName";
+            this.awayNameDataGridViewTextBoxColumn.HeaderText = "Away Player";
+            this.awayNameDataGridViewTextBoxColumn.Name = "awayNameDataGridViewTextBoxColumn";
+            this.awayNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // homeScoreDataGridViewTextBoxColumn
             // 
@@ -697,17 +727,10 @@
             this.homeScoreDataGridViewTextBoxColumn.Name = "homeScoreDataGridViewTextBoxColumn";
             this.homeScoreDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // awayNameDataGridViewTextBoxColumn
-            // 
-            this.awayNameDataGridViewTextBoxColumn.DataPropertyName = "AwayName";
-            this.awayNameDataGridViewTextBoxColumn.HeaderText = "Away Contestant";
-            this.awayNameDataGridViewTextBoxColumn.Name = "awayNameDataGridViewTextBoxColumn";
-            this.awayNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // awayScoreDataGridViewTextBoxColumn
             // 
             this.awayScoreDataGridViewTextBoxColumn.DataPropertyName = "AwayScore";
-            this.awayScoreDataGridViewTextBoxColumn.HeaderText = "Away\'Score";
+            this.awayScoreDataGridViewTextBoxColumn.HeaderText = "Away Score";
             this.awayScoreDataGridViewTextBoxColumn.Name = "awayScoreDataGridViewTextBoxColumn";
             this.awayScoreDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -718,49 +741,196 @@
             this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
             this.isFinishedDataGridViewCheckBoxColumn.ReadOnly = true;
             // 
-            // textBox1
+            // matchBindingSource
             // 
-            this.textBox1.Location = new System.Drawing.Point(114, 82);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 0;
+            this.matchBindingSource.DataSource = typeof(BLL.Objects.Match);
             // 
-            // textBox2
+            // tabAccounts
             // 
-            this.textBox2.Location = new System.Drawing.Point(114, 123);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
-            this.textBox2.TabIndex = 1;
+            this.tabAccounts.Controls.Add(this.groupBox2);
+            this.tabAccounts.Location = new System.Drawing.Point(4, 24);
+            this.tabAccounts.Name = "tabAccounts";
+            this.tabAccounts.Size = new System.Drawing.Size(938, 632);
+            this.tabAccounts.TabIndex = 3;
+            this.tabAccounts.Text = "Accounts";
+            this.tabAccounts.UseVisualStyleBackColor = true;
             // 
-            // textBox3
+            // groupBox2
             // 
-            this.textBox3.Location = new System.Drawing.Point(114, 163);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 23);
-            this.textBox3.TabIndex = 2;
+            this.groupBox2.Controls.Add(this.btnGeneratePassword);
+            this.groupBox2.Controls.Add(this.btnRegisterAccount);
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.label18);
+            this.groupBox2.Controls.Add(this.inputName);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Controls.Add(this.inputSurname);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.inputEmail);
+            this.groupBox2.Controls.Add(this.label15);
+            this.groupBox2.Controls.Add(this.comboRoles);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Controls.Add(this.inputPassword);
+            this.groupBox2.Controls.Add(this.comboTypes);
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(440, 375);
+            this.groupBox2.TabIndex = 24;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Account Registration";
+            // 
+            // btnGeneratePassword
+            // 
+            this.btnGeneratePassword.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnGeneratePassword.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.btnGeneratePassword.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnGeneratePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGeneratePassword.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnGeneratePassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnGeneratePassword.Location = new System.Drawing.Point(297, 172);
+            this.btnGeneratePassword.Name = "btnGeneratePassword";
+            this.btnGeneratePassword.Size = new System.Drawing.Size(119, 23);
+            this.btnGeneratePassword.TabIndex = 27;
+            this.btnGeneratePassword.Text = "Generate Password";
+            this.btnGeneratePassword.UseVisualStyleBackColor = false;
+            // 
+            // btnRegisterAccount
+            // 
+            this.btnRegisterAccount.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnRegisterAccount.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnRegisterAccount.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnRegisterAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegisterAccount.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnRegisterAccount.ForeColor = System.Drawing.Color.Green;
+            this.btnRegisterAccount.Location = new System.Drawing.Point(142, 274);
+            this.btnRegisterAccount.Name = "btnRegisterAccount";
+            this.btnRegisterAccount.Size = new System.Drawing.Size(149, 54);
+            this.btnRegisterAccount.TabIndex = 24;
+            this.btnRegisterAccount.Text = "Register Account";
+            this.btnRegisterAccount.UseVisualStyleBackColor = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label13.Location = new System.Drawing.Point(34, 86);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(102, 19);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "(Team) Name: *";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label18.Location = new System.Drawing.Point(34, 231);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(103, 19);
+            this.label18.TabIndex = 23;
+            this.label18.Text = "Account type: *";
+            // 
+            // inputName
+            // 
+            this.inputName.Location = new System.Drawing.Point(142, 85);
+            this.inputName.Name = "inputName";
+            this.inputName.Size = new System.Drawing.Size(149, 23);
+            this.inputName.TabIndex = 0;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label17.Location = new System.Drawing.Point(34, 202);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(48, 19);
+            this.label17.TabIndex = 22;
+            this.label17.Text = "Role: *";
+            // 
+            // inputSurname
+            // 
+            this.inputSurname.Location = new System.Drawing.Point(142, 114);
+            this.inputSurname.Name = "inputSurname";
+            this.inputSurname.Size = new System.Drawing.Size(149, 23);
+            this.inputSurname.TabIndex = 1;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label16.Location = new System.Drawing.Point(34, 173);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(80, 19);
+            this.label16.TabIndex = 21;
+            this.label16.Text = "Password: *";
+            // 
+            // inputEmail
+            // 
+            this.inputEmail.Location = new System.Drawing.Point(142, 143);
+            this.inputEmail.Name = "inputEmail";
+            this.inputEmail.Size = new System.Drawing.Size(149, 23);
+            this.inputEmail.TabIndex = 2;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label15.Location = new System.Drawing.Point(34, 144);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(54, 19);
+            this.label15.TabIndex = 20;
+            this.label15.Text = "Email: *";
             // 
             // comboRoles
             // 
             this.comboRoles.FormattingEnabled = true;
-            this.comboRoles.Location = new System.Drawing.Point(114, 243);
+            this.comboRoles.Location = new System.Drawing.Point(142, 201);
             this.comboRoles.Name = "comboRoles";
-            this.comboRoles.Size = new System.Drawing.Size(121, 23);
+            this.comboRoles.Size = new System.Drawing.Size(149, 23);
             this.comboRoles.TabIndex = 3;
             // 
-            // textBox4
+            // label14
             // 
-            this.textBox4.Location = new System.Drawing.Point(114, 204);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 23);
-            this.textBox4.TabIndex = 4;
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label14.Location = new System.Drawing.Point(34, 115);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(66, 19);
+            this.label14.TabIndex = 19;
+            this.label14.Text = "Surname:";
+            // 
+            // inputPassword
+            // 
+            this.inputPassword.Location = new System.Drawing.Point(142, 172);
+            this.inputPassword.Name = "inputPassword";
+            this.inputPassword.Size = new System.Drawing.Size(149, 23);
+            this.inputPassword.TabIndex = 4;
             // 
             // comboTypes
             // 
             this.comboTypes.FormattingEnabled = true;
-            this.comboTypes.Location = new System.Drawing.Point(114, 272);
+            this.comboTypes.Location = new System.Drawing.Point(142, 230);
             this.comboTypes.Name = "comboTypes";
-            this.comboTypes.Size = new System.Drawing.Size(121, 23);
+            this.comboTypes.Size = new System.Drawing.Size(149, 23);
             this.comboTypes.TabIndex = 5;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label19.Location = new System.Drawing.Point(577, 8);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(158, 21);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "Tournament matches:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label20.Location = new System.Drawing.Point(125, 8);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(103, 21);
+            this.label20.TabIndex = 6;
+            this.label20.Text = "Tournaments:";
             // 
             // MainForm
             // 
@@ -783,10 +953,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).EndInit();
             this.tabMatches.ResumeLayout(false);
-            this.tabAccounts.ResumeLayout(false);
-            this.tabAccounts.PerformLayout();
+            this.tabMatches.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournamentMatches)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).EndInit();
+            this.tabAccounts.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -846,16 +1018,30 @@
         private DataGridView dgvTournamentMatches;
         private BindingSource matchBindingSource;
         private DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn1;
+        private TextBox inputPassword;
+        private ComboBox comboRoles;
+        private TextBox inputEmail;
+        private TextBox inputSurname;
+        private TextBox inputName;
+        private ComboBox comboTypes;
+        private Label label18;
+        private Label label17;
+        private Label label16;
+        private Label label15;
+        private Label label14;
+        private Label label13;
+        private GroupBox groupBox2;
+        private Button btnRegisterAccount;
+        private Button btnGeneratePassword;
+        private ListView listView1;
         private DataGridViewTextBoxColumn homeNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn homeScoreDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn awayNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn homeScoreDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn awayScoreDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn isFinishedDataGridViewCheckBoxColumn;
-        private TextBox textBox4;
-        private ComboBox comboRoles;
-        private TextBox textBox3;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private ComboBox comboTypes;
+        private Button btnGenerateMatches;
+        private Button btnPlayMatch;
+        private Label label20;
+        private Label label19;
     }
 }

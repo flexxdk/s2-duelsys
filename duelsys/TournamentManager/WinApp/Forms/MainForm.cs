@@ -22,6 +22,7 @@ namespace WinApp.Forms
             SetupComboBoxes();
 
             pickStartDate.MinDate = DateTime.Now;
+            pickStartDate.CustomFormat = "dddd dd MMMM";
             pickEndDate.MinDate = DateTime.Now;
 
             tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()), true);

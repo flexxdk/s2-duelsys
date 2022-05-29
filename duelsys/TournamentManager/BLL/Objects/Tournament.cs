@@ -9,48 +9,60 @@ namespace BLL.Objects
     {
         [Key]
         [Required]
-        [Browsable(false)]
+        [Display(Name = "ID")]
         public int ID { get; set; }
 
         [Required(ErrorMessage = "No title was given")]
         public string? Title { get; set; }
 
+        [Browsable(false)]
         [Required(ErrorMessage = "No description was given")]
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "No sport was given")]
         public string? Sport { get; set; }
 
+        [Browsable(false)]
         [Required(ErrorMessage = "Invalid team type")]
         public ContestantType Type { get; set; }
 
+        [Browsable(false)]
         [Required(ErrorMessage = "Specify a scoring system")]
         public string? Scoring { get; set; }
 
         [Required(ErrorMessage = "Specify the city of the event")]
         public string? City { get; set; }
 
+        [Browsable(false)]
         [Required(ErrorMessage = "Specify the address of the event")]
         public string? Address { get; set; }
 
-        [Required(ErrorMessage = "Minimum contestants needs to be set")]
-        [Range(2, int.MaxValue, ErrorMessage = "Minimum contestants needs to be at least 2")]
+        [Browsable(false)]
+        [Required]
+        [Range(2, int.MaxValue, ErrorMessage = "Minimum contestants needs to be at least {1}")]
+        [Display(Name = "Min. Contestants")]
         public int MinContestants { get; set; }
 
-        [Required(ErrorMessage = "No start date was entered")]
-        [Range(2, int.MaxValue, ErrorMessage = "Maximum contestants needs to be at least 2")]
+        [Browsable(false)]
+        [Required]
+        [Range(2, int.MaxValue, ErrorMessage = "Maximum contestants needs to be at least {1}")]
+        [Display(Name = "Max. Contestants")]
         public int MaxContestants { get; set; }
 
         [Required(ErrorMessage = "No start date was entered")]
-        public DateTime? StartDate { get; set; }
+        [Display(Name = "Start Date")]
+        public DateTime StartDate { get; set; }
 
+        [Browsable(false)]
         [Required(ErrorMessage = "No end date was entered")]
-        public DateTime? EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "The status is invalid")]
+        [Display(Name = "Current Status")]
         public TournamentStatus Status { get; set; }
 
         [Required(ErrorMessage = "No tournament system was given")]
+        [Browsable(false)]
         public TournamentSystem System { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace DAL.Interfaces
     {
         public bool CheckIfEmailExists(string email);
         public bool VerifyCredentials(CredentialsDTO credentials);
-        public IList<UserDTO> Load();
+        public UserDTO? GetCredentials(string email);
     }
 }

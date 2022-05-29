@@ -81,5 +81,10 @@ namespace UnitTests.Mocks
         {
             return tournaments;
         }
+
+        public TournamentDTO? GetByID(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

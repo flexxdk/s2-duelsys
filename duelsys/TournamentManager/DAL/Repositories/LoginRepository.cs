@@ -21,5 +21,10 @@ namespace DAL.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public UserDTO? GetCredentials(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

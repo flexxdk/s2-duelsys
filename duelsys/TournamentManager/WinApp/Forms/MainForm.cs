@@ -184,7 +184,7 @@ namespace WinApp.Forms
             btnDeleteTournament.Enabled = status == TournamentStatus.Planned;
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void tabHome_Click(object sender, EventArgs e)
         {
 
         }

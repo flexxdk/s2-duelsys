@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.navPanel = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -108,9 +110,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.inputPassword = new System.Windows.Forms.TextBox();
             this.comboTypes = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.navPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.tabTournaments.SuspendLayout();
@@ -125,15 +126,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).BeginInit();
             this.tabAccounts.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // navPanel
             // 
             this.navPanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.navPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.navPanel.Controls.Add(this.pictureBox2);
             this.navPanel.Controls.Add(this.label22);
-            this.navPanel.Controls.Add(this.pictureBox1);
             this.navPanel.Controls.Add(this.panel1);
             this.navPanel.Controls.Add(this.button1);
             this.navPanel.Controls.Add(this.NavRegistration);
@@ -146,6 +146,28 @@
             this.navPanel.Size = new System.Drawing.Size(204, 684);
             this.navPanel.TabIndex = 0;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = global::WinApp.Properties.Resources.logo;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(31, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(144, 127);
+            this.pictureBox2.TabIndex = 7;
+            this.pictureBox2.TabStop = false;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.Transparent;
+            this.label22.Font = new System.Drawing.Font("Franklin Gothic Book", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label22.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label22.Location = new System.Drawing.Point(1, 130);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(199, 24);
+            this.label22.TabIndex = 12;
+            this.label22.Text = "Tournament Manager";
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightSlateGray;
@@ -155,18 +177,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(204, 60);
             this.panel1.TabIndex = 5;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label21.ForeColor = System.Drawing.Color.Black;
-            this.label21.Location = new System.Drawing.Point(12, 9);
+            this.label21.Location = new System.Drawing.Point(8, 23);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(144, 42);
+            this.label21.Size = new System.Drawing.Size(188, 17);
             this.label21.TabIndex = 6;
-            this.label21.Text = "DuelSys, inc.\r\n© 2022 Copyright\r\n";
+            this.label21.Text = "DuelSys, inc. © 2022 Copyright\r\n";
             // 
             // button1
             // 
@@ -278,6 +299,7 @@
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "Home";
             this.tabHome.UseVisualStyleBackColor = true;
+            this.tabHome.Click += new System.EventHandler(this.tabHome_Click);
             // 
             // tabTournaments
             // 
@@ -1031,26 +1053,6 @@
             this.comboTypes.Size = new System.Drawing.Size(149, 23);
             this.comboTypes.TabIndex = 5;
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Franklin Gothic Book", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label22.Location = new System.Drawing.Point(3, 121);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(199, 24);
-            this.label22.TabIndex = 7;
-            this.label22.Text = "Tournament Manager";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::WinApp.Properties.Resources.logo;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(52, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1063,6 +1065,7 @@
             this.Text = "MainForm";
             this.navPanel.ResumeLayout(false);
             this.navPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabsControl.ResumeLayout(false);
@@ -1081,7 +1084,6 @@
             this.tabAccounts.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1170,6 +1172,6 @@
         private Panel panel1;
         private Label label21;
         private Label label22;
-        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
     }
 }

@@ -46,7 +46,12 @@
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tournamentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCancelTournament = new System.Windows.Forms.Button();
+            this.btnDeleteTournament = new System.Windows.Forms.Button();
+            this.btnFinishTournament = new System.Windows.Forms.Button();
+            this.btnStartTournament = new System.Windows.Forms.Button();
             this.gpbTournamentCreation = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.btnCreateTournament = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.pickEndDate = new System.Windows.Forms.DateTimePicker();
@@ -74,14 +79,33 @@
             this.pickStartDate = new System.Windows.Forms.DateTimePicker();
             this.tabMatches = new System.Windows.Forms.TabPage();
             this.tabAccounts = new System.Windows.Forms.TabPage();
+            this.dgvTournamentMatches = new System.Windows.Forms.DataGridView();
+            this.matchBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.iDDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.homeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.awayNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.comboRoles = new System.Windows.Forms.ComboBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.comboTypes = new System.Windows.Forms.ComboBox();
             this.navPanel.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.tabTournaments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.gpbTournamentCreation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).BeginInit();
+            this.tabMatches.SuspendLayout();
+            this.tabAccounts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTournamentMatches)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // navPanel
@@ -198,6 +222,7 @@
             this.dgvTournaments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTournaments.Size = new System.Drawing.Size(565, 383);
             this.dgvTournaments.TabIndex = 3;
+            this.dgvTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTournaments_CellClick);
             // 
             // iDDataGridViewTextBoxColumn
             // 
@@ -253,15 +278,81 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(6, 395);
+            this.groupBox1.Controls.Add(this.btnCancelTournament);
+            this.groupBox1.Controls.Add(this.btnDeleteTournament);
+            this.groupBox1.Controls.Add(this.btnFinishTournament);
+            this.groupBox1.Controls.Add(this.btnStartTournament);
+            this.groupBox1.Location = new System.Drawing.Point(310, 395);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(565, 231);
+            this.groupBox1.Size = new System.Drawing.Size(261, 231);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Update Tournament Status";
             // 
+            // btnCancelTournament
+            // 
+            this.btnCancelTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnCancelTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.btnCancelTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnCancelTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCancelTournament.ForeColor = System.Drawing.Color.Red;
+            this.btnCancelTournament.Location = new System.Drawing.Point(49, 126);
+            this.btnCancelTournament.Name = "btnCancelTournament";
+            this.btnCancelTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnCancelTournament.TabIndex = 28;
+            this.btnCancelTournament.Text = "Cancel Tournament";
+            this.btnCancelTournament.UseVisualStyleBackColor = false;
+            // 
+            // btnDeleteTournament
+            // 
+            this.btnDeleteTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnDeleteTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.btnDeleteTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnDeleteTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDeleteTournament.ForeColor = System.Drawing.Color.Red;
+            this.btnDeleteTournament.Location = new System.Drawing.Point(49, 173);
+            this.btnDeleteTournament.Name = "btnDeleteTournament";
+            this.btnDeleteTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnDeleteTournament.TabIndex = 25;
+            this.btnDeleteTournament.Text = "Delete Tournament";
+            this.btnDeleteTournament.UseVisualStyleBackColor = false;
+            // 
+            // btnFinishTournament
+            // 
+            this.btnFinishTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnFinishTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.btnFinishTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnFinishTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFinishTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnFinishTournament.ForeColor = System.Drawing.Color.DarkOrange;
+            this.btnFinishTournament.Location = new System.Drawing.Point(49, 79);
+            this.btnFinishTournament.Name = "btnFinishTournament";
+            this.btnFinishTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnFinishTournament.TabIndex = 26;
+            this.btnFinishTournament.Text = "Finish Tournament";
+            this.btnFinishTournament.UseVisualStyleBackColor = false;
+            // 
+            // btnStartTournament
+            // 
+            this.btnStartTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnStartTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnStartTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnStartTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStartTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnStartTournament.ForeColor = System.Drawing.Color.Green;
+            this.btnStartTournament.Location = new System.Drawing.Point(49, 32);
+            this.btnStartTournament.Name = "btnStartTournament";
+            this.btnStartTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnStartTournament.TabIndex = 26;
+            this.btnStartTournament.Text = "Start Tournament";
+            this.btnStartTournament.UseVisualStyleBackColor = false;
+            this.btnStartTournament.Click += new System.EventHandler(this.btnStartTournament_Click);
+            // 
             // gpbTournamentCreation
             // 
+            this.gpbTournamentCreation.Controls.Add(this.button2);
             this.gpbTournamentCreation.Controls.Add(this.btnCreateTournament);
             this.gpbTournamentCreation.Controls.Add(this.label12);
             this.gpbTournamentCreation.Controls.Add(this.pickEndDate);
@@ -294,22 +385,42 @@
             this.gpbTournamentCreation.TabStop = false;
             this.gpbTournamentCreation.Text = "Create Tournament";
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button2.ForeColor = System.Drawing.Color.DarkOrange;
+            this.button2.Location = new System.Drawing.Point(190, 487);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(159, 127);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "Adjust Tournament";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
             // btnCreateTournament
             // 
+            this.btnCreateTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnCreateTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnCreateTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnCreateTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateTournament.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCreateTournament.Location = new System.Drawing.Point(6, 538);
+            this.btnCreateTournament.ForeColor = System.Drawing.Color.Green;
+            this.btnCreateTournament.Location = new System.Drawing.Point(6, 487);
             this.btnCreateTournament.Name = "btnCreateTournament";
-            this.btnCreateTournament.Size = new System.Drawing.Size(343, 76);
+            this.btnCreateTournament.Size = new System.Drawing.Size(161, 127);
             this.btnCreateTournament.TabIndex = 2;
             this.btnCreateTournament.Text = "Create Tournament";
-            this.btnCreateTournament.UseVisualStyleBackColor = true;
+            this.btnCreateTournament.UseVisualStyleBackColor = false;
             this.btnCreateTournament.Click += new System.EventHandler(this.btnCreateTournament_Click);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label12.Location = new System.Drawing.Point(190, 363);
+            this.label12.Location = new System.Drawing.Point(190, 312);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(65, 19);
             this.label12.TabIndex = 23;
@@ -317,7 +428,7 @@
             // 
             // pickEndDate
             // 
-            this.pickEndDate.Location = new System.Drawing.Point(190, 385);
+            this.pickEndDate.Location = new System.Drawing.Point(190, 334);
             this.pickEndDate.Name = "pickEndDate";
             this.pickEndDate.Size = new System.Drawing.Size(159, 23);
             this.pickEndDate.TabIndex = 22;
@@ -326,7 +437,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label11.Location = new System.Drawing.Point(6, 363);
+            this.label11.Location = new System.Drawing.Point(6, 312);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(71, 19);
             this.label11.TabIndex = 21;
@@ -336,7 +447,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label10.Location = new System.Drawing.Point(6, 475);
+            this.label10.Location = new System.Drawing.Point(6, 424);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(131, 19);
             this.label10.TabIndex = 20;
@@ -345,7 +456,7 @@
             // comboTournamentSystem
             // 
             this.comboTournamentSystem.FormattingEnabled = true;
-            this.comboTournamentSystem.Location = new System.Drawing.Point(6, 497);
+            this.comboTournamentSystem.Location = new System.Drawing.Point(6, 446);
             this.comboTournamentSystem.Name = "comboTournamentSystem";
             this.comboTournamentSystem.Size = new System.Drawing.Size(161, 23);
             this.comboTournamentSystem.TabIndex = 19;
@@ -354,7 +465,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(190, 422);
+            this.label9.Location = new System.Drawing.Point(190, 371);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(148, 19);
             this.label9.TabIndex = 18;
@@ -364,7 +475,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(6, 422);
+            this.label8.Location = new System.Drawing.Point(6, 371);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(146, 19);
             this.label8.TabIndex = 17;
@@ -372,21 +483,21 @@
             // 
             // numMaxContestants
             // 
-            this.numMaxContestants.Location = new System.Drawing.Point(190, 444);
+            this.numMaxContestants.Location = new System.Drawing.Point(190, 393);
             this.numMaxContestants.Name = "numMaxContestants";
             this.numMaxContestants.Size = new System.Drawing.Size(75, 23);
             this.numMaxContestants.TabIndex = 16;
             // 
             // numMinContestants
             // 
-            this.numMinContestants.Location = new System.Drawing.Point(6, 444);
+            this.numMinContestants.Location = new System.Drawing.Point(6, 393);
             this.numMinContestants.Name = "numMinContestants";
             this.numMinContestants.Size = new System.Drawing.Size(75, 23);
             this.numMinContestants.TabIndex = 15;
             // 
             // inputAddress
             // 
-            this.inputAddress.Location = new System.Drawing.Point(190, 326);
+            this.inputAddress.Location = new System.Drawing.Point(190, 275);
             this.inputAddress.Name = "inputAddress";
             this.inputAddress.Size = new System.Drawing.Size(159, 23);
             this.inputAddress.TabIndex = 14;
@@ -395,7 +506,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(190, 304);
+            this.label7.Location = new System.Drawing.Point(190, 253);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(58, 19);
             this.label7.TabIndex = 13;
@@ -403,16 +514,16 @@
             // 
             // inputCity
             // 
-            this.inputCity.Location = new System.Drawing.Point(6, 326);
+            this.inputCity.Location = new System.Drawing.Point(6, 275);
             this.inputCity.Name = "inputCity";
-            this.inputCity.Size = new System.Drawing.Size(159, 23);
+            this.inputCity.Size = new System.Drawing.Size(161, 23);
             this.inputCity.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(6, 304);
+            this.label6.Location = new System.Drawing.Point(6, 253);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(33, 19);
             this.label6.TabIndex = 11;
@@ -422,7 +533,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(190, 475);
+            this.label5.Location = new System.Drawing.Point(190, 424);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 19);
             this.label5.TabIndex = 10;
@@ -430,7 +541,7 @@
             // 
             // inputScoring
             // 
-            this.inputScoring.Location = new System.Drawing.Point(190, 271);
+            this.inputScoring.Location = new System.Drawing.Point(190, 220);
             this.inputScoring.Name = "inputScoring";
             this.inputScoring.Size = new System.Drawing.Size(159, 23);
             this.inputScoring.TabIndex = 9;
@@ -438,7 +549,7 @@
             // comboContestantType
             // 
             this.comboContestantType.FormattingEnabled = true;
-            this.comboContestantType.Location = new System.Drawing.Point(190, 497);
+            this.comboContestantType.Location = new System.Drawing.Point(190, 446);
             this.comboContestantType.Name = "comboContestantType";
             this.comboContestantType.Size = new System.Drawing.Size(159, 23);
             this.comboContestantType.TabIndex = 8;
@@ -447,7 +558,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(6, 249);
+            this.label4.Location = new System.Drawing.Point(6, 198);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 19);
             this.label4.TabIndex = 7;
@@ -457,7 +568,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(190, 249);
+            this.label3.Location = new System.Drawing.Point(190, 198);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(102, 19);
             this.label3.TabIndex = 6;
@@ -467,7 +578,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(6, 127);
+            this.label2.Location = new System.Drawing.Point(6, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(78, 19);
             this.label2.TabIndex = 5;
@@ -477,7 +588,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(6, 73);
+            this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(34, 19);
             this.label1.TabIndex = 4;
@@ -485,14 +596,14 @@
             // 
             // inputSport
             // 
-            this.inputSport.Location = new System.Drawing.Point(6, 271);
+            this.inputSport.Location = new System.Drawing.Point(6, 220);
             this.inputSport.Name = "inputSport";
-            this.inputSport.Size = new System.Drawing.Size(159, 23);
+            this.inputSport.Size = new System.Drawing.Size(161, 23);
             this.inputSport.TabIndex = 3;
             // 
             // inputDescription
             // 
-            this.inputDescription.Location = new System.Drawing.Point(6, 149);
+            this.inputDescription.Location = new System.Drawing.Point(6, 98);
             this.inputDescription.Name = "inputDescription";
             this.inputDescription.Size = new System.Drawing.Size(343, 96);
             this.inputDescription.TabIndex = 2;
@@ -500,20 +611,21 @@
             // 
             // inputTitle
             // 
-            this.inputTitle.Location = new System.Drawing.Point(6, 95);
+            this.inputTitle.Location = new System.Drawing.Point(6, 44);
             this.inputTitle.Name = "inputTitle";
             this.inputTitle.Size = new System.Drawing.Size(343, 23);
             this.inputTitle.TabIndex = 1;
             // 
             // pickStartDate
             // 
-            this.pickStartDate.Location = new System.Drawing.Point(6, 385);
+            this.pickStartDate.Location = new System.Drawing.Point(6, 334);
             this.pickStartDate.Name = "pickStartDate";
-            this.pickStartDate.Size = new System.Drawing.Size(159, 23);
+            this.pickStartDate.Size = new System.Drawing.Size(161, 23);
             this.pickStartDate.TabIndex = 0;
             // 
             // tabMatches
             // 
+            this.tabMatches.Controls.Add(this.dgvTournamentMatches);
             this.tabMatches.Location = new System.Drawing.Point(4, 24);
             this.tabMatches.Name = "tabMatches";
             this.tabMatches.Size = new System.Drawing.Size(938, 632);
@@ -523,12 +635,132 @@
             // 
             // tabAccounts
             // 
+            this.tabAccounts.Controls.Add(this.comboTypes);
+            this.tabAccounts.Controls.Add(this.textBox4);
+            this.tabAccounts.Controls.Add(this.comboRoles);
+            this.tabAccounts.Controls.Add(this.textBox3);
+            this.tabAccounts.Controls.Add(this.textBox2);
+            this.tabAccounts.Controls.Add(this.textBox1);
             this.tabAccounts.Location = new System.Drawing.Point(4, 24);
             this.tabAccounts.Name = "tabAccounts";
             this.tabAccounts.Size = new System.Drawing.Size(938, 632);
             this.tabAccounts.TabIndex = 3;
             this.tabAccounts.Text = "Accounts";
             this.tabAccounts.UseVisualStyleBackColor = true;
+            // 
+            // dgvTournamentMatches
+            // 
+            this.dgvTournamentMatches.AllowUserToAddRows = false;
+            this.dgvTournamentMatches.AllowUserToDeleteRows = false;
+            this.dgvTournamentMatches.AutoGenerateColumns = false;
+            this.dgvTournamentMatches.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTournamentMatches.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.iDDataGridViewTextBoxColumn1,
+            this.homeNameDataGridViewTextBoxColumn,
+            this.homeScoreDataGridViewTextBoxColumn,
+            this.awayNameDataGridViewTextBoxColumn,
+            this.awayScoreDataGridViewTextBoxColumn,
+            this.isFinishedDataGridViewCheckBoxColumn});
+            this.dgvTournamentMatches.DataSource = this.matchBindingSource;
+            this.dgvTournamentMatches.Location = new System.Drawing.Point(391, 3);
+            this.dgvTournamentMatches.MultiSelect = false;
+            this.dgvTournamentMatches.Name = "dgvTournamentMatches";
+            this.dgvTournamentMatches.ReadOnly = true;
+            this.dgvTournamentMatches.RowTemplate.Height = 25;
+            this.dgvTournamentMatches.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvTournamentMatches.Size = new System.Drawing.Size(544, 381);
+            this.dgvTournamentMatches.TabIndex = 0;
+            // 
+            // matchBindingSource
+            // 
+            this.matchBindingSource.DataSource = typeof(BLL.Objects.Match);
+            // 
+            // iDDataGridViewTextBoxColumn1
+            // 
+            this.iDDataGridViewTextBoxColumn1.DataPropertyName = "ID";
+            this.iDDataGridViewTextBoxColumn1.HeaderText = "ID";
+            this.iDDataGridViewTextBoxColumn1.Name = "iDDataGridViewTextBoxColumn1";
+            this.iDDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.iDDataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // homeNameDataGridViewTextBoxColumn
+            // 
+            this.homeNameDataGridViewTextBoxColumn.DataPropertyName = "HomeName";
+            this.homeNameDataGridViewTextBoxColumn.HeaderText = "Home Contestant";
+            this.homeNameDataGridViewTextBoxColumn.Name = "homeNameDataGridViewTextBoxColumn";
+            this.homeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // homeScoreDataGridViewTextBoxColumn
+            // 
+            this.homeScoreDataGridViewTextBoxColumn.DataPropertyName = "HomeScore";
+            this.homeScoreDataGridViewTextBoxColumn.HeaderText = "Home Score";
+            this.homeScoreDataGridViewTextBoxColumn.Name = "homeScoreDataGridViewTextBoxColumn";
+            this.homeScoreDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // awayNameDataGridViewTextBoxColumn
+            // 
+            this.awayNameDataGridViewTextBoxColumn.DataPropertyName = "AwayName";
+            this.awayNameDataGridViewTextBoxColumn.HeaderText = "Away Contestant";
+            this.awayNameDataGridViewTextBoxColumn.Name = "awayNameDataGridViewTextBoxColumn";
+            this.awayNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // awayScoreDataGridViewTextBoxColumn
+            // 
+            this.awayScoreDataGridViewTextBoxColumn.DataPropertyName = "AwayScore";
+            this.awayScoreDataGridViewTextBoxColumn.HeaderText = "Away\'Score";
+            this.awayScoreDataGridViewTextBoxColumn.Name = "awayScoreDataGridViewTextBoxColumn";
+            this.awayScoreDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // isFinishedDataGridViewCheckBoxColumn
+            // 
+            this.isFinishedDataGridViewCheckBoxColumn.DataPropertyName = "IsFinished";
+            this.isFinishedDataGridViewCheckBoxColumn.HeaderText = "Match Finished";
+            this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
+            this.isFinishedDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(114, 82);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 23);
+            this.textBox1.TabIndex = 0;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(114, 123);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 23);
+            this.textBox2.TabIndex = 1;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(114, 163);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 23);
+            this.textBox3.TabIndex = 2;
+            // 
+            // comboRoles
+            // 
+            this.comboRoles.FormattingEnabled = true;
+            this.comboRoles.Location = new System.Drawing.Point(114, 243);
+            this.comboRoles.Name = "comboRoles";
+            this.comboRoles.Size = new System.Drawing.Size(121, 23);
+            this.comboRoles.TabIndex = 3;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(114, 204);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 23);
+            this.textBox4.TabIndex = 4;
+            // 
+            // comboTypes
+            // 
+            this.comboTypes.FormattingEnabled = true;
+            this.comboTypes.Location = new System.Drawing.Point(114, 272);
+            this.comboTypes.Name = "comboTypes";
+            this.comboTypes.Size = new System.Drawing.Size(121, 23);
+            this.comboTypes.TabIndex = 5;
             // 
             // MainForm
             // 
@@ -545,10 +777,16 @@
             this.tabTournaments.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.gpbTournamentCreation.ResumeLayout(false);
             this.gpbTournamentCreation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).EndInit();
+            this.tabMatches.ResumeLayout(false);
+            this.tabAccounts.ResumeLayout(false);
+            this.tabAccounts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTournamentMatches)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -565,12 +803,6 @@
         private TabPage tabTournaments;
         private TabPage tabMatches;
         private TabPage tabAccounts;
-        private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn typeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn scoringDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn minContestantsDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn maxContestantsDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn systemDataGridViewTextBoxColumn;
         private GroupBox gpbTournamentCreation;
         private GroupBox groupBox1;
         private TextBox inputSport;
@@ -606,5 +838,24 @@
         private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
         private BindingSource tournamentBindingSource;
+        private Button btnDeleteTournament;
+        private Button btnStartTournament;
+        private Button btnCancelTournament;
+        private Button btnFinishTournament;
+        private Button button2;
+        private DataGridView dgvTournamentMatches;
+        private BindingSource matchBindingSource;
+        private DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn homeNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn homeScoreDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn awayNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn awayScoreDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn isFinishedDataGridViewCheckBoxColumn;
+        private TextBox textBox4;
+        private ComboBox comboRoles;
+        private TextBox textBox3;
+        private TextBox textBox2;
+        private TextBox textBox1;
+        private ComboBox comboTypes;
     }
 }

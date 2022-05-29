@@ -6,6 +6,7 @@ using DAL;
 using BLL.Objects;
 using BLL.Objects.Users;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace WinApp.Forms
 {
@@ -17,7 +18,7 @@ namespace WinApp.Forms
         {
             InitializeComponent();
             //SwitchPage(new HomePage());
-            HideTabControls();
+            SetupFormGraphics();
             SetupComboBoxes();
 
             pickStartDate.MinDate = DateTime.Now;
@@ -27,17 +28,22 @@ namespace WinApp.Forms
             RefreshTournaments();
         }
 
-        public void HideTabControls()
+        public void SetupFormGraphics()
         {
+            //Disable standard tab controls
             tabsControl.Appearance = TabAppearance.FlatButtons;
             tabsControl.ItemSize = new Size(0, 1);
             tabsControl.SizeMode = TabSizeMode.Fixed;
+
+            //Change button borders
         }
 
         private void SetupComboBoxes()
         {
             comboContestantType.DataSource = Enum.GetValues(typeof(ContestantType));
             comboTournamentSystem.DataSource = Enum.GetValues(typeof(TournamentSystem));
+            comboTypes.DataSource = Enum.GetValues(typeof(ContestantType));
+            comboRoles.DataSource = Enum.GetValues(typeof(UserRole));
         }
 
         //private void SwitchPage(UserControl control)
@@ -135,6 +141,46 @@ namespace WinApp.Forms
             {
                 MessageBox.Show(ex.Message, "An unknown error occured:");
             }
+        }
+
+        private void dgvTournaments_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvTournaments.SelectedRows[0] != null)
+            {
+                int id = GetIDFromDataGridView(dgvTournaments, "iDDataGridViewTextColumn");
+                Tournament tournament = tournamentRegistry.GetByID(id)!;
+            }
+            else
+            {
+                btnStartTournament.Enabled = false;
+                btnFinishTournament.Enabled = false;
+                btnCancelTournament.Enabled = false;
+                btnDeleteTournament.Enabled = false;
+            }
+        }
+
+        private void btnStartTournament_Click(object sender, EventArgs e)
+        {
+            if (dgvTournaments.SelectedRows[0] != null)
+            {
+                int id = GetIDFromDataGridView(dgvTournaments, "iDDataGridViewTextColumn");
+                Tournament tournament = tournamentRegistry.GetByID(id)!;
+                tournament.Status = TournamentStatus.Running;
+                tournamentRegistry.UpdateTournament(tournament);
+            }
+        }
+
+        private int GetIDFromDataGridView(DataGridView dgv, string columnName)
+        {
+            return Convert.ToInt32(dgvTournaments.SelectedRows[0].Cells[columnName].Value);
+        }
+
+        private void ToggleTournamentStatusButtons(TournamentStatus status)
+        {
+            btnStartTournament.Enabled = status == TournamentStatus.Planned;
+            btnFinishTournament.Enabled = status == TournamentStatus.Running;
+            btnCancelTournament.Enabled = status != TournamentStatus.Cancelled && status != TournamentStatus.Finished;
+            btnDeleteTournament.Enabled = status == TournamentStatus.Planned;
         }
     }
 }

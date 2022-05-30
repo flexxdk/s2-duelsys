@@ -1,5 +1,5 @@
 ﻿using DTO;
-using DTO.Users;
+using BLL.Objects.Users;
 using BLL.Enums;
 
 namespace BLL.Registries
@@ -8,7 +8,7 @@ namespace BLL.Registries
     {
         public MatchGenerator() { }
 
-        public IEnumerable<MatchDTO> GenerateMatches(TournamentSystem system, int tournamentID, IList<ContestantDTO> contestants)
+        public IEnumerable<MatchDTO> GenerateMatches(TournamentSystem system, int tournamentID, IEnumerable<Contestant> contestants)
         {
             IEnumerable<MatchDTO> matches;
             switch (system)
@@ -25,15 +25,15 @@ namespace BLL.Registries
             return matches;
         }
 
-        private IEnumerable<MatchDTO> RoundRobin(int tournamentID, IList<ContestantDTO> contestants)
+        private IEnumerable<MatchDTO> RoundRobin(int tournamentID, IEnumerable<Contestant> contestants)
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 
-            Queue<ContestantDTO> contestantQueue = new Queue<ContestantDTO>(contestants);
+            Queue<Contestant> contestantQueue = new Queue<Contestant>(contestants);
             while(contestantQueue.Count > 0)
             {
-                ContestantDTO contestantHome = contestantQueue.Dequeue();
-                foreach(ContestantDTO contestant in contestantQueue)
+                Contestant contestantHome = contestantQueue.Dequeue();
+                foreach(Contestant contestant in contestantQueue)
                 {
                     generated.Add(new MatchDTO(0, tournamentID, false, contestantHome.ID, contestantHome.Name, 0, contestant.ID, contestant.Name, 0));
                 }
@@ -42,12 +42,12 @@ namespace BLL.Registries
             return generated;
         }
 
-        private IEnumerable<MatchDTO> SingleElimination(int tournamentID, IList<ContestantDTO> contestants)
+        private IEnumerable<MatchDTO> SingleElimination(int tournamentID, IEnumerable<Contestant> contestants)
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 
             //Remove all contestants that have lost a match and thus have been eliminated
-            IEnumerable<ContestantDTO> validContestants = contestants.Where(c => c.Losses == 0);
+            IEnumerable<Contestant> validContestants = contestants.Where(c => c.Losses == 0);
 
             //Calculate the nearest power of two based on the list size
             int validCount = validContestants.Count();
@@ -62,8 +62,8 @@ namespace BLL.Registries
                 //Ensure we never go out of bounds of the list
                 if (i < validCount - 1)
                 {
-                    ContestantDTO home = validContestants.ElementAt(i);
-                    ContestantDTO away = validContestants.ElementAt(i + 1); 
+                    Contestant home = validContestants.ElementAt(i);
+                    Contestant away = validContestants.ElementAt(i + 1); 
                     generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name, 0, away.ID, away.Name, 0));
                 }
             }

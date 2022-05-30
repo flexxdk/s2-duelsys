@@ -15,16 +15,17 @@ namespace WinApp.Forms
         private TournamentRegistry tournamentRegistry;
         private UserRegistry userRegistry;
         private MatchRegistry matchRegistry;
+        private ContestantRegistry contestantRegistry;
 
         public MainForm()
         {
             InitializeComponent();
-            //SwitchPage(new HomePage());
             SetupFormGUI();
 
             tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()), true);
             userRegistry = new UserRegistry(new UserRepository(new DbContext()));
             matchRegistry = new MatchRegistry(new MatchRepository(new DbContext()));
+            contestantRegistry = new ContestantRegistry(new ContestantRepository(new DbContext()));
 
             RefreshTournaments();
         }
@@ -78,6 +79,11 @@ namespace WinApp.Forms
         {
             dgvTournaments.DataSource = tournamentRegistry.GetAll(false);
             dgvActiveTournaments.DataSource = tournamentRegistry.GetActiveTournaments();
+        }
+
+        private void RefreshMatches(int tournamentID)
+        {
+            dgvTournamentMatches.DataSource = matchRegistry.GetMatches(tournamentID);
         }
 
         private void btnCreateTournament_Click(object sender, EventArgs e)
@@ -254,7 +260,7 @@ namespace WinApp.Forms
 
         private int GetIDFromDataGridView(DataGridView dgv, string columnName)
         {
-            return Convert.ToInt32(dgvTournaments.SelectedRows[0].Cells[columnName].Value);
+            return Convert.ToInt32(dgv.SelectedRows[0].Cells[columnName].Value);
         }
 
         private void ToggleTournamentStatusButtons(TournamentStatus status)
@@ -314,10 +320,21 @@ namespace WinApp.Forms
             if (dgvActiveTournaments.SelectedRows[0] != null)
             {
                 int id = GetIDFromDataGridView(dgvActiveTournaments, "iDDataGridViewTextBoxColumn");
-                //if (tournament != null)
-                //{
-                //    matchRegistry.GenerateMatches(id);
-                //}
+                Tournament? tournament = tournamentRegistry.GetByID(id);
+                if (tournament != null)
+                {
+                    matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(id));
+                    RefreshMatches(id);
+                }
+            }
+        }
+
+        private void dgvActiveTournaments_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvActiveTournaments.SelectedRows[0] != null)
+            {
+                int id = GetIDFromDataGridView(dgvActiveTournaments, "iDDataGridViewTextBoxColumn");
+                RefreshMatches(id);
             }
         }
     }

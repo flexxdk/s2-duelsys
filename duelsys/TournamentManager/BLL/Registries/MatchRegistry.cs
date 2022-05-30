@@ -1,4 +1,5 @@
 ﻿using BLL.Objects;
+using BLL.Objects.Users;
 using DAL.Interfaces;
 using DTO;
 
@@ -57,13 +58,19 @@ namespace BLL.Registries
             return matches;
         }
 
-        public void GenerateMatches(Tournament tournament)
+        public bool GenerateMatches(Tournament tournament, IEnumerable<Contestant> contestants)
         {
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, repository.GetTournamentContestants(tournament.ID)).ToList();
-            foreach(MatchDTO match in matches)
+            IEnumerable<Match> currentMatches = GetMatches(tournament.ID);
+            if(currentMatches.Count() == 0 || !currentMatches.Any(c => c.IsFinished == false))
             {
-                repository.Create(match);
+                List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+                foreach (MatchDTO match in matches)
+                {
+                    repository.Create(match);
+                }
+                return true;
             }
+            return false;
         }
 
         public void SaveResults(Match match)

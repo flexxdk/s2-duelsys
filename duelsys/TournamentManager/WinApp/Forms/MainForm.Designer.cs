@@ -846,6 +846,7 @@
             this.dgvActiveTournaments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvActiveTournaments.Size = new System.Drawing.Size(367, 381);
             this.dgvActiveTournaments.TabIndex = 7;
+            this.dgvActiveTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvActiveTournaments_CellClick);
             // 
             // iDDataGridViewTextBoxColumn
             // 

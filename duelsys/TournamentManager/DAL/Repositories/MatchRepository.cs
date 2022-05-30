@@ -100,7 +100,34 @@ namespace DAL.Repositories
 
         public IList<ContestantDTO> GetTournamentContestants(int tournamentID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"SELECT c.*, a.name, a.surname 
+                                FROM syn_contestants AS c
+                                INNER JOIN syn_accounts AS a
+                                ON a.id = c.user_id
+                                WHERE tournament_id = @TournamentID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@TournamentID", tournamentID);
+                DataTable results = ExecuteReader(cmd);
+                List<ContestantDTO> contestants = new List<ContestantDTO>();
+                foreach (DataRow row in results.Rows)
+                {
+                    contestants.Add(new ContestantDTO(
+                        Convert.ToInt32(row["user_id"]),
+                        row["name"].ToString()!,
+                        row["surname"].ToString()!,
+                        Convert.ToInt32(row["tournament_id"]),
+                        Convert.ToInt32(row["wins"]),
+                        Convert.ToInt32(row["losses"])
+                    ));
+                }
+                return contestants;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         private MatchDTO InstantiateDTO(DataRow row)

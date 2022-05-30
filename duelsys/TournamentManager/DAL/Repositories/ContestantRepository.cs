@@ -70,7 +70,7 @@ namespace DAL.Repositories
             }
             catch
             {
-                return null;
+                throw;
             }
         }
 

@@ -7,6 +7,7 @@ namespace DAL.Interfaces
     {
         public bool Delete(int tournamentID);
         public IList<ContestantDTO> GetStandings(int tournamentID);
+        public IEnumerable<TournamentDTO> FilterTournamentsOnStatus(string filter);
         public TournamentDTO? GetByID(int id);
         public int Create(TournamentDTO obj);
         public int Update(TournamentDTO obj);

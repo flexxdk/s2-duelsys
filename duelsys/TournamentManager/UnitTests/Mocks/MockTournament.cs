@@ -84,6 +84,11 @@ namespace UnitTests.Mocks
 
         public TournamentDTO? GetByID(int id)
         {
+            return tournaments.Find(trn => trn.ID == id);
+        }
+
+        public IEnumerable<TournamentDTO> FilterTournamentsOnStatus(string filter)
+        {
             throw new NotImplementedException();
         }
     }

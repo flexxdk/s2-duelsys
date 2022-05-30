@@ -62,7 +62,6 @@ namespace BLL.Objects
         public TournamentStatus Status { get; set; }
 
         [Required(ErrorMessage = "No tournament system was given")]
-        [Browsable(false)]
         public TournamentSystem System { get; set; }
     }
 }

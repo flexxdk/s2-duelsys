@@ -4,7 +4,8 @@ namespace DAL.Interfaces
 {
     public interface IUserRepository
     {
-        public int Register(UserDTO userDTO);
-        public IList<UserDTO> Load();
+        public UserDTO? GetByID(int id);
+        public bool Register(UserDTO userDTO);
+        public bool CheckIfEmailExists(string email);
     }
 }

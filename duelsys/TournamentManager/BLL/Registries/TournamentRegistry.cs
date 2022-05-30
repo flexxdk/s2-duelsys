@@ -16,7 +16,7 @@ namespace BLL.Registries
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
 
-        public TournamentRegistry(ITournamentRepository repository, bool preload)
+        public TournamentRegistry(ITournamentRepository repository, bool preload = false)
         {
             this.repository = repository;
             this.tournaments = new Dictionary<int, Tournament>();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Linq;
 
 using DAL.Interfaces;
 using DTO.Users;
@@ -29,7 +30,12 @@ namespace UnitTests.Mocks
         }
         public bool CheckIfEmailExists(string email)
         {
-            throw new NotImplementedException();
+            return users.Any(user => user.Email == email);
+        }
+
+        public UserDTO? GetByID(int id)
+        {
+            return users.Find(user => user.ID == id);
         }
     }
 }

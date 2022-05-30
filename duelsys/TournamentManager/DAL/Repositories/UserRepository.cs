@@ -65,7 +65,7 @@ namespace DAL.Repositories
                 string query = "SELECT * FROM syn_accounts WHERE email = @Email;";
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@Email", email);
-                return ExecuteScalar(cmd) == null;
+                return ExecuteScalar(cmd) != null;
             }
             catch
             {

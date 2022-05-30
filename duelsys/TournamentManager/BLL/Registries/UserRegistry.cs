@@ -44,7 +44,7 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(user);
-                if (repository.CheckIfEmailExists(user.Email!))
+                if (!repository.CheckIfEmailExists(user.Email!))
                 {
                     SaltKey hashed = encryptor.Hash(user.Password!);
                     user.Password = hashed.Key;
@@ -52,10 +52,7 @@ namespace BLL.Registries
                     UserDTO dto = new UserDTO(0, user.Name!, user.SurName!, user.Role.ToString(), user.Type.ToString(), user.Email!, user.Password, user.Salt);
                     return repository.Register(dto);
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             catch
             {

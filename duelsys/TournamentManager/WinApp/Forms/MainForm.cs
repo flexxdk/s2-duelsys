@@ -323,8 +323,16 @@ namespace WinApp.Forms
                 Tournament? tournament = tournamentRegistry.GetByID(id);
                 if (tournament != null)
                 {
-                    matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(id));
-                    RefreshMatches(id);
+                    bool result = matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(id));
+                    if (result)
+                    {
+                        MessageBox.Show("Matches have been generated");
+                        RefreshMatches(id);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not generate matches because not all matches were finished.");
+                    }
                 }
             }
         }

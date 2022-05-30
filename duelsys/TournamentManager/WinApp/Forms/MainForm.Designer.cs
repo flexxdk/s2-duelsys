@@ -99,11 +99,6 @@
             this.btnPlayMatch = new System.Windows.Forms.Button();
             this.btnGenerateMatches = new System.Windows.Forms.Button();
             this.dgvTournamentMatches = new System.Windows.Forms.DataGridView();
-            this.homeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.awayNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.matchBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabAccounts = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -121,6 +116,11 @@
             this.label14 = new System.Windows.Forms.Label();
             this.inputPassword = new System.Windows.Forms.TextBox();
             this.comboTypes = new System.Windows.Forms.ComboBox();
+            this.homeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.awayNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.navPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -978,41 +978,6 @@
             this.dgvTournamentMatches.Size = new System.Drawing.Size(559, 381);
             this.dgvTournamentMatches.TabIndex = 0;
             // 
-            // homeNameDataGridViewTextBoxColumn
-            // 
-            this.homeNameDataGridViewTextBoxColumn.DataPropertyName = "HomeName";
-            this.homeNameDataGridViewTextBoxColumn.HeaderText = "Home Player";
-            this.homeNameDataGridViewTextBoxColumn.Name = "homeNameDataGridViewTextBoxColumn";
-            this.homeNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // awayNameDataGridViewTextBoxColumn
-            // 
-            this.awayNameDataGridViewTextBoxColumn.DataPropertyName = "AwayName";
-            this.awayNameDataGridViewTextBoxColumn.HeaderText = "Away Player";
-            this.awayNameDataGridViewTextBoxColumn.Name = "awayNameDataGridViewTextBoxColumn";
-            this.awayNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // homeScoreDataGridViewTextBoxColumn
-            // 
-            this.homeScoreDataGridViewTextBoxColumn.DataPropertyName = "HomeScore";
-            this.homeScoreDataGridViewTextBoxColumn.HeaderText = "Home Score";
-            this.homeScoreDataGridViewTextBoxColumn.Name = "homeScoreDataGridViewTextBoxColumn";
-            this.homeScoreDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // awayScoreDataGridViewTextBoxColumn
-            // 
-            this.awayScoreDataGridViewTextBoxColumn.DataPropertyName = "AwayScore";
-            this.awayScoreDataGridViewTextBoxColumn.HeaderText = "Away Score";
-            this.awayScoreDataGridViewTextBoxColumn.Name = "awayScoreDataGridViewTextBoxColumn";
-            this.awayScoreDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // isFinishedDataGridViewCheckBoxColumn
-            // 
-            this.isFinishedDataGridViewCheckBoxColumn.DataPropertyName = "IsFinished";
-            this.isFinishedDataGridViewCheckBoxColumn.HeaderText = "Match Finished";
-            this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
-            this.isFinishedDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
             // matchBindingSource
             // 
             this.matchBindingSource.DataSource = typeof(BLL.Objects.Match);
@@ -1187,6 +1152,41 @@
             this.comboTypes.Size = new System.Drawing.Size(149, 23);
             this.comboTypes.TabIndex = 5;
             // 
+            // homeNameDataGridViewTextBoxColumn
+            // 
+            this.homeNameDataGridViewTextBoxColumn.DataPropertyName = "HomeName";
+            this.homeNameDataGridViewTextBoxColumn.HeaderText = "Home Player";
+            this.homeNameDataGridViewTextBoxColumn.Name = "homeNameDataGridViewTextBoxColumn";
+            this.homeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // awayNameDataGridViewTextBoxColumn
+            // 
+            this.awayNameDataGridViewTextBoxColumn.DataPropertyName = "AwayName";
+            this.awayNameDataGridViewTextBoxColumn.HeaderText = "Away Player";
+            this.awayNameDataGridViewTextBoxColumn.Name = "awayNameDataGridViewTextBoxColumn";
+            this.awayNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // homeScoreDataGridViewTextBoxColumn
+            // 
+            this.homeScoreDataGridViewTextBoxColumn.DataPropertyName = "HomeScore";
+            this.homeScoreDataGridViewTextBoxColumn.HeaderText = "Home Score";
+            this.homeScoreDataGridViewTextBoxColumn.Name = "homeScoreDataGridViewTextBoxColumn";
+            this.homeScoreDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // awayScoreDataGridViewTextBoxColumn
+            // 
+            this.awayScoreDataGridViewTextBoxColumn.DataPropertyName = "AwayScore";
+            this.awayScoreDataGridViewTextBoxColumn.HeaderText = "Away Score";
+            this.awayScoreDataGridViewTextBoxColumn.Name = "awayScoreDataGridViewTextBoxColumn";
+            this.awayScoreDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // isFinishedDataGridViewCheckBoxColumn
+            // 
+            this.isFinishedDataGridViewCheckBoxColumn.DataPropertyName = "IsFinished";
+            this.isFinishedDataGridViewCheckBoxColumn.HeaderText = "Match Finished";
+            this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
+            this.isFinishedDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1285,11 +1285,6 @@
         private GroupBox groupBox2;
         private Button btnRegisterAccount;
         private Button btnGeneratePassword;
-        private DataGridViewTextBoxColumn homeNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn awayNameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn homeScoreDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn awayScoreDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn isFinishedDataGridViewCheckBoxColumn;
         private Button btnGenerateMatches;
         private Button btnPlayMatch;
         private Label label20;
@@ -1318,5 +1313,10 @@
         private GroupBox gpbTournamentUpdateStatus;
         private Button btnCancelTournament;
         private Button btnUpdateTournament;
+        private DataGridViewTextBoxColumn homeNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn awayNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn homeScoreDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn awayScoreDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn isFinishedDataGridViewCheckBoxColumn;
     }
 }

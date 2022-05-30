@@ -66,11 +66,6 @@ namespace UnitTests.Mocks
             return contestants.FindAll(c => c.TournamentID == tournamentID);
         }
 
-        public IList<MatchDTO> Load()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public int Update(MatchDTO dto)
         {
             int index = matches.IndexOf(matches.Find(matches => matches.ID == dto.ID)!);

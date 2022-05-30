@@ -34,14 +34,15 @@ namespace DAL.Repositories
         {
             try
             {
-                string query = "SELECT * FROM syn_tournaments;";
-                DataRow? row = ExecuteReader(new MySqlCommand(query)).Rows[0];
-                if(row != null) return InstantiateDTO(row);
-                else return null;
+                string query = "SELECT * FROM syn_tournaments WHERE id = @ID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@ID", id);
+                DataRow? row = ExecuteReader(cmd).Rows[0];
+                return InstantiateDTO(row);
             }
             catch
             {
-                throw;
+                return null;
             }
         }
 
@@ -125,8 +126,7 @@ namespace DAL.Repositories
                 cmd.Parameters.AddWithValue("@EndDate", dto.EndDate);
                 cmd.Parameters.AddWithValue("@Status", dto.Status);
                 cmd.Parameters.AddWithValue("@System", dto.System);
-                ExecuteNonQuery(cmd);
-                return Convert.ToInt32(cmd.LastInsertedId);
+                return ExecuteNonQuery(cmd);
             }
             catch
             {

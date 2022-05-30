@@ -96,24 +96,6 @@ namespace BLL.Registries
             }
         }
 
-        public bool UpdateTournamentStatus(int id, TournamentStatus status)
-        {
-            try
-            {
-                bool found = tournaments.ContainsKey(id);
-                if (found)
-                {
-                    tournaments[id].Status = status;
-                    repository.Update(InstantiateDTO(tournaments[id]));
-                }
-                return found;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
         public bool DeleteTournament(int id)
         {
             try
@@ -137,11 +119,7 @@ namespace BLL.Registries
         public IEnumerable<Tournament> GetActiveTournaments()
         {
             IList<Tournament> tournaments = new List<Tournament>();
-            StringBuilder filter = new StringBuilder();
-            filter.Append(TournamentStatus.ClosedForReg.ToString());
-            filter.Append(',');
-            filter.Append(TournamentStatus.Running.ToString());
-            foreach (TournamentDTO dto in repository.FilterTournamentsOnStatus(filter.ToString()))
+            foreach (TournamentDTO dto in repository.FilterTournamentsOnStatus(TournamentStatus.Planned.ToString()))
             {
                 tournaments.Add(InstantiateTournament(dto));
             }

@@ -10,6 +10,5 @@ namespace DAL.Interfaces
         public IList<ContestantDTO> GetTournamentContestants(int tournamentID);
         public int Create(MatchDTO obj);
         public int Update(MatchDTO obj);
-        public IList<MatchDTO> Load();
     }
 }

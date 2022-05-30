@@ -9,8 +9,6 @@ namespace BLL.Enums
     public enum TournamentStatus
     {
         Planned,
-        OpenForReg,
-        ClosedForReg,
         Running,
         Finished,
         Cancelled

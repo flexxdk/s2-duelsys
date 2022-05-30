@@ -31,7 +31,7 @@ namespace DAL.Repositories
             }
             catch
             {
-                throw;
+                return null;
             }
         }
     }

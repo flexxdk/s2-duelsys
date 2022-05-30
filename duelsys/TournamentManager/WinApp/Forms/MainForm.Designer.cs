@@ -37,15 +37,15 @@
             this.NavLogout = new System.Windows.Forms.Button();
             this.NavRegistration = new System.Windows.Forms.Button();
             this.NavMatches = new System.Windows.Forms.Button();
-            this.NavTournaments = new System.Windows.Forms.Button();
             this.NavHome = new System.Windows.Forms.Button();
+            this.NavTournaments = new System.Windows.Forms.Button();
             this.tabsControl = new System.Windows.Forms.TabControl();
             this.tabHome = new System.Windows.Forms.TabPage();
             this.tabTournaments = new System.Windows.Forms.TabPage();
-            this.gpbRegistrations = new System.Windows.Forms.GroupBox();
-            this.btnDeleteTournament = new System.Windows.Forms.Button();
-            this.btnCloseRegistrations = new System.Windows.Forms.Button();
-            this.btnOpenRegistrations = new System.Windows.Forms.Button();
+            this.gpbTournamentUpdateStatus = new System.Windows.Forms.GroupBox();
+            this.btnCancelTournament = new System.Windows.Forms.Button();
+            this.btnFinishTournament = new System.Windows.Forms.Button();
+            this.btnStartTournament = new System.Windows.Forms.Button();
             this.dgvTournaments = new System.Windows.Forms.DataGridView();
             this.TournamentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titleDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,12 +55,11 @@
             this.statusDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.systemDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tournamentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gpbRunningStatus = new System.Windows.Forms.GroupBox();
-            this.btnCancelTournament = new System.Windows.Forms.Button();
-            this.btnFinishTournament = new System.Windows.Forms.Button();
-            this.btnStartTournament = new System.Windows.Forms.Button();
+            this.gpbModifyTournament = new System.Windows.Forms.GroupBox();
+            this.btnAdjustTournament = new System.Windows.Forms.Button();
+            this.btnDeleteTournament = new System.Windows.Forms.Button();
             this.gpbTournamentCreation = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnUpdateTournament = new System.Windows.Forms.Button();
             this.btnCreateTournament = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.pickEndDate = new System.Windows.Forms.DateTimePicker();
@@ -127,10 +126,10 @@
             this.panel1.SuspendLayout();
             this.tabsControl.SuspendLayout();
             this.tabTournaments.SuspendLayout();
-            this.gpbRegistrations.SuspendLayout();
+            this.gpbTournamentUpdateStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).BeginInit();
-            this.gpbRunningStatus.SuspendLayout();
+            this.gpbModifyTournament.SuspendLayout();
             this.gpbTournamentCreation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).BeginInit();
@@ -256,24 +255,6 @@
             this.NavMatches.UseVisualStyleBackColor = false;
             this.NavMatches.Click += new System.EventHandler(this.NavMatches_Click);
             // 
-            // NavTournaments
-            // 
-            this.NavTournaments.BackColor = System.Drawing.Color.SkyBlue;
-            this.NavTournaments.FlatAppearance.BorderSize = 0;
-            this.NavTournaments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.NavTournaments.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.NavTournaments.Image = global::WinApp.Properties.Resources.tournaments;
-            this.NavTournaments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NavTournaments.Location = new System.Drawing.Point(0, 252);
-            this.NavTournaments.Margin = new System.Windows.Forms.Padding(0);
-            this.NavTournaments.Name = "NavTournaments";
-            this.NavTournaments.Size = new System.Drawing.Size(204, 93);
-            this.NavTournaments.TabIndex = 1;
-            this.NavTournaments.Text = "Tournaments";
-            this.NavTournaments.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.NavTournaments.UseVisualStyleBackColor = false;
-            this.NavTournaments.Click += new System.EventHandler(this.NavTournaments_Click);
-            // 
             // NavHome
             // 
             this.NavHome.BackColor = System.Drawing.Color.SkyBlue;
@@ -291,6 +272,24 @@
             this.NavHome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.NavHome.UseVisualStyleBackColor = false;
             this.NavHome.Click += new System.EventHandler(this.NavHome_Click);
+            // 
+            // NavTournaments
+            // 
+            this.NavTournaments.BackColor = System.Drawing.Color.SkyBlue;
+            this.NavTournaments.FlatAppearance.BorderSize = 0;
+            this.NavTournaments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NavTournaments.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.NavTournaments.Image = global::WinApp.Properties.Resources.tournaments;
+            this.NavTournaments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.NavTournaments.Location = new System.Drawing.Point(0, 252);
+            this.NavTournaments.Margin = new System.Windows.Forms.Padding(0);
+            this.NavTournaments.Name = "NavTournaments";
+            this.NavTournaments.Size = new System.Drawing.Size(204, 93);
+            this.NavTournaments.TabIndex = 1;
+            this.NavTournaments.Text = "Tournaments";
+            this.NavTournaments.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.NavTournaments.UseVisualStyleBackColor = false;
+            this.NavTournaments.Click += new System.EventHandler(this.NavTournaments_Click);
             // 
             // tabsControl
             // 
@@ -316,9 +315,9 @@
             // 
             // tabTournaments
             // 
-            this.tabTournaments.Controls.Add(this.gpbRegistrations);
+            this.tabTournaments.Controls.Add(this.gpbTournamentUpdateStatus);
             this.tabTournaments.Controls.Add(this.dgvTournaments);
-            this.tabTournaments.Controls.Add(this.gpbRunningStatus);
+            this.tabTournaments.Controls.Add(this.gpbModifyTournament);
             this.tabTournaments.Controls.Add(this.gpbTournamentCreation);
             this.tabTournaments.Location = new System.Drawing.Point(4, 24);
             this.tabTournaments.Name = "tabTournaments";
@@ -328,63 +327,65 @@
             this.tabTournaments.Text = "Tournaments";
             this.tabTournaments.UseVisualStyleBackColor = true;
             // 
-            // gpbRegistrations
+            // gpbTournamentUpdateStatus
             // 
-            this.gpbRegistrations.Controls.Add(this.btnDeleteTournament);
-            this.gpbRegistrations.Controls.Add(this.btnCloseRegistrations);
-            this.gpbRegistrations.Controls.Add(this.btnOpenRegistrations);
-            this.gpbRegistrations.Location = new System.Drawing.Point(18, 395);
-            this.gpbRegistrations.Name = "gpbRegistrations";
-            this.gpbRegistrations.Size = new System.Drawing.Size(261, 231);
-            this.gpbRegistrations.TabIndex = 29;
-            this.gpbRegistrations.TabStop = false;
-            this.gpbRegistrations.Text = "S";
+            this.gpbTournamentUpdateStatus.Controls.Add(this.btnCancelTournament);
+            this.gpbTournamentUpdateStatus.Controls.Add(this.btnFinishTournament);
+            this.gpbTournamentUpdateStatus.Controls.Add(this.btnStartTournament);
+            this.gpbTournamentUpdateStatus.Location = new System.Drawing.Point(18, 395);
+            this.gpbTournamentUpdateStatus.Name = "gpbTournamentUpdateStatus";
+            this.gpbTournamentUpdateStatus.Size = new System.Drawing.Size(261, 231);
+            this.gpbTournamentUpdateStatus.TabIndex = 29;
+            this.gpbTournamentUpdateStatus.TabStop = false;
+            this.gpbTournamentUpdateStatus.Text = "Update Tournament Status";
             // 
-            // btnDeleteTournament
+            // btnCancelTournament
             // 
-            this.btnDeleteTournament.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnDeleteTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
-            this.btnDeleteTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
-            this.btnDeleteTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnDeleteTournament.ForeColor = System.Drawing.Color.Red;
-            this.btnDeleteTournament.Location = new System.Drawing.Point(45, 151);
-            this.btnDeleteTournament.Name = "btnDeleteTournament";
-            this.btnDeleteTournament.Size = new System.Drawing.Size(165, 41);
-            this.btnDeleteTournament.TabIndex = 25;
-            this.btnDeleteTournament.Text = "Delete Tournament";
-            this.btnDeleteTournament.UseVisualStyleBackColor = false;
+            this.btnCancelTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnCancelTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.btnCancelTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnCancelTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCancelTournament.ForeColor = System.Drawing.Color.Red;
+            this.btnCancelTournament.Location = new System.Drawing.Point(49, 151);
+            this.btnCancelTournament.Name = "btnCancelTournament";
+            this.btnCancelTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnCancelTournament.TabIndex = 28;
+            this.btnCancelTournament.Text = "Cancel Tournament";
+            this.btnCancelTournament.UseVisualStyleBackColor = false;
+            this.btnCancelTournament.Click += new System.EventHandler(this.btnCancelTournament_Click);
             // 
-            // btnCloseRegistrations
+            // btnFinishTournament
             // 
-            this.btnCloseRegistrations.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnCloseRegistrations.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.btnCloseRegistrations.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
-            this.btnCloseRegistrations.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCloseRegistrations.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCloseRegistrations.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnCloseRegistrations.Location = new System.Drawing.Point(45, 104);
-            this.btnCloseRegistrations.Name = "btnCloseRegistrations";
-            this.btnCloseRegistrations.Size = new System.Drawing.Size(165, 41);
-            this.btnCloseRegistrations.TabIndex = 26;
-            this.btnCloseRegistrations.Text = "Close Registrations";
-            this.btnCloseRegistrations.UseVisualStyleBackColor = false;
+            this.btnFinishTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnFinishTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.btnFinishTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnFinishTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFinishTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnFinishTournament.ForeColor = System.Drawing.Color.DarkOrange;
+            this.btnFinishTournament.Location = new System.Drawing.Point(49, 104);
+            this.btnFinishTournament.Name = "btnFinishTournament";
+            this.btnFinishTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnFinishTournament.TabIndex = 26;
+            this.btnFinishTournament.Text = "Finish Tournament";
+            this.btnFinishTournament.UseVisualStyleBackColor = false;
+            this.btnFinishTournament.Click += new System.EventHandler(this.btnFinishTournament_Click);
             // 
-            // btnOpenRegistrations
+            // btnStartTournament
             // 
-            this.btnOpenRegistrations.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnOpenRegistrations.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
-            this.btnOpenRegistrations.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnOpenRegistrations.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenRegistrations.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnOpenRegistrations.ForeColor = System.Drawing.Color.Green;
-            this.btnOpenRegistrations.Location = new System.Drawing.Point(45, 57);
-            this.btnOpenRegistrations.Name = "btnOpenRegistrations";
-            this.btnOpenRegistrations.Size = new System.Drawing.Size(165, 41);
-            this.btnOpenRegistrations.TabIndex = 26;
-            this.btnOpenRegistrations.Text = "Open Registrations";
-            this.btnOpenRegistrations.UseVisualStyleBackColor = false;
-            this.btnOpenRegistrations.Click += new System.EventHandler(this.btnOpenRegistrations_Click);
+            this.btnStartTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnStartTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnStartTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnStartTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStartTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnStartTournament.ForeColor = System.Drawing.Color.Green;
+            this.btnStartTournament.Location = new System.Drawing.Point(49, 57);
+            this.btnStartTournament.Name = "btnStartTournament";
+            this.btnStartTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnStartTournament.TabIndex = 26;
+            this.btnStartTournament.Text = "Start Tournament";
+            this.btnStartTournament.UseVisualStyleBackColor = false;
+            this.btnStartTournament.Click += new System.EventHandler(this.btnStartTournament_Click);
             // 
             // dgvTournaments
             // 
@@ -466,67 +467,52 @@
             // 
             this.tournamentBindingSource.DataSource = typeof(BLL.Objects.Tournament);
             // 
-            // gpbRunningStatus
+            // gpbModifyTournament
             // 
-            this.gpbRunningStatus.Controls.Add(this.btnCancelTournament);
-            this.gpbRunningStatus.Controls.Add(this.btnFinishTournament);
-            this.gpbRunningStatus.Controls.Add(this.btnStartTournament);
-            this.gpbRunningStatus.Location = new System.Drawing.Point(310, 395);
-            this.gpbRunningStatus.Name = "gpbRunningStatus";
-            this.gpbRunningStatus.Size = new System.Drawing.Size(261, 231);
-            this.gpbRunningStatus.TabIndex = 2;
-            this.gpbRunningStatus.TabStop = false;
-            this.gpbRunningStatus.Text = "Set Running Status";
+            this.gpbModifyTournament.Controls.Add(this.btnAdjustTournament);
+            this.gpbModifyTournament.Controls.Add(this.btnDeleteTournament);
+            this.gpbModifyTournament.Location = new System.Drawing.Point(310, 395);
+            this.gpbModifyTournament.Name = "gpbModifyTournament";
+            this.gpbModifyTournament.Size = new System.Drawing.Size(261, 231);
+            this.gpbModifyTournament.TabIndex = 2;
+            this.gpbModifyTournament.TabStop = false;
+            this.gpbModifyTournament.Text = "Modify Tournament";
             // 
-            // btnCancelTournament
+            // btnAdjustTournament
             // 
-            this.btnCancelTournament.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnCancelTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
-            this.btnCancelTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
-            this.btnCancelTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCancelTournament.ForeColor = System.Drawing.Color.Red;
-            this.btnCancelTournament.Location = new System.Drawing.Point(51, 151);
-            this.btnCancelTournament.Name = "btnCancelTournament";
-            this.btnCancelTournament.Size = new System.Drawing.Size(165, 41);
-            this.btnCancelTournament.TabIndex = 28;
-            this.btnCancelTournament.Text = "Cancel Tournament";
-            this.btnCancelTournament.UseVisualStyleBackColor = false;
+            this.btnAdjustTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnAdjustTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.btnAdjustTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnAdjustTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdjustTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAdjustTournament.ForeColor = System.Drawing.Color.DarkOrange;
+            this.btnAdjustTournament.Location = new System.Drawing.Point(49, 57);
+            this.btnAdjustTournament.Name = "btnAdjustTournament";
+            this.btnAdjustTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnAdjustTournament.TabIndex = 24;
+            this.btnAdjustTournament.Text = "Adjust Tournament";
+            this.btnAdjustTournament.UseVisualStyleBackColor = false;
+            this.btnAdjustTournament.Click += new System.EventHandler(this.btnAdjustTournament_Click);
             // 
-            // btnFinishTournament
+            // btnDeleteTournament
             // 
-            this.btnFinishTournament.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnFinishTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.btnFinishTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
-            this.btnFinishTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFinishTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnFinishTournament.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnFinishTournament.Location = new System.Drawing.Point(51, 104);
-            this.btnFinishTournament.Name = "btnFinishTournament";
-            this.btnFinishTournament.Size = new System.Drawing.Size(165, 41);
-            this.btnFinishTournament.TabIndex = 26;
-            this.btnFinishTournament.Text = "Finish Tournament";
-            this.btnFinishTournament.UseVisualStyleBackColor = false;
-            // 
-            // btnStartTournament
-            // 
-            this.btnStartTournament.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnStartTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
-            this.btnStartTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnStartTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnStartTournament.ForeColor = System.Drawing.Color.Green;
-            this.btnStartTournament.Location = new System.Drawing.Point(51, 57);
-            this.btnStartTournament.Name = "btnStartTournament";
-            this.btnStartTournament.Size = new System.Drawing.Size(165, 41);
-            this.btnStartTournament.TabIndex = 26;
-            this.btnStartTournament.Text = "Start Tournament";
-            this.btnStartTournament.UseVisualStyleBackColor = false;
-            this.btnStartTournament.Click += new System.EventHandler(this.btnStartTournament_Click);
+            this.btnDeleteTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnDeleteTournament.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.btnDeleteTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnDeleteTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDeleteTournament.ForeColor = System.Drawing.Color.Red;
+            this.btnDeleteTournament.Location = new System.Drawing.Point(49, 151);
+            this.btnDeleteTournament.Name = "btnDeleteTournament";
+            this.btnDeleteTournament.Size = new System.Drawing.Size(165, 41);
+            this.btnDeleteTournament.TabIndex = 25;
+            this.btnDeleteTournament.Text = "Delete Tournament";
+            this.btnDeleteTournament.UseVisualStyleBackColor = false;
+            this.btnDeleteTournament.Click += new System.EventHandler(this.btnDeleteTournament_Click);
             // 
             // gpbTournamentCreation
             // 
-            this.gpbTournamentCreation.Controls.Add(this.button2);
+            this.gpbTournamentCreation.Controls.Add(this.btnUpdateTournament);
             this.gpbTournamentCreation.Controls.Add(this.btnCreateTournament);
             this.gpbTournamentCreation.Controls.Add(this.label12);
             this.gpbTournamentCreation.Controls.Add(this.pickEndDate);
@@ -559,20 +545,21 @@
             this.gpbTournamentCreation.TabStop = false;
             this.gpbTournamentCreation.Text = "Create Tournament";
             // 
-            // button2
+            // btnUpdateTournament
             // 
-            this.button2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button2.ForeColor = System.Drawing.Color.DarkOrange;
-            this.button2.Location = new System.Drawing.Point(190, 487);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(159, 127);
-            this.button2.TabIndex = 24;
-            this.button2.Text = "Adjust Tournament";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnUpdateTournament.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnUpdateTournament.Enabled = false;
+            this.btnUpdateTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
+            this.btnUpdateTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnUpdateTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdateTournament.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnUpdateTournament.ForeColor = System.Drawing.Color.DarkOrange;
+            this.btnUpdateTournament.Location = new System.Drawing.Point(190, 489);
+            this.btnUpdateTournament.Name = "btnUpdateTournament";
+            this.btnUpdateTournament.Size = new System.Drawing.Size(159, 127);
+            this.btnUpdateTournament.TabIndex = 26;
+            this.btnUpdateTournament.Text = "Adjust Tournament";
+            this.btnUpdateTournament.UseVisualStyleBackColor = false;
             // 
             // btnCreateTournament
             // 
@@ -838,7 +825,6 @@
             // 
             // dgvActiveTournaments
             // 
-            this.dgvActiveTournaments.AllowDrop = true;
             this.dgvActiveTournaments.AllowUserToAddRows = false;
             this.dgvActiveTournaments.AllowUserToDeleteRows = false;
             this.dgvActiveTournaments.AutoGenerateColumns = false;
@@ -853,9 +839,11 @@
             this.systemDataGridViewTextBoxColumn});
             this.dgvActiveTournaments.DataSource = this.tournamentBindingSource;
             this.dgvActiveTournaments.Location = new System.Drawing.Point(3, 35);
+            this.dgvActiveTournaments.MultiSelect = false;
             this.dgvActiveTournaments.Name = "dgvActiveTournaments";
             this.dgvActiveTournaments.ReadOnly = true;
             this.dgvActiveTournaments.RowTemplate.Height = 25;
+            this.dgvActiveTournaments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvActiveTournaments.Size = new System.Drawing.Size(367, 381);
             this.dgvActiveTournaments.TabIndex = 7;
             // 
@@ -963,6 +951,7 @@
             this.btnGenerateMatches.TabIndex = 3;
             this.btnGenerateMatches.Text = "Generate Matches";
             this.btnGenerateMatches.UseVisualStyleBackColor = false;
+            this.btnGenerateMatches.Click += new System.EventHandler(this.btnGenerateMatches_Click);
             // 
             // dgvTournamentMatches
             // 
@@ -1214,10 +1203,10 @@
             this.panel1.PerformLayout();
             this.tabsControl.ResumeLayout(false);
             this.tabTournaments.ResumeLayout(false);
-            this.gpbRegistrations.ResumeLayout(false);
+            this.gpbTournamentUpdateStatus.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).EndInit();
-            this.gpbRunningStatus.ResumeLayout(false);
+            this.gpbModifyTournament.ResumeLayout(false);
             this.gpbTournamentCreation.ResumeLayout(false);
             this.gpbTournamentCreation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).EndInit();
@@ -1247,7 +1236,7 @@
         private TabPage tabMatches;
         private TabPage tabAccounts;
         private GroupBox gpbTournamentCreation;
-        private GroupBox gpbRunningStatus;
+        private GroupBox gpbModifyTournament;
         private TextBox inputSport;
         private RichTextBox inputDescription;
         private TextBox inputTitle;
@@ -1277,7 +1266,7 @@
         private Button btnDeleteTournament;
         private Button btnStartTournament;
         private Button btnFinishTournament;
-        private Button button2;
+        private Button btnAdjustTournament;
         private DataGridView dgvTournamentMatches;
         private BindingSource matchBindingSource;
         private DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn1;
@@ -1326,9 +1315,8 @@
         private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn systemDataGridViewTextBoxColumn1;
-        private GroupBox gpbRegistrations;
-        private Button btnCloseRegistrations;
-        private Button btnOpenRegistrations;
+        private GroupBox gpbTournamentUpdateStatus;
         private Button btnCancelTournament;
+        private Button btnUpdateTournament;
     }
 }

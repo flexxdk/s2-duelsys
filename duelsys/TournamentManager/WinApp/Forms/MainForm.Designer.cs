@@ -1269,7 +1269,6 @@
         private Button btnAdjustTournament;
         private DataGridView dgvTournamentMatches;
         private BindingSource matchBindingSource;
-        private DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn1;
         private TextBox inputPassword;
         private ComboBox comboRoles;
         private TextBox inputEmail;

@@ -28,19 +28,22 @@ namespace BLL.Registries
 
                 if (dto != null)
                 {
-                    if (encryptor.Verify(creds.Password!, dto.Password, dto.Salt))
+                    if (dto.Role != UserRole.Staff.ToString() || dto.Role != UserRole.Administrator.ToString())
                     {
-                        return new User()
+                        if (encryptor.Verify(creds.Password!, dto.Password, dto.Salt))
                         {
-                            ID = dto.ID,
-                            Name = dto.Name,
-                            SurName = dto.SurName,
-                            Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
-                            Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
-                            Email = dto.Email,
-                            Password = dto.Password,
-                            Salt = dto.Salt
-                        };
+                            return new User()
+                            {
+                                ID = dto.ID,
+                                Name = dto.Name,
+                                SurName = dto.SurName,
+                                Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
+                                Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
+                                Email = dto.Email,
+                                Password = dto.Password,
+                                Salt = dto.Salt
+                            };
+                        }
                     }
                 }
                 return null;

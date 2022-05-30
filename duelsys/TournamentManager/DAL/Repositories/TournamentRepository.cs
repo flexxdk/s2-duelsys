@@ -32,7 +32,39 @@ namespace DAL.Repositories
 
         public TournamentDTO? GetByID(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "SELECT * FROM syn_tournaments;";
+                DataRow? row = ExecuteReader(new MySqlCommand(query)).Rows[0];
+                if(row != null) return InstantiateDTO(row);
+                else return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<TournamentDTO> FilterTournamentsOnStatus(string filter)
+        {
+            try
+            {
+                string query = "SELECT * FROM syn_tournaments WHERE FIND_IN_SET(status, @Filter) != 0;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@Filter", filter);
+                DataTable results = ExecuteReader(cmd);
+                List<TournamentDTO> tournaments = new List<TournamentDTO>();
+                foreach (DataRow row in results.Rows)
+                {
+                    tournaments.Add(InstantiateDTO(row));
+                }
+                return tournaments;
+
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public int Create(TournamentDTO dto)
@@ -153,24 +185,22 @@ namespace DAL.Repositories
 
         private TournamentDTO InstantiateDTO(DataRow row)
         {
-#pragma warning disable CS8604 // Possible null reference argument.
             return new TournamentDTO(
                 Convert.ToInt32(row["id"]),
-                row["title"].ToString(),
-                row["description"].ToString(),
-                row["sport"].ToString(),
-                row["contestant_type"].ToString(),
-                row["scoring"].ToString(),
-                row["city"].ToString(),
-                row["address"].ToString(),
+                row["title"].ToString()!,
+                row["description"].ToString()!,
+                row["sport"].ToString()!,
+                row["contestant_type"].ToString()!,
+                row["scoring"].ToString()!,
+                row["city"].ToString()!,
+                row["address"].ToString()!,
                 Convert.ToInt32(row["min_contestants"]),
                 Convert.ToInt32(row["max_contestants"]),
-                row["start_date"].ToString(),
-                row["end_date"].ToString(),
-                row["status"].ToString(),
-                row["system"].ToString()
+                row["start_date"].ToString()!,
+                row["end_date"].ToString()!,
+                row["status"].ToString()!,
+                row["system"].ToString()!
                 );
-#pragma warning restore CS8604 // Possible null reference argument.
         }
     }
 }

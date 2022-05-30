@@ -86,6 +86,25 @@ namespace BLL.Registries
                 if (found) 
                 {
                     tournaments[tournament.ID] = tournament;
+                    repository.Update(InstantiateDTO(tournament));
+                }
+                return found;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public bool UpdateTournamentStatus(int id, TournamentStatus status)
+        {
+            try
+            {
+                bool found = tournaments.ContainsKey(id);
+                if (found)
+                {
+                    tournaments[id].Status = status;
+                    repository.Update(InstantiateDTO(tournaments[id]));
                 }
                 return found;
             }
@@ -113,6 +132,20 @@ namespace BLL.Registries
             {
                 throw;
             }
+        }
+
+        public IEnumerable<Tournament> GetActiveTournaments()
+        {
+            IList<Tournament> tournaments = new List<Tournament>();
+            StringBuilder filter = new StringBuilder();
+            filter.Append(TournamentStatus.ClosedForReg.ToString());
+            filter.Append(',');
+            filter.Append(TournamentStatus.Running.ToString());
+            foreach (TournamentDTO dto in repository.FilterTournamentsOnStatus(filter.ToString()))
+            {
+                tournaments.Add(InstantiateTournament(dto));
+            }
+            return tournaments;
         }
 
         public IList<Contestant> GetLeaderboard(int tournamentID)
@@ -168,6 +201,14 @@ namespace BLL.Registries
                 System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
             };
         }
+
+        private TournamentDTO InstantiateDTO(Tournament obj)
+        {
+            return new TournamentDTO(obj.ID, obj.Title, obj.Description, obj.Sport, obj.Type.ToString(), obj.Scoring, obj.City, obj.Address, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
+        }
+
+
+
         private bool AddToDictionary(Tournament tournament)
         {
             return tournaments.TryAdd(tournament.ID, tournament);

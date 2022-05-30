@@ -83,6 +83,7 @@ namespace WinApp.Forms
         private void RefreshTournaments()
         {
             dgvTournaments.DataSource = tournamentRegistry.GetAll(false);
+            dgvActiveTournaments.DataSource = tournamentRegistry.GetActiveTournaments();
         }
 
         private void btnCreateTournament_Click(object sender, EventArgs e)
@@ -159,14 +160,21 @@ namespace WinApp.Forms
             }
         }
 
-        private void btnStartTournament_Click(object sender, EventArgs e)
+        private void btnOpenRegistrations_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvActiveTournaments.SelectedRows[0] != null)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "TournamentID");
-                Tournament tournament = tournamentRegistry.GetByID(id)!;
-                tournament.Status = TournamentStatus.Running;
-                tournamentRegistry.UpdateTournament(tournament);
+                tournamentRegistry.UpdateTournamentStatus(id, TournamentStatus.Running);
+            }
+        }
+
+        private void btnStartTournament_Click(object sender, EventArgs e)
+        {
+            if (dgvActiveTournaments.SelectedRows[0] != null)
+            {
+                int id = GetIDFromDataGridView(dgvTournaments, "TournamentID");
+                tournamentRegistry.UpdateTournamentStatus(id, TournamentStatus.Running);
             }
         }
 

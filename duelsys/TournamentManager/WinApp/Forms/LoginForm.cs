@@ -47,7 +47,7 @@ namespace WinApp.Forms
                 }
                 else
                 {
-                    MessageBox.Show("The credentials credentials are incorrect.");
+                    MessageBox.Show("Could not find an account with the entered credentials.");
                 }
             }
             catch(Exception ex)

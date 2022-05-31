@@ -1,4 +1,8 @@
-﻿using DTO;
+﻿using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+
+using DTO;
 using BLL.Objects.Users;
 using BLL.Enums;
 using DAL.Interfaces;
@@ -23,6 +27,7 @@ namespace BLL.Registries
                 default:
                 case TournamentSystem.RoundRobin:
                     matches = RoundRobin(tournamentID, contestants);
+                    //matches = RecursiveRoundRobin(0, tournamentID, contestants.ToList());
                     break;
 
                 case TournamentSystem.SingleElimination:
@@ -59,6 +64,20 @@ namespace BLL.Registries
                 }
             }
 
+            return generated;
+        }
+
+        public IEnumerable<MatchDTO> RecursiveRoundRobin(int start, int tournamentID, IList<Contestant> contestants)
+        {
+            List<MatchDTO> generated = new List<MatchDTO>();
+            if(start + 1 <= contestants.Count())
+            {
+                for(int i = start + 1; i < contestants.Count(); i++)
+                {
+                    generated.Add(new MatchDTO(0, tournamentID, false, contestants[start].ID, contestants[start].Name, 0, contestants[i].ID, contestants[i].Name, 0));
+                }
+                generated.AddRange(RecursiveRoundRobin(start + 1, tournamentID, contestants));
+            }
             return generated;
         }
 

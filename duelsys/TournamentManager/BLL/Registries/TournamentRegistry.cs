@@ -119,7 +119,7 @@ namespace BLL.Registries
         public IEnumerable<Tournament> GetActiveTournaments()
         {
             IList<Tournament> tournaments = new List<Tournament>();
-            foreach (TournamentDTO dto in repository.FilterTournamentsOnStatus(TournamentStatus.Planned.ToString()))
+            foreach (TournamentDTO dto in repository.FilterTournamentsOnStatus(TournamentStatus.Running.ToString()))
             {
                 tournaments.Add(InstantiateTournament(dto));
             }

@@ -99,6 +99,7 @@
             this.btnPlayMatch = new System.Windows.Forms.Button();
             this.btnGenerateMatches = new System.Windows.Forms.Button();
             this.dgvTournamentMatches = new System.Windows.Forms.DataGridView();
+            this.colMatchID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.homeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.awayNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -218,6 +219,7 @@
             this.NavLogout.Text = "Log Out";
             this.NavLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.NavLogout.UseVisualStyleBackColor = false;
+            this.NavLogout.Click += new System.EventHandler(this.NavLogout_Click);
             // 
             // NavRegistration
             // 
@@ -359,7 +361,7 @@
             // 
             this.btnFinishTournament.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnFinishTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.btnFinishTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnFinishTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Bisque;
             this.btnFinishTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFinishTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnFinishTournament.ForeColor = System.Drawing.Color.DarkOrange;
@@ -471,7 +473,7 @@
             // 
             this.gpbModifyTournament.Controls.Add(this.btnAdjustTournament);
             this.gpbModifyTournament.Controls.Add(this.btnDeleteTournament);
-            this.gpbModifyTournament.Location = new System.Drawing.Point(310, 395);
+            this.gpbModifyTournament.Location = new System.Drawing.Point(300, 395);
             this.gpbModifyTournament.Name = "gpbModifyTournament";
             this.gpbModifyTournament.Size = new System.Drawing.Size(261, 231);
             this.gpbModifyTournament.TabIndex = 2;
@@ -482,7 +484,7 @@
             // 
             this.btnAdjustTournament.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnAdjustTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.btnAdjustTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnAdjustTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Bisque;
             this.btnAdjustTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdjustTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAdjustTournament.ForeColor = System.Drawing.Color.DarkOrange;
@@ -550,11 +552,11 @@
             this.btnUpdateTournament.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnUpdateTournament.Enabled = false;
             this.btnUpdateTournament.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.btnUpdateTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MistyRose;
+            this.btnUpdateTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Bisque;
             this.btnUpdateTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateTournament.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnUpdateTournament.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnUpdateTournament.Location = new System.Drawing.Point(190, 489);
+            this.btnUpdateTournament.Location = new System.Drawing.Point(190, 487);
             this.btnUpdateTournament.Name = "btnUpdateTournament";
             this.btnUpdateTournament.Size = new System.Drawing.Size(159, 127);
             this.btnUpdateTournament.TabIndex = 26;
@@ -942,7 +944,6 @@
             // btnGenerateMatches
             // 
             this.btnGenerateMatches.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnGenerateMatches.Enabled = false;
             this.btnGenerateMatches.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
             this.btnGenerateMatches.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnGenerateMatches.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -965,6 +966,7 @@
             this.dgvTournamentMatches.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvTournamentMatches.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTournamentMatches.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colMatchID,
             this.homeNameDataGridViewTextBoxColumn,
             this.awayNameDataGridViewTextBoxColumn,
             this.homeScoreDataGridViewTextBoxColumn,
@@ -979,6 +981,14 @@
             this.dgvTournamentMatches.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTournamentMatches.Size = new System.Drawing.Size(559, 381);
             this.dgvTournamentMatches.TabIndex = 0;
+            // 
+            // colMatchID
+            // 
+            this.colMatchID.DataPropertyName = "ID";
+            this.colMatchID.HeaderText = "ID";
+            this.colMatchID.Name = "colMatchID";
+            this.colMatchID.ReadOnly = true;
+            this.colMatchID.Visible = false;
             // 
             // homeNameDataGridViewTextBoxColumn
             // 
@@ -1315,6 +1325,7 @@
         private GroupBox gpbTournamentUpdateStatus;
         private Button btnCancelTournament;
         private Button btnUpdateTournament;
+        private DataGridViewTextBoxColumn colMatchID;
         private DataGridViewTextBoxColumn homeNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn awayNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn homeScoreDataGridViewTextBoxColumn;

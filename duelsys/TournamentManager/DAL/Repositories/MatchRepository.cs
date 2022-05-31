@@ -15,7 +15,13 @@ namespace DAL.Repositories
         {
             try
             {
-                string query = "SELECT * FROM syn_matches WHERE id = @ID;";
+                string query = @"SELECT m.*, CONCAT(home.name, ' ', home.surname) AS home_name, CONCAT(away.name, ' ', away.surname) AS away_name
+                                    FROM syn_matches AS m
+                                    INNER JOIN syn_accounts AS home
+                                    ON home.id = m.home_id
+                                    INNER JOIN syn_accounts AS away
+                                    ON away.id = m.away_id
+                                    WHERE m.id = @ID;";
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@ID", id);
                 DataRow? row = ExecuteReader(cmd).Rows[0];
@@ -23,7 +29,7 @@ namespace DAL.Repositories
             }
             catch
             {
-                return null;
+                throw;
             }
         }
 
@@ -57,7 +63,7 @@ namespace DAL.Repositories
         {
             try
             {
-                string query = @"SELECT m.*, CONCAT(home.name, home.surname) AS home_name, CONCAT(away.name, away.surname) AS away_name
+                string query = @"SELECT m.*, CONCAT(home.name, ' ', home.surname) AS home_name, CONCAT(away.name, ' ', away.surname) AS away_name
                                     FROM syn_matches AS m
                                     INNER JOIN syn_accounts AS home
                                     ON home.id = m.home_id
@@ -84,12 +90,12 @@ namespace DAL.Repositories
         {
             try
             {
-                string query = @"UPDATE syn_matches (home_score, away_score, isfinished)
-                                    VALUES (@HomeScore, @AwayScore, @IsFinished);";
+                string query = "UPDATE syn_matches SET home_score = @HomeScore, away_score = @AwayScore, is_finished = @IsFinished WHERE id = @ID;";
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@HomeScore", dto.HomeScore);
                 cmd.Parameters.AddWithValue("@AwayScore", dto.AwayScore);
                 cmd.Parameters.AddWithValue("@IsFinished", dto.IsFinished);
+                cmd.Parameters.AddWithValue("@ID", dto.ID);
                 return ExecuteNonQuery(cmd);
             }
             catch

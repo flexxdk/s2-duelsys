@@ -12,6 +12,8 @@ namespace WinApp.Forms
 {
     public partial class MainForm : Form
     {
+        private MatchForm? matchForm;
+
         private TournamentRegistry tournamentRegistry;
         private UserRegistry userRegistry;
         private MatchRegistry matchRegistry;
@@ -360,7 +362,34 @@ namespace WinApp.Forms
 
         private void btnPlayMatch_Click(object sender, EventArgs e)
         {
+            if (dgvTournamentMatches.SelectedRows[0] != null)
+            {
+                int id = GetIDFromDataGridView(dgvTournamentMatches, "colMatchID");
+                Match? match = matchRegistry.GetByID(id);
+                if(match != null && !match.IsFinished)
+                {
+                    matchForm = new MatchForm(match);
+                    matchForm.ShowDialog();
 
+                    if (matchForm.DialogResult == DialogResult.OK)
+                    {
+                        matchRegistry.SaveResults(matchForm.CurrentMatch);
+                        MessageBox.Show("Match results saved!");
+                        RefreshMatches(match.TournamentID);
+                    }
+                    else
+                    {
+
+                    }
+
+                    matchForm.Dispose();
+                }
+            }
+        }
+
+        private void NavLogout_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

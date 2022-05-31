@@ -14,7 +14,7 @@ namespace BLL.Registries
         public MatchRegistry(IMatchRepository repository)
         {
             this.repository = repository;
-            matchGenerator = new MatchGenerator();
+            matchGenerator = new MatchGenerator(repository);
         }
 
         public Match? GetByID(int matchID)
@@ -71,15 +71,7 @@ namespace BLL.Registries
 
         public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
         {
-            IEnumerable<MatchDTO> matches = repository.GetMatches(tournamentID);
-            switch (system)
-            {
-                //RoundRobin should always be default
-                default:
-                    return !matches.Any();
-                case TournamentSystem.SingleElimination:
-                    return !matches.Any() || (!matches.Any(match => match.IsFinished == false) && matches.Count() > 1);
-            }
+            return matchGenerator.CheckCanGenerate(tournamentID, system);
         }
 
         public void SaveResults(Match match)

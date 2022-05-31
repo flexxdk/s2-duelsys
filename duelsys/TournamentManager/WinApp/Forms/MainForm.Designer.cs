@@ -1198,7 +1198,7 @@
             this.Controls.Add(this.tabsControl);
             this.Controls.Add(this.navPanel);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = " ";
             this.navPanel.ResumeLayout(false);
             this.navPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

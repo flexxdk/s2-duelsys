@@ -1,12 +1,18 @@
 ﻿using DTO;
 using BLL.Objects.Users;
 using BLL.Enums;
+using DAL.Interfaces;
 
 namespace BLL.Registries
 {
     public class MatchGenerator
     {
-        public MatchGenerator() { }
+        private IMatchRepository repository;
+
+        public MatchGenerator(IMatchRepository repository) 
+        {
+            this.repository = repository;
+        }
 
         public IEnumerable<MatchDTO> GenerateMatches(TournamentSystem system, int tournamentID, IEnumerable<Contestant> contestants)
         {
@@ -24,6 +30,19 @@ namespace BLL.Registries
                     break;
             }
             return matches;
+        }
+
+        public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
+        {
+            IEnumerable<MatchDTO> matches = repository.GetMatches(tournamentID);
+            switch (system)
+            {
+                //RoundRobin should always be default
+                default:
+                    return !matches.Any();
+                case TournamentSystem.SingleElimination:
+                    return !matches.Any() || (!matches.Any(match => match.IsFinished == false) && matches.Count() > 1);
+            }
         }
 
         public IEnumerable<MatchDTO> RoundRobin(int tournamentID, IEnumerable<Contestant> contestants)

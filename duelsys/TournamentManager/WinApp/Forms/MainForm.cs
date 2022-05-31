@@ -323,18 +323,27 @@ namespace WinApp.Forms
                 Tournament? tournament = tournamentRegistry.GetByID(id);
                 if (tournament != null)
                 {
-                    bool result = matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(id));
-                    if (result)
+                    bool possible = matchRegistry.CheckCanGenerate(tournament.ID, tournament.System);
+                    if (possible)
                     {
-                        MessageBox.Show("Matches have been generated");
-                        RefreshMatches(id);
+                        bool result = matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(id));
+                        if (result)
+                        {
+                            MessageBox.Show("Matches have been generated");
+                            RefreshMatches(id);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Could not generate matches.");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Could not generate matches because not all matches were finished.");
+                        MessageBox.Show("Cannot generate matches");
                     }
                 }
             }
+            btnGenerateMatches.Enabled = false;
         }
 
         private void dgvActiveTournaments_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -342,8 +351,16 @@ namespace WinApp.Forms
             if (dgvActiveTournaments.SelectedRows[0] != null)
             {
                 int id = GetIDFromDataGridView(dgvActiveTournaments, "iDDataGridViewTextBoxColumn");
+                Tournament? tournament = tournamentRegistry.GetByID(id);
+                if (tournament != null) btnGenerateMatches.Enabled = matchRegistry.CheckCanGenerate(tournament.ID, tournament.System);
+                else btnGenerateMatches.Enabled = false;
                 RefreshMatches(id);
             }
+        }
+
+        private void btnPlayMatch_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

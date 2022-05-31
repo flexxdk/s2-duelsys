@@ -29,6 +29,10 @@ namespace DAL.Repositories
                     results.Rows[0]["salt"].ToString()!
                     );
             }
+            catch(MySqlException)
+            {
+                throw;
+            }
             catch
             {
                 return null;

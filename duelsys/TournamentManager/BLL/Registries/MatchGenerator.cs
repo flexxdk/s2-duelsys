@@ -10,6 +10,7 @@ namespace BLL.Registries
 
         public IEnumerable<MatchDTO> GenerateMatches(TournamentSystem system, int tournamentID, IEnumerable<Contestant> contestants)
         {
+
             IEnumerable<MatchDTO> matches;
             switch (system)
             {
@@ -25,24 +26,24 @@ namespace BLL.Registries
             return matches;
         }
 
-        private IEnumerable<MatchDTO> RoundRobin(int tournamentID, IEnumerable<Contestant> contestants)
+        public IEnumerable<MatchDTO> RoundRobin(int tournamentID, IEnumerable<Contestant> contestants)
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 
             Queue<Contestant> contestantQueue = new Queue<Contestant>(contestants);
             while(contestantQueue.Count > 0)
             {
-                Contestant contestantHome = contestantQueue.Dequeue();
-                foreach(Contestant contestant in contestantQueue)
+                Contestant home = contestantQueue.Dequeue();
+                foreach(Contestant away in contestantQueue)
                 {
-                    generated.Add(new MatchDTO(0, tournamentID, false, contestantHome.ID, contestantHome.Name, 0, contestant.ID, contestant.Name, 0));
+                    generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name, 0, away.ID, away.Name, 0));
                 }
             }
 
             return generated;
         }
 
-        private IEnumerable<MatchDTO> SingleElimination(int tournamentID, IEnumerable<Contestant> contestants)
+        public IEnumerable<MatchDTO> SingleElimination(int tournamentID, IEnumerable<Contestant> contestants)
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 

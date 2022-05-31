@@ -2,6 +2,7 @@
 using BLL.Objects.Users;
 using DAL.Interfaces;
 using DTO;
+using BLL.Enums;
 
 namespace BLL.Registries
 {
@@ -60,17 +61,25 @@ namespace BLL.Registries
 
         public bool GenerateMatches(Tournament tournament, IEnumerable<Contestant> contestants)
         {
-            IEnumerable<Match> currentMatches = GetMatches(tournament.ID);
-            if(currentMatches.Count() == 0 || !currentMatches.Any(c => c.IsFinished == false))
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            foreach (MatchDTO match in matches)
             {
-                List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
-                foreach (MatchDTO match in matches)
-                {
-                    repository.Create(match);
-                }
-                return true;
+                repository.Create(match);
             }
-            return false;
+            return matches.Any();
+        }
+
+        public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
+        {
+            IEnumerable<MatchDTO> matches = repository.GetMatches(tournamentID);
+            switch (system)
+            {
+                //RoundRobin should always be default
+                default:
+                    return !matches.Any();
+                case TournamentSystem.SingleElimination:
+                    return !matches.Any() || (!matches.Any(match => match.IsFinished == false) && matches.Count() > 1);
+            }
         }
 
         public void SaveResults(Match match)

@@ -4,6 +4,7 @@ using DTO.Users;
 using BLL.Encryption;
 using BLL.Validation;
 using BLL.Enums;
+using System.Security.Authentication;
 
 namespace BLL.Registries
 {
@@ -18,40 +19,60 @@ namespace BLL.Registries
             this.encryptor = new Encryptor();
         }
 
-        public User? VerifyCredentials(Credentials creds)
+        public User AuthenticateForm(Credentials creds)
         {
             try
             {
                 ValidateModel(creds);
 
-                UserDTO? dto = repository.GetCredentials(creds.Email!);
+                User user = VerifyCredentials(creds.Email!, creds.Password!);
 
-                if (dto != null)
+                if (user.Role == UserRole.Staff || user.Role == UserRole.Administrator)
                 {
-                    if (dto.Role != UserRole.Staff.ToString() || dto.Role != UserRole.Administrator.ToString())
-                    {
-                        if (encryptor.Verify(creds.Password!, dto.Password, dto.Salt))
-                        {
-                            return new User()
-                            {
-                                ID = dto.ID,
-                                Name = dto.Name,
-                                SurName = dto.SurName,
-                                Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
-                                Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
-                                Email = dto.Email,
-                                Password = dto.Password,
-                                Salt = dto.Salt
-                            };
-                        }
-                    }
+                    return user;
                 }
-                return null;
+                throw new AuthenticationException();
             }
             catch
             {
                 throw;
             }
+        }
+
+        public User AuthenticateWebsite(Credentials creds)
+        {
+            try
+            {
+                return VerifyCredentials(creds.Email!, creds.Password!);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private User VerifyCredentials(string email, string password)
+        {
+            UserDTO? dto = repository.GetCredentials(email);
+
+            if (dto != null)
+            {
+                if (encryptor.Verify(password, dto.Password, dto.Salt))
+                {
+                    return new User()
+                    {
+                        ID = dto.ID,
+                        Name = dto.Name,
+                        SurName = dto.SurName,
+                        Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
+                        Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
+                        Email = dto.Email,
+                        Password = dto.Password,
+                        Salt = dto.Salt
+                    };
+                }
+            }
+            throw new AuthenticationException();
         }
     }
 }

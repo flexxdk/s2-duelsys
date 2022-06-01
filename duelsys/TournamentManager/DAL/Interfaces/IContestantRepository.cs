@@ -1,5 +1,4 @@
-﻿using DAL.Interfaces.Generic;
-using DTO.Users;
+﻿using DTO.Users;
 using DTO;
 
 namespace DAL.Interfaces

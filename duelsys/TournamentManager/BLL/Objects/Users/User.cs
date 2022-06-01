@@ -15,8 +15,8 @@ namespace BLL.Objects.Users
 
         [Required(ErrorMessage = "Specify team type")]
         [Display(Name = "Team Type")]
-        [EnumDataType(typeof(TeamType))]
-        public TeamType Type { get; set; }
+        [EnumDataType(typeof(ContestantType))]
+        public ContestantType Type { get; set; }
 
         [Required(ErrorMessage = "Invalid email address")]
         [Display(Name = "Email address")]

@@ -1,4 +1,7 @@
-﻿using DAL.Interfaces;
+﻿using System.Data;
+using MySql.Data.MySqlClient;
+
+using DAL.Interfaces;
 using DTO;
 using DTO.Users;
 
@@ -10,32 +13,110 @@ namespace DAL.Repositories
 
         public MatchDTO? GetByID(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"SELECT m.*, CONCAT(home.name, ' ', home.surname) AS home_name, CONCAT(away.name, ' ', away.surname) AS away_name
+                                    FROM syn_matches AS m
+                                    INNER JOIN syn_accounts AS home
+                                    ON home.id = m.home_id
+                                    INNER JOIN syn_accounts AS away
+                                    ON away.id = m.away_id
+                                    WHERE m.id = @ID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@ID", id);
+                DataRow? row = ExecuteReader(cmd).Rows[0];
+                return InstantiateDTO(row);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public int Create(MatchDTO obj)
+        public int Create(MatchDTO dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"INSERT INTO syn_matches (
+                                    tournament_id, home_id, home_score, away_id, away_score, is_finished
+                                ) 
+                                VALUES (
+                                    @TournamentID, @HomeID, @HomeScore, @AwayID, @AwayScore, @IsFinished
+                                );";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@TournamentID", dto.TournamentID);
+                cmd.Parameters.AddWithValue("@HomeID", dto.HomeID);
+                cmd.Parameters.AddWithValue("@HomeScore", dto.HomeScore);
+                cmd.Parameters.AddWithValue("@AwayID", dto.AwayID);
+                cmd.Parameters.AddWithValue("@AwayScore", dto.AwayScore);
+                cmd.Parameters.AddWithValue("@IsFinished", dto.IsFinished);
+                ExecuteNonQuery(cmd);
+                return Convert.ToInt32(cmd.LastInsertedId);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public IList<MatchDTO> GetMatches(int tournamentID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"SELECT m.*, CONCAT(home.name, ' ', home.surname) AS home_name, CONCAT(away.name, ' ', away.surname) AS away_name
+                                    FROM syn_matches AS m
+                                    INNER JOIN syn_accounts AS home
+                                    ON home.id = m.home_id
+                                    INNER JOIN syn_accounts AS away
+                                    ON away.id = m.away_id
+                                    WHERE m.tournament_id = @TournamentID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@TournamentID", tournamentID);
+                DataTable results = ExecuteReader(cmd);
+                List<MatchDTO> matches = new List<MatchDTO>();
+                foreach(DataRow row in results.Rows)
+                {
+                    matches.Add(InstantiateDTO(row));
+                }
+                return matches;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public IList<MatchDTO> Load()
+        public int Update(MatchDTO dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "UPDATE syn_matches SET home_score = @HomeScore, away_score = @AwayScore, is_finished = @IsFinished WHERE id = @ID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@HomeScore", dto.HomeScore);
+                cmd.Parameters.AddWithValue("@AwayScore", dto.AwayScore);
+                cmd.Parameters.AddWithValue("@IsFinished", dto.IsFinished);
+                cmd.Parameters.AddWithValue("@ID", dto.ID);
+                return ExecuteNonQuery(cmd);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public int Update(MatchDTO obj)
+        private MatchDTO InstantiateDTO(DataRow row)
         {
-            throw new NotImplementedException();
-        }
-
-        public IList<ContestantDTO> GetTournamentContestants(int tournamentID)
-        {
-            throw new NotImplementedException();
+            return new MatchDTO(
+                    Convert.ToInt32(row["id"]),
+                    Convert.ToInt32(row["tournament_id"]),
+                    Convert.ToBoolean(row["is_finished"]),
+                    Convert.ToInt32(row["home_id"]),
+                    row["home_name"].ToString()!,
+                    Convert.ToInt32(row["home_score"]),
+                    Convert.ToInt32(row["away_id"]),
+                    row["away_name"].ToString()!,
+                    Convert.ToInt32(row["away_score"])
+                );
         }
     }
 }

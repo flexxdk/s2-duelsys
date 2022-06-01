@@ -1,6 +1,8 @@
 ﻿using BLL.Objects;
+using BLL.Objects.Users;
 using DAL.Interfaces;
 using DTO;
+using BLL.Enums;
 
 namespace BLL.Registries
 {
@@ -12,7 +14,7 @@ namespace BLL.Registries
         public MatchRegistry(IMatchRepository repository)
         {
             this.repository = repository;
-            matchGenerator = new MatchGenerator();
+            matchGenerator = new MatchGenerator(repository);
         }
 
         public Match? GetByID(int matchID)
@@ -57,13 +59,19 @@ namespace BLL.Registries
             return matches;
         }
 
-        public void GenerateMatches(Tournament tournament)
+        public bool GenerateMatches(Tournament tournament, IEnumerable<Contestant> contestants)
         {
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, repository.GetTournamentContestants(tournament.ID)).ToList();
-            foreach(MatchDTO match in matches)
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            foreach (MatchDTO match in matches)
             {
                 repository.Create(match);
             }
+            return matches.Any();
+        }
+
+        public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
+        {
+            return matchGenerator.CheckCanGenerate(tournamentID, system);
         }
 
         public void SaveResults(Match match)

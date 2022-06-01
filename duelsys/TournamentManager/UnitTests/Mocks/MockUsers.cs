@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System;
+using System.Linq;
 
 using DAL.Interfaces;
 using DTO.Users;
@@ -21,15 +23,19 @@ namespace UnitTests.Mocks
             };
         }
 
-        public IList<UserDTO> Load()
-        {
-            return users;
-        }
-
-        public int Register(UserDTO dto)
+        public bool Register(UserDTO dto)
         {
             users.Add(new UserDTO(++idSeeder, dto.Name, dto.SurName, dto.Role, dto.Type, dto.Email, dto.Password, dto.Salt));
-            return idSeeder;
+            return true;
+        }
+        public bool CheckIfEmailExists(string email)
+        {
+            return users.Any(user => user.Email == email);
+        }
+
+        public UserDTO? GetByID(int id)
+        {
+            return users.Find(user => user.ID == id);
         }
     }
 }

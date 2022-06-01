@@ -16,11 +16,11 @@ namespace BLL.Registries
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
 
-        public TournamentRegistry(ITournamentRepository repository)
+        public TournamentRegistry(ITournamentRepository repository, bool preload = false)
         {
             this.repository = repository;
             this.tournaments = new Dictionary<int, Tournament>();
-            LoadTournaments();
+            if(preload) LoadTournaments();
         }
 
         public void LoadTournaments()
@@ -28,27 +28,13 @@ namespace BLL.Registries
             tournaments.Clear();
             foreach (TournamentDTO dto in repository.Load())
             {
-                tournaments.Add(dto.ID, new Tournament()
-                {
-                    ID = dto.ID,
-                    Title = dto.Title,
-                    Sport = dto.Sport,
-                    Scoring = dto.Scoring,
-                    City = dto.City,
-                    Address = dto.Address,
-                    MinContestants = dto.MinContestants,
-                    MaxContestants = dto.MaxContestants,
-                    StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
-                    EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
-                    Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
-                    System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
-                });
+                AddToDictionary(InstantiateTournament(dto));
             }
         }
 
-        public IList<Tournament> GetAll()
+        public IList<Tournament> GetAll(bool refresh)
         {
-            if (tournaments.Count == 0) LoadTournaments();
+            if (refresh) LoadTournaments();
             return tournaments.Values.ToList();
         }
 
@@ -58,6 +44,15 @@ namespace BLL.Registries
             {
                 return tournaments[id];
             }
+            else
+            {
+                TournamentDTO? dto = repository.GetByID(id);
+                if(dto != null)
+                {
+                    AddToDictionary(InstantiateTournament(dto));
+                    return tournaments[id];
+                }
+            }
             return null;
         }
 
@@ -66,10 +61,15 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(tournament);
-                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString()!, tournament.ToString()!, tournament.Status.ToString(), tournament.System.ToString());
-                tournament.ID = repository.Create(dto);
-                return tournaments.TryAdd(tournament.ID, tournament);
-                
+                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString("d"), tournament.EndDate.ToString("d"), tournament.Status.ToString(), tournament.System.ToString());
+                int ID = repository.Create(dto);
+                if(ID == 0)
+                {
+                    return false;
+                }
+                tournament.ID = ID;
+                return AddToDictionary(tournament);
+
             }
             catch
             {
@@ -86,6 +86,7 @@ namespace BLL.Registries
                 if (found) 
                 {
                     tournaments[tournament.ID] = tournament;
+                    repository.Update(InstantiateDTO(tournament));
                 }
                 return found;
             }
@@ -113,6 +114,16 @@ namespace BLL.Registries
             {
                 throw;
             }
+        }
+
+        public IEnumerable<Tournament> GetActiveTournaments()
+        {
+            IList<Tournament> tournaments = new List<Tournament>();
+            foreach (TournamentDTO dto in repository.FilterTournamentsOnStatus(TournamentStatus.Running.ToString()))
+            {
+                tournaments.Add(InstantiateTournament(dto));
+            }
+            return tournaments;
         }
 
         public IList<Contestant> GetLeaderboard(int tournamentID)
@@ -149,6 +160,38 @@ namespace BLL.Registries
             }
         }
 
+        private Tournament InstantiateTournament(TournamentDTO dto)
+        {
+            return new Tournament()
+            {
+                ID = dto.ID,
+                Title = dto.Title,
+                Description = dto.Description,
+                Sport = dto.Sport,
+                Scoring = dto.Scoring,
+                City = dto.City,
+                Address = dto.Address,
+                MinContestants = dto.MinContestants,
+                MaxContestants = dto.MaxContestants,
+                StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
+                EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
+                Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
+                System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
+            };
+        }
+
+        private TournamentDTO InstantiateDTO(Tournament obj)
+        {
+            return new TournamentDTO(obj.ID, obj.Title, obj.Description, obj.Sport, obj.Type.ToString(), obj.Scoring, obj.City, obj.Address, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
+        }
+
+
+
+        private bool AddToDictionary(Tournament tournament)
+        {
+            return tournaments.TryAdd(tournament.ID, tournament);
+        }
+
         private void ValidateModel(Tournament model)
         {
             IList<string> errors = new List<string>();
@@ -158,7 +201,7 @@ namespace BLL.Registries
             }
             if (model.StartDate > model.EndDate)
             {
-                errors.Add("Cannot set start date after end date");
+                errors.Add("End date must be set after start date");
             }
             base.ValidateModel(model, errors);
         }

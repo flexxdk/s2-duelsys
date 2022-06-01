@@ -20,8 +20,8 @@ namespace UnitTests.RegistryTests
         {
             TournamentRegistry tournamentRegistry = new TournamentRegistry(new MockTournament());
 
-            Assert.AreEqual(3, tournamentRegistry.GetAll().Count);
-            Assert.IsInstanceOfType(tournamentRegistry.GetAll().ToList(), typeof(List<Tournament>));
+            Assert.AreEqual(3, tournamentRegistry.GetAll(true).Count);
+            Assert.IsInstanceOfType(tournamentRegistry.GetAll(true).ToList(), typeof(List<Tournament>));
         }
 
         [TestMethod]
@@ -49,10 +49,11 @@ namespace UnitTests.RegistryTests
         {
             TournamentRegistry tournamentRegistry = new TournamentRegistry(new MockTournament());
 
-            int beforeCount = tournamentRegistry.GetAll().Count;
+            int beforeCount = tournamentRegistry.GetAll(true).Count;
             tournamentRegistry.CreateTournament(new Tournament()
             {
                 Title = "Average-Minton",
+                Description = "It's also badminton!",
                 Sport = "Badminton",
                 Scoring = "Points",
                 City = "Eindhoven",
@@ -64,10 +65,10 @@ namespace UnitTests.RegistryTests
                 Status = TournamentStatus.Planned,
                 System = TournamentSystem.RoundRobin
             });
-            int afterCount = tournamentRegistry.GetAll().Count;
+            int afterCount = tournamentRegistry.GetAll(true).Count;
 
             Assert.AreNotEqual(beforeCount, afterCount);
-            Assert.AreEqual(afterCount, tournamentRegistry.GetAll().Last().ID);
+            Assert.AreEqual(afterCount, tournamentRegistry.GetAll(true).Last().ID);
         }
 
         [TestMethod]
@@ -104,6 +105,7 @@ namespace UnitTests.RegistryTests
             {
                 ID = tournament!.ID,
                 Title = "Mario Kart Grand Prix",
+                Description = "Now it's karting!",
                 Sport = "eGames",
                 Scoring = "Cups",
                 City = "Eindhoven",
@@ -164,13 +166,13 @@ namespace UnitTests.RegistryTests
             TournamentRegistry tournamentRegistry = new TournamentRegistry(new MockTournament());
             int idToRemove = 1;
 
-            int beforeCount = tournamentRegistry.GetAll().Count;
+            int beforeCount = tournamentRegistry.GetAll(true).Count;
             bool result = tournamentRegistry.DeleteTournament(idToRemove);
-            int afterCount = tournamentRegistry.GetAll().Count;
+            int afterCount = tournamentRegistry.GetAll(true).Count;
 
             Assert.IsTrue(result);
             Assert.AreNotEqual(beforeCount, afterCount);
-            Assert.AreNotEqual(idToRemove, tournamentRegistry.GetAll().First().ID);
+            Assert.AreNotEqual(idToRemove, tournamentRegistry.GetAll(true).First().ID);
         }
 
         [TestMethod]
@@ -179,9 +181,9 @@ namespace UnitTests.RegistryTests
             TournamentRegistry tournamentRegistry = new TournamentRegistry(new MockTournament());
             int idToRemove = 5;
 
-            int beforeCount = tournamentRegistry.GetAll().Count;
+            int beforeCount = tournamentRegistry.GetAll(true).Count;
             bool result = tournamentRegistry.DeleteTournament(idToRemove);
-            int afterCount = tournamentRegistry.GetAll().Count;
+            int afterCount = tournamentRegistry.GetAll(true).Count;
 
             Assert.IsFalse(result);
             Assert.AreEqual(beforeCount, afterCount);

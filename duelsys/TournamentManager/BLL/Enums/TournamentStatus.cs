@@ -9,7 +9,7 @@ namespace BLL.Enums
     public enum TournamentStatus
     {
         Planned,
-        Active,
+        Running,
         Finished,
         Cancelled
     }

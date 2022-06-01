@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Enums
 {
-    public enum TeamType
+    public enum ContestantType
     {
         Solo,
         Team

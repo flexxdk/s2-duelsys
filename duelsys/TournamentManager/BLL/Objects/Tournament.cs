@@ -15,35 +15,29 @@ namespace BLL.Objects
         [Required(ErrorMessage = "No title was given")]
         public string? Title { get; set; }
 
-        [Browsable(false)]
         [Required(ErrorMessage = "No description was given")]
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "No sport was given")]
         public string? Sport { get; set; }
 
-        [Browsable(false)]
         [Required(ErrorMessage = "Invalid team type")]
         public ContestantType Type { get; set; }
 
-        [Browsable(false)]
         [Required(ErrorMessage = "Specify a scoring system")]
         public string? Scoring { get; set; }
 
         [Required(ErrorMessage = "Specify the city of the event")]
         public string? City { get; set; }
 
-        [Browsable(false)]
         [Required(ErrorMessage = "Specify the address of the event")]
         public string? Address { get; set; }
 
-        [Browsable(false)]
         [Required]
         [Range(2, int.MaxValue, ErrorMessage = "Minimum contestants needs to be at least {1}")]
         [Display(Name = "Min. Contestants")]
         public int MinContestants { get; set; }
 
-        [Browsable(false)]
         [Required]
         [Range(2, int.MaxValue, ErrorMessage = "Maximum contestants needs to be at least {1}")]
         [Display(Name = "Max. Contestants")]
@@ -53,7 +47,6 @@ namespace BLL.Objects
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
-        [Browsable(false)]
         [Required(ErrorMessage = "No end date was entered")]
         public DateTime EndDate { get; set; }
 

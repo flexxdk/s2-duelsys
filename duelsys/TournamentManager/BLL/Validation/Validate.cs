@@ -15,7 +15,7 @@ namespace BLL.Validation
             return Enum.GetNames(typeof(T)).Contains(input);
         }
 
-        public static bool AsDouble(string input)
+        public static bool AsDouble(object input)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace BLL.Validation
             }
         }
 
-        public static bool AsInt(string input)
+        public static bool AsInt(object input)
         {
             try
             {

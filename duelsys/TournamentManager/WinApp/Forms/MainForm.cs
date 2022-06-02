@@ -7,6 +7,8 @@ using BLL.Objects;
 using BLL.Objects.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using BLL.Objects.Sports;
+using System.Collections;
 
 namespace WinApp.Forms
 {
@@ -46,10 +48,11 @@ namespace WinApp.Forms
             pickEndDate.CustomFormat = "dddd dd MMMM";
 
             //Setup combo boxes with enum values
-            comboContestantType.DataSource = Enum.GetValues(typeof(ContestantType));
+            comboTeamType.DataSource = Enum.GetValues(typeof(TeamType));
             comboTournamentSystem.DataSource = Enum.GetValues(typeof(TournamentSystem));
-            comboTypes.DataSource = Enum.GetValues(typeof(ContestantType));
+            comboTypes.DataSource = Enum.GetValues(typeof(TeamType));
             comboRoles.DataSource = Enum.GetValues(typeof(UserRole));
+            comboSport.DataSource = SportAssigner.GetNames();
         }
 
         private void SwitchTab(TabPage tab)
@@ -92,8 +95,6 @@ namespace WinApp.Forms
         {
             string title = inputTitle.Text;
             string description = inputDescription.Text;
-            string sport = inputSport.Text;
-            string scoring = inputScoring.Text;
             string city = inputCity.Text;
             string address = inputAddress.Text;
             DateTime startDate = pickStartDate.Value;
@@ -104,14 +105,13 @@ namespace WinApp.Forms
             try
             {
                 TournamentSystem system = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), comboTournamentSystem.Text);
-                ContestantType type = (ContestantType)Enum.Parse(typeof(ContestantType), comboContestantType.Text);
+                TeamType type = (TeamType)Enum.Parse(typeof(TeamType), comboTeamType.Text);
 
                 bool result = tournamentRegistry.CreateTournament(new Tournament()
                 {
                     Title = title,
                     Description = description,
-                    Sport = sport,
-                    Scoring = scoring,
+                    Sport = SportAssigner.RetrieveSport(comboSport.SelectedIndex),
                     City = city,
                     Address = address,
                     StartDate = startDate,
@@ -177,10 +177,12 @@ namespace WinApp.Forms
             pickStartDate.Value = DateTime.Now;
             pickEndDate.MinDate = DateTime.Now;
             pickEndDate.Value = DateTime.Now;
-            comboContestantType.Enabled = true;
-            comboContestantType.SelectedIndex = 0;
+            comboTeamType.Enabled = true;
+            comboTeamType.SelectedIndex = 0;
             comboTournamentSystem.Enabled = true;
             comboTournamentSystem.SelectedIndex = 0;
+            comboSport.SelectedIndex = 0;
+            comboSport.Enabled = true;
             gpbTournamentCreation.Text = "Create Tournament";
         }
 
@@ -252,8 +254,9 @@ namespace WinApp.Forms
                     btnUpdateTournament.Enabled = true;
                     pickStartDate.MinDate = tournament.StartDate;
                     pickEndDate.MinDate = tournament.EndDate;
-                    comboContestantType.Enabled = false;
+                    comboTeamType.Enabled = false;
                     comboTournamentSystem.Enabled = false;
+                    comboSport.Enabled = false;
                     tournamentBindingSource.DataSource = tournament;
                     gpbTournamentCreation.Text = "Adjust Tournament";
                 }
@@ -312,9 +315,9 @@ namespace WinApp.Forms
             try
             {
                 UserRole role = (UserRole)Enum.Parse(typeof(UserRole), comboRoles.Text);
-                ContestantType type = (ContestantType)Enum.Parse(typeof(ContestantType), comboTypes.Text);
+                TeamType type = (TeamType)Enum.Parse(typeof(TeamType), comboTypes.Text);
 
-                bool result = userRegistry.RegisterAccount(new User()
+                bool result = userRegistry.RegisterAccount(new Account()
                 {
                     Name = name,
                     SurName = surname,
@@ -393,11 +396,13 @@ namespace WinApp.Forms
         {
             if (dgvTournamentMatches.SelectedRows[0] != null)
             {
-                int id = GetIDFromDataGridView(dgvTournamentMatches, "dgvColMatchesID");
-                Match? match = matchRegistry.GetByID(id);
-                if(match != null && !match.IsFinished)
+                int matchID = GetIDFromDataGridView(dgvTournamentMatches, "dgvColMatchesID");
+                int tournamentID = GetIDFromDataGridView(dgvTournamentMatches, "dgvColMatchesTournamentID");
+                Match? match = matchRegistry.GetByID(matchID);
+                Tournament? tournament = tournamentRegistry.GetByID(tournamentID);
+                if(match != null && tournament != null && !match.IsFinished)
                 {
-                    matchForm = new MatchForm(match);
+                    matchForm = new MatchForm(tournament.Sport!, match);
                     matchForm.ShowDialog();
 
                     if (matchForm.DialogResult == DialogResult.OK)
@@ -408,7 +413,7 @@ namespace WinApp.Forms
                     }
                     else
                     {
-
+                        
                     }
 
                     matchForm.Dispose();
@@ -436,8 +441,6 @@ namespace WinApp.Forms
                 {
                     string title = inputTitle.Text;
                     string description = inputDescription.Text;
-                    string sport = inputSport.Text;
-                    string scoring = inputScoring.Text;
                     string city = inputCity.Text;
                     string address = inputAddress.Text;
                     DateTime startDate = pickStartDate.Value;
@@ -448,15 +451,14 @@ namespace WinApp.Forms
                     try
                     {
                         TournamentSystem system = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), comboTournamentSystem.Text);
-                        ContestantType type = (ContestantType)Enum.Parse(typeof(ContestantType), comboContestantType.Text);
+                        TeamType type = (TeamType)Enum.Parse(typeof(TeamType), comboTeamType.Text);
 
                         bool result = tournamentRegistry.UpdateTournament(new Tournament()
                         {
                             ID = tournament.ID,
                             Title = title,
                             Description = description,
-                            Sport = sport,
-                            Scoring = scoring,
+                            Sport = SportAssigner.RetrieveSport(comboSport.SelectedIndex),
                             City = city,
                             Address = address,
                             StartDate = startDate,

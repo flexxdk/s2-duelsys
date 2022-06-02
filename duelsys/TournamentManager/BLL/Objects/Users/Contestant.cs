@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Objects.Users
 {
-    public class Contestant : Account
+    public class Contestant : Person
     {
         [Required]
         [Browsable(false)]

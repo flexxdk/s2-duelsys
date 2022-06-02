@@ -23,7 +23,7 @@ namespace DAL.Repositories
                     results.Rows[0]["name"].ToString()!,
                     results.Rows[0]["surname"].ToString()!,
                     results.Rows[0]["role"].ToString()!,
-                    results.Rows[0]["contestant_type"].ToString()!,
+                    results.Rows[0]["team_type"].ToString()!,
                     results.Rows[0]["email"].ToString()!,
                     results.Rows[0]["password"].ToString()!,
                     results.Rows[0]["salt"].ToString()!

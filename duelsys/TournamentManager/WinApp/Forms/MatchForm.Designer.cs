@@ -122,7 +122,6 @@
             // btnSaveMatchResults
             // 
             this.btnSaveMatchResults.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnSaveMatchResults.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSaveMatchResults.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
             this.btnSaveMatchResults.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnSaveMatchResults.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

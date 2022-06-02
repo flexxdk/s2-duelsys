@@ -18,7 +18,7 @@ namespace BLL.Registries
             this.encryptor = new Encryptor();
         }
 
-        public User? VerifyCredentials(Credentials creds)
+        public Account? VerifyCredentials(Credentials creds)
         {
             try
             {
@@ -32,13 +32,13 @@ namespace BLL.Registries
                     {
                         if (encryptor.Verify(creds.Password!, dto.Password, dto.Salt))
                         {
-                            return new User()
+                            return new Account()
                             {
                                 ID = dto.ID,
                                 Name = dto.Name,
                                 SurName = dto.SurName,
                                 Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
-                                Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
+                                Type = (TeamType)Enum.Parse(typeof(TeamType), dto.Type),
                                 Email = dto.Email,
                                 Password = dto.Password,
                                 Salt = dto.Salt

@@ -35,7 +35,7 @@ namespace WinApp.Forms
             };
             try
             {
-                User? user = loginHandler.VerifyCredentials(creds);
+                Account? user = loginHandler.VerifyCredentials(creds);
 
                 if (user != null)
                 {

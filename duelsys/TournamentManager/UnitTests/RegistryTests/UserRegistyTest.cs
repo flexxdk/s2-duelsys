@@ -18,7 +18,7 @@ namespace UnitTests.RegistryTests
         {
             UserRegistry userRegistry = new UserRegistry(new MockUsers());
 
-            User? user = userRegistry.GetByID(1);
+            Account? user = userRegistry.GetByID(1);
 
             Assert.IsNotNull(user);
         }
@@ -28,7 +28,7 @@ namespace UnitTests.RegistryTests
         {
             UserRegistry userRegistry = new UserRegistry(new MockUsers());
 
-            User? user = userRegistry.GetByID(5);
+            Account? user = userRegistry.GetByID(5);
 
             Assert.IsNull(user);
         }
@@ -40,11 +40,11 @@ namespace UnitTests.RegistryTests
             string firstName = "Fontys";
             string lastName = "Man";
             UserRole role = UserRole.Administrator;
-            ContestantType type = ContestantType.Solo;
+            TeamType type = TeamType.Solo;
             string email = "fontys_man@fontys.nl";
             string password = "fontysman";
 
-            bool result = userRegistry.RegisterAccount(new User()
+            bool result = userRegistry.RegisterAccount(new Account()
             {
                 Name = firstName,
                 SurName = lastName,
@@ -57,7 +57,7 @@ namespace UnitTests.RegistryTests
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetByID(5)!.ID);
             Assert.AreEqual(email, userRegistry.GetByID(5).Email);
-            Assert.AreEqual(ContestantType.Solo, userRegistry.GetByID(5).Type);
+            Assert.AreEqual(TeamType.Solo, userRegistry.GetByID(5).Type);
         }
 
         [TestMethod]
@@ -67,11 +67,11 @@ namespace UnitTests.RegistryTests
             string firstName = "Fontys";
             string lastName = "Man";
             UserRole role = UserRole.Administrator;
-            ContestantType type = ContestantType.Team;
+            TeamType type = TeamType.Team;
             string email = "fontys_man@fontys.nl";
             string password = "fontysman";
 
-            bool result = userRegistry.RegisterAccount(new User()
+            bool result = userRegistry.RegisterAccount(new Account()
             {
                 Name = firstName,
                 SurName = lastName,
@@ -84,7 +84,7 @@ namespace UnitTests.RegistryTests
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetByID(5)!.ID);
             Assert.AreEqual(email, userRegistry.GetByID(5).Email);
-            Assert.AreEqual(ContestantType.Team, userRegistry.GetByID(5).Type);
+            Assert.AreEqual(TeamType.Team, userRegistry.GetByID(5).Type);
         }
 
         [TestMethod]
@@ -94,11 +94,11 @@ namespace UnitTests.RegistryTests
             string firstName = "Fontys";
             string lastName = "Man";
             UserRole role = UserRole.Administrator;
-            ContestantType type = ContestantType.Solo;
+            TeamType type = TeamType.Solo;
             string email = "devops@gmail.com";
             string password = "fontysman";
 
-            bool result = userRegistry.RegisterAccount(new User()
+            bool result = userRegistry.RegisterAccount(new Account()
             {
                 Name = firstName,
                 SurName = lastName,
@@ -118,12 +118,12 @@ namespace UnitTests.RegistryTests
             string firstName = "";
             string lastName = "";
             UserRole role = UserRole.Administrator;
-            ContestantType type = ContestantType.Solo;
+            TeamType type = TeamType.Solo;
             string email = "";
             string password = "";
 
             Assert.ThrowsException<ValidationException>(() => 
-                userRegistry.RegisterAccount(new User()
+                userRegistry.RegisterAccount(new Account()
                 {
                     Name = firstName,
                     SurName = lastName,

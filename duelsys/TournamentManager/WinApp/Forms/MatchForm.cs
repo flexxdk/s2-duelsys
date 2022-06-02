@@ -39,15 +39,19 @@ namespace WinApp.Forms
         {
             try
             {
-                if(sport.ScoreIsValid(numHomeScore.Value, numAwayScore.Value))
+                if (sport.ScoreIsValid(numHomeScore.Value, numAwayScore.Value))
                 {
                     CurrentMatch.HomeScore = Convert.ToInt32(numHomeScore.Value);
                     CurrentMatch.AwayScore = Convert.ToInt32(numAwayScore.Value);
                     CurrentMatch.IsFinished = true;
                     this.DialogResult = DialogResult.OK;
                 }
+                else
+                {
+                    MessageBox.Show($"The entered score is not in accordance with the rules of {sport.Name}.");
+                }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 MessageBox.Show("Invalid score entered");
             }

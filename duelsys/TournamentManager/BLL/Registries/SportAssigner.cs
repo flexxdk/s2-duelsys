@@ -29,7 +29,7 @@ namespace BLL.Registries
         {
             foreach(var sport in sports)
             {
-                if(sport != null && sport.Name == name)
+                if(sport!.Name == name)
                 {
                     return sport;
                 }

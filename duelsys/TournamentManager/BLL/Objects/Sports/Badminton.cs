@@ -4,8 +4,8 @@ namespace BLL.Objects.Sports
 {
     public class Badminton : ISport
     {
-        public string Name { get; set; }
-        public string Scoring { get; set; }
+        public string Name { get; }
+        public string Scoring { get; }
 
         public Badminton()
         {

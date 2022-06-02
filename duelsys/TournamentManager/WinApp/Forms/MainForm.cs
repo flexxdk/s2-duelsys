@@ -8,6 +8,7 @@ using BLL.Objects.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using BLL.Objects.Sports;
+using System.Collections;
 
 namespace WinApp.Forms
 {
@@ -180,6 +181,8 @@ namespace WinApp.Forms
             comboTeamType.SelectedIndex = 0;
             comboTournamentSystem.Enabled = true;
             comboTournamentSystem.SelectedIndex = 0;
+            comboSport.SelectedIndex = 0;
+            comboSport.Enabled = true;
             gpbTournamentCreation.Text = "Create Tournament";
         }
 
@@ -253,6 +256,7 @@ namespace WinApp.Forms
                     pickEndDate.MinDate = tournament.EndDate;
                     comboTeamType.Enabled = false;
                     comboTournamentSystem.Enabled = false;
+                    comboSport.Enabled = false;
                     tournamentBindingSource.DataSource = tournament;
                     gpbTournamentCreation.Text = "Adjust Tournament";
                 }

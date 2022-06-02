@@ -8,8 +8,8 @@ namespace BLL.Objects.Sports
 {
     public interface ISport
     {
-        public string Name { get; set; }
-        public string Scoring { get; set; }
+        public string Name { get; }
+        public string Scoring { get; }
         public bool ScoreIsValid(object objHome, object objAway);
         public string ToString();
     }

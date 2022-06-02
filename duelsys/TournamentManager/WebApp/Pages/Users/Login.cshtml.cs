@@ -16,7 +16,7 @@ namespace WebApp.Pages.Users
     public class LoginModel : PageModel
     {
         [BindProperty]
-        public Credentials? UserCredentials { get; set; }
+        public Credentials LoginCredentials { get; set; } = new Credentials();
 
         private LoginHandler loginHandler = new LoginHandler(new LoginRepository(new DbContext()));
 
@@ -30,24 +30,24 @@ namespace WebApp.Pages.Users
             {
                 try
                 {
-                    User user = loginHandler.AuthenticateWebsite(UserCredentials!);
+                    User user = loginHandler.AuthenticateWebsite(LoginCredentials!);
                     await CreateCookie(user);
-                    return new RedirectToPageResult("Index");
+                    return RedirectToPage("/Index");
                 }
                 catch (AuthenticationException)
                 {
                     ModelState.AddModelError(string.Empty, "The combination of email and password is incorrect.");
-                    return RedirectToPage("Login");
+                    return Page();
                 }
                 catch (MySqlException)
                 {
-                    ModelState.AddModelError(string.Empty, "Could not connect to database, please contact the system administrator.");
-                    return RedirectToPage("Login");
+                    ModelState.AddModelError(string.Empty, "Could not connect to database, please contact the owner of the website.");
+                    return Page();
                 }
                 catch
                 {
-                    ModelState.AddModelError(string.Empty, "An unknown error occured, please contact the system administrator.");
-                    return RedirectToPage("Login");
+                    ModelState.AddModelError(string.Empty, "An unknown error occured, please try again later.");
+                    return Page();
                 }
             }
             return Page();

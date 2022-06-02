@@ -2,3 +2,21 @@
 @model WebApp.Pages.Users.LoginModel
 @{
 }
+
+<div>
+    <form method="post">
+        <label asp-for="LoginCredentials.Email"></label>
+        <span asp-validation-for="LoginCredentials.Email"></span>
+        <input asp-for="LoginCredentials.Email" type="email"/>
+        <label asp-for="LoginCredentials.Password"></label>
+        <span asp-validation-for="LoginCredentials.Password"></span>
+        <input asp-for="LoginCredentials.Password" type="password"/>
+        <span>@Html.ValidationSummary(true)</span>
+        <input type="submit" value="Login" />
+        <input type="reset" value="Cancel" />
+    </form>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

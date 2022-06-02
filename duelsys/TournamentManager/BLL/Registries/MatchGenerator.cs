@@ -25,7 +25,6 @@ namespace BLL.Registries
             switch (system)
             {
                 default:
-                case TournamentSystem.RoundRobin:
                     matches = RoundRobin(tournamentID, contestants);
                     //matches = RecursiveRoundRobin(0, tournamentID, contestants.ToList());
                     break;

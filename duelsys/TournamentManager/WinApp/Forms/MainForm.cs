@@ -26,7 +26,7 @@ namespace WinApp.Forms
             InitializeComponent();
             SetupFormGUI();
 
-            tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()), true);
+            tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()));
             userRegistry = new UserRegistry(new UserRepository(new DbContext()));
             matchRegistry = new MatchRegistry(new MatchRepository(new DbContext()));
             contestantRegistry = new ContestantRegistry(new ContestantRepository(new DbContext()));

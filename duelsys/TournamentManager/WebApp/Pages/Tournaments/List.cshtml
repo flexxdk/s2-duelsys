@@ -1,4 +1,12 @@
 ﻿@page
+@using BLL.Objects
 @model WebApp.Pages.Tournaments.ListModel
 @{
 }
+
+<div>
+@foreach(Tournament tournament in Model.Tournaments!)
+{
+    <p>@tournament.Title</p>
+}
+</div>

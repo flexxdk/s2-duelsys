@@ -16,11 +16,11 @@ namespace BLL.Registries
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
 
-        public TournamentRegistry(ITournamentRepository repository, bool preload = false)
+        public TournamentRegistry(ITournamentRepository repository)
         {
             this.repository = repository;
             this.tournaments = new Dictionary<int, Tournament>();
-            if(preload) LoadTournaments();
+            LoadTournaments();
         }
 
         public void LoadTournaments()

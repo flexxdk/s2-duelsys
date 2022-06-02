@@ -95,7 +95,7 @@ namespace UnitTests
         [TestMethod]
         public void TestGenerateMatchesSingleEliminationBaseTwoContestants()
         {
-            MatchGenerator matchGenerator = new MatchGenerator();
+            MatchGenerator matchGenerator = new MatchGenerator(new MockMatch());
 
             Tournament tournament = new Tournament()
             {

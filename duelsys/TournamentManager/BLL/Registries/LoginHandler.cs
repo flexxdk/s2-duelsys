@@ -19,17 +19,17 @@ namespace BLL.Registries
             this.encryptor = new Encryptor();
         }
 
-        public User AuthenticateForm(Credentials creds)
+        public Account AuthenticateForm(Credentials creds)
         {
             try
             {
                 ValidateModel(creds);
 
-                User user = VerifyCredentials(creds.Email!, creds.Password!);
+                Account account = VerifyCredentials(creds.Email!, creds.Password!);
 
-                if (user.Role == UserRole.Staff || user.Role == UserRole.Administrator)
+                if (account.Role == UserRole.Staff || account.Role == UserRole.Administrator)
                 {
-                    return user;
+                    return account;
                 }
                 throw new AuthenticationException();
             }
@@ -39,7 +39,7 @@ namespace BLL.Registries
             }
         }
 
-        public User AuthenticateWebsite(Credentials creds)
+        public Account AuthenticateWebsite(Credentials creds)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace BLL.Registries
             }
         }
 
-        private User VerifyCredentials(string email, string password)
+        private Account VerifyCredentials(string email, string password)
         {
             UserDTO? dto = repository.GetCredentials(email);
 
@@ -59,13 +59,13 @@ namespace BLL.Registries
             {
                 if (encryptor.Verify(password, dto.Password, dto.Salt))
                 {
-                    return new User()
+                    return new Account()
                     {
                         ID = dto.ID,
                         Name = dto.Name,
                         SurName = dto.SurName,
                         Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
-                        Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
+                        Type = (TeamType)Enum.Parse(typeof(TeamType), dto.Type),
                         Email = dto.Email,
                         Password = dto.Password,
                         Salt = dto.Salt

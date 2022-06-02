@@ -36,7 +36,7 @@ namespace WinApp.Forms
             };
             try
             {
-                User user = loginHandler.AuthenticateForm(creds);
+                Account account = loginHandler.AuthenticateForm(creds);
                 mainForm ??= new MainForm();
                 mainForm.FormClosing += MainForm_FormClosing;
                 mainForm.VisibleChanged += MainForm_VisibleChanged;

@@ -8,6 +8,7 @@ using BLL.Objects.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Globalization;
+using BLL.Objects.Sports;
 
 namespace BLL.Registries
 {
@@ -61,7 +62,7 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(tournament);
-                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!, tournament.Type.ToString(), tournament.Scoring!, tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString("d"), tournament.EndDate.ToString("d"), tournament.Status.ToString(), tournament.System.ToString());
+                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!.Name, tournament.Type.ToString(), tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString("d"), tournament.EndDate.ToString("d"), tournament.Status.ToString(), tournament.System.ToString());
                 int ID = repository.Create(dto);
                 if(ID == 0)
                 {
@@ -167,8 +168,8 @@ namespace BLL.Registries
                 ID = dto.ID,
                 Title = dto.Title,
                 Description = dto.Description,
-                Sport = dto.Sport,
-                Scoring = dto.Scoring,
+                //Sport = dto.Sport,
+                Sport = new Badminton(),
                 City = dto.City,
                 Address = dto.Address,
                 MinContestants = dto.MinContestants,
@@ -182,10 +183,8 @@ namespace BLL.Registries
 
         private TournamentDTO InstantiateDTO(Tournament obj)
         {
-            return new TournamentDTO(obj.ID, obj.Title, obj.Description, obj.Sport, obj.Type.ToString(), obj.Scoring, obj.City, obj.Address, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
+            return new TournamentDTO(obj.ID, obj.Title!, obj.Description!, obj.Sport!.ToString(), obj.Type.ToString(), obj.City!, obj.Address!, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
         }
-
-
 
         private bool AddToDictionary(Tournament tournament)
         {

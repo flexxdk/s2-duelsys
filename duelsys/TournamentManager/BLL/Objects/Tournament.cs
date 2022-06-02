@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+using BLL.Objects.Sports;
 using BLL.Enums;
 
 namespace BLL.Objects
@@ -19,13 +20,7 @@ namespace BLL.Objects
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "No sport was given")]
-        public string? Sport { get; set; }
-
-        [Required(ErrorMessage = "Invalid team type")]
-        public ContestantType Type { get; set; }
-
-        [Required(ErrorMessage = "Specify a scoring system")]
-        public string? Scoring { get; set; }
+        public ISport? Sport { get; set; }
 
         [Required(ErrorMessage = "Specify the city of the event")]
         public string? City { get; set; }
@@ -56,5 +51,8 @@ namespace BLL.Objects
 
         [Required(ErrorMessage = "No tournament system was given")]
         public TournamentSystem System { get; set; }
+
+        [Required(ErrorMessage = "Invalid team type")]
+        public TeamType Type { get; set; }
     }
 }

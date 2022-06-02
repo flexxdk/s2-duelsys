@@ -13,7 +13,6 @@ namespace DTO
         public string Description { get; private set; }
         public string Sport { get; private set; }
         public string Type { get; set; }
-        public string Scoring { get; private set; }
         public string City { get; private set; }
         public string Address { get; private set; }
         public int MinContestants { get; private set; }
@@ -23,14 +22,13 @@ namespace DTO
         public string Status { get; private set; }
         public string System { get; private set; }
 
-        public TournamentDTO(int id, string title, string description, string sport, string type, string scoring, string city, string address, int minContestants, int maxContestants, string startDate, string endDate, string status, string system)
+        public TournamentDTO(int id, string title, string description, string sport, string type, string city, string address, int minContestants, int maxContestants, string startDate, string endDate, string status, string system)
         {
             ID = id;
             Title = title;
             Description = description;
             Sport = sport;
             Type = type;
-            Scoring = scoring;
             City = city;
             Address = address;
             MinContestants = minContestants;

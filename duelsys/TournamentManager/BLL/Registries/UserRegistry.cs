@@ -20,26 +20,26 @@ namespace BLL.Registries
             this.encryptor = new Encryptor();
         }
 
-        public User? GetByID(int id)
+        public Account? GetByID(int id)
         {
             UserDTO? dto = repository.GetByID(id);
             if(dto == null)
             {
                 return null;
             }
-            return new User()
+            return new Account()
             {
                 ID = dto.ID,
                 Name = dto.Name,
                 Role = (UserRole)Enum.Parse(typeof(UserRole), dto.Role),
-                Type = (ContestantType)Enum.Parse(typeof(ContestantType), dto.Type),
+                Type = (TeamType)Enum.Parse(typeof(TeamType), dto.Type),
                 Email = dto.Email,
                 Password = dto.Password,
                 Salt = dto.Salt
             };
         }
 
-        public bool RegisterAccount(User user)
+        public bool RegisterAccount(Account user)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace BLL.Registries
             }
         }
 
-        private void ValidateModel(User user)
+        private void ValidateModel(Account user)
         {
             List<string> results = Validate.AsModel(user).ToList();
 

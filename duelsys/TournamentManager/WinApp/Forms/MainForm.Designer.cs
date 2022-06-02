@@ -47,11 +47,12 @@
             this.btnFinishTournament = new System.Windows.Forms.Button();
             this.btnStartTournament = new System.Windows.Forms.Button();
             this.dgvTournaments = new System.Windows.Forms.DataGridView();
-            this.tournamentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gpbModifyTournament = new System.Windows.Forms.GroupBox();
             this.btnAdjustTournament = new System.Windows.Forms.Button();
             this.btnDeleteTournament = new System.Windows.Forms.Button();
             this.gpbTournamentCreation = new System.Windows.Forms.GroupBox();
+            this.comboSport = new System.Windows.Forms.ComboBox();
+            this.tournamentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnUpdateTournament = new System.Windows.Forms.Button();
             this.btnCreateTournament = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -68,13 +69,10 @@
             this.inputCity = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.inputScoring = new System.Windows.Forms.TextBox();
-            this.comboContestantType = new System.Windows.Forms.ComboBox();
+            this.comboTeamType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.inputSport = new System.Windows.Forms.TextBox();
             this.inputDescription = new System.Windows.Forms.RichTextBox();
             this.inputTitle = new System.Windows.Forms.TextBox();
             this.pickStartDate = new System.Windows.Forms.DateTimePicker();
@@ -119,12 +117,15 @@
             this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgvColAllTournamentsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvColAllTournamentsTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvColAllTournamentsSport = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvColAllTournamentsCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvColAllTournamentsStartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvColAllTournamentsStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvColAllTournamentsSystem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.minContestantsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maxContestantsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.startDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.systemDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.navPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -132,9 +133,9 @@
             this.tabTournaments.SuspendLayout();
             this.gpbTournamentUpdateStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).BeginInit();
             this.gpbModifyTournament.SuspendLayout();
             this.gpbTournamentCreation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).BeginInit();
             this.tabMatches.SuspendLayout();
@@ -400,12 +401,15 @@
             this.dgvTournaments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvTournaments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvColAllTournamentsID,
-            this.dgvColAllTournamentsTitle,
-            this.dgvColAllTournamentsSport,
-            this.dgvColAllTournamentsCity,
-            this.dgvColAllTournamentsStartDate,
-            this.dgvColAllTournamentsStatus,
-            this.dgvColAllTournamentsSystem});
+            this.titleDataGridViewTextBoxColumn,
+            this.sportDataGridViewTextBoxColumn,
+            this.cityDataGridViewTextBoxColumn,
+            this.minContestantsDataGridViewTextBoxColumn,
+            this.maxContestantsDataGridViewTextBoxColumn,
+            this.startDateDataGridViewTextBoxColumn,
+            this.endDateDataGridViewTextBoxColumn,
+            this.statusDataGridViewTextBoxColumn,
+            this.systemDataGridViewTextBoxColumn});
             this.dgvTournaments.DataSource = this.tournamentBindingSource;
             this.dgvTournaments.Location = new System.Drawing.Point(6, 6);
             this.dgvTournaments.MultiSelect = false;
@@ -416,10 +420,6 @@
             this.dgvTournaments.Size = new System.Drawing.Size(565, 383);
             this.dgvTournaments.TabIndex = 3;
             this.dgvTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTournaments_CellClick);
-            // 
-            // tournamentBindingSource
-            // 
-            this.tournamentBindingSource.DataSource = typeof(BLL.Objects.Tournament);
             // 
             // gpbModifyTournament
             // 
@@ -466,6 +466,7 @@
             // 
             // gpbTournamentCreation
             // 
+            this.gpbTournamentCreation.Controls.Add(this.comboSport);
             this.gpbTournamentCreation.Controls.Add(this.btnUpdateTournament);
             this.gpbTournamentCreation.Controls.Add(this.btnCreateTournament);
             this.gpbTournamentCreation.Controls.Add(this.label12);
@@ -482,13 +483,10 @@
             this.gpbTournamentCreation.Controls.Add(this.inputCity);
             this.gpbTournamentCreation.Controls.Add(this.label6);
             this.gpbTournamentCreation.Controls.Add(this.label5);
-            this.gpbTournamentCreation.Controls.Add(this.inputScoring);
-            this.gpbTournamentCreation.Controls.Add(this.comboContestantType);
+            this.gpbTournamentCreation.Controls.Add(this.comboTeamType);
             this.gpbTournamentCreation.Controls.Add(this.label4);
-            this.gpbTournamentCreation.Controls.Add(this.label3);
             this.gpbTournamentCreation.Controls.Add(this.label2);
             this.gpbTournamentCreation.Controls.Add(this.label1);
-            this.gpbTournamentCreation.Controls.Add(this.inputSport);
             this.gpbTournamentCreation.Controls.Add(this.inputDescription);
             this.gpbTournamentCreation.Controls.Add(this.inputTitle);
             this.gpbTournamentCreation.Controls.Add(this.pickStartDate);
@@ -498,6 +496,20 @@
             this.gpbTournamentCreation.TabIndex = 1;
             this.gpbTournamentCreation.TabStop = false;
             this.gpbTournamentCreation.Text = "Create Tournament";
+            // 
+            // comboSport
+            // 
+            this.comboSport.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tournamentBindingSource, "System", true));
+            this.comboSport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboSport.FormattingEnabled = true;
+            this.comboSport.Location = new System.Drawing.Point(6, 220);
+            this.comboSport.Name = "comboSport";
+            this.comboSport.Size = new System.Drawing.Size(161, 23);
+            this.comboSport.TabIndex = 27;
+            // 
+            // tournamentBindingSource
+            // 
+            this.tournamentBindingSource.DataSource = typeof(BLL.Objects.Tournament);
             // 
             // btnUpdateTournament
             // 
@@ -679,27 +691,19 @@
             this.label5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label5.Location = new System.Drawing.Point(190, 424);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(109, 19);
+            this.label5.Size = new System.Drawing.Size(76, 19);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Contestant Type";
+            this.label5.Text = "Team Type:";
             // 
-            // inputScoring
+            // comboTeamType
             // 
-            this.inputScoring.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tournamentBindingSource, "Scoring", true));
-            this.inputScoring.Location = new System.Drawing.Point(190, 220);
-            this.inputScoring.Name = "inputScoring";
-            this.inputScoring.Size = new System.Drawing.Size(159, 23);
-            this.inputScoring.TabIndex = 9;
-            // 
-            // comboContestantType
-            // 
-            this.comboContestantType.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tournamentBindingSource, "Type", true));
-            this.comboContestantType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboContestantType.FormattingEnabled = true;
-            this.comboContestantType.Location = new System.Drawing.Point(190, 446);
-            this.comboContestantType.Name = "comboContestantType";
-            this.comboContestantType.Size = new System.Drawing.Size(159, 23);
-            this.comboContestantType.TabIndex = 8;
+            this.comboTeamType.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tournamentBindingSource, "Type", true));
+            this.comboTeamType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboTeamType.FormattingEnabled = true;
+            this.comboTeamType.Location = new System.Drawing.Point(190, 446);
+            this.comboTeamType.Name = "comboTeamType";
+            this.comboTeamType.Size = new System.Drawing.Size(159, 23);
+            this.comboTeamType.TabIndex = 8;
             // 
             // label4
             // 
@@ -710,16 +714,6 @@
             this.label4.Size = new System.Drawing.Size(42, 19);
             this.label4.TabIndex = 7;
             this.label4.Text = "Sport";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(190, 198);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 19);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Scoring System";
             // 
             // label2
             // 
@@ -740,14 +734,6 @@
             this.label1.Size = new System.Drawing.Size(34, 19);
             this.label1.TabIndex = 4;
             this.label1.Text = "Title";
-            // 
-            // inputSport
-            // 
-            this.inputSport.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tournamentBindingSource, "Sport", true));
-            this.inputSport.Location = new System.Drawing.Point(6, 220);
-            this.inputSport.Name = "inputSport";
-            this.inputSport.Size = new System.Drawing.Size(161, 23);
-            this.inputSport.TabIndex = 3;
             // 
             // inputDescription
             // 
@@ -1187,55 +1173,69 @@
             this.dgvColAllTournamentsID.Name = "dgvColAllTournamentsID";
             this.dgvColAllTournamentsID.ReadOnly = true;
             this.dgvColAllTournamentsID.Visible = false;
-            this.dgvColAllTournamentsID.Width = 43;
             // 
-            // dgvColAllTournamentsTitle
+            // titleDataGridViewTextBoxColumn
             // 
-            this.dgvColAllTournamentsTitle.DataPropertyName = "Title";
-            this.dgvColAllTournamentsTitle.HeaderText = "Title";
-            this.dgvColAllTournamentsTitle.Name = "dgvColAllTournamentsTitle";
-            this.dgvColAllTournamentsTitle.ReadOnly = true;
-            this.dgvColAllTournamentsTitle.Width = 195;
+            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
+            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            this.titleDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dgvColAllTournamentsSport
+            // sportDataGridViewTextBoxColumn
             // 
-            this.dgvColAllTournamentsSport.DataPropertyName = "Sport";
-            this.dgvColAllTournamentsSport.HeaderText = "Sport";
-            this.dgvColAllTournamentsSport.Name = "dgvColAllTournamentsSport";
-            this.dgvColAllTournamentsSport.ReadOnly = true;
-            this.dgvColAllTournamentsSport.Width = 60;
+            this.sportDataGridViewTextBoxColumn.DataPropertyName = "Sport";
+            this.sportDataGridViewTextBoxColumn.HeaderText = "Sport";
+            this.sportDataGridViewTextBoxColumn.Name = "sportDataGridViewTextBoxColumn";
+            this.sportDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dgvColAllTournamentsCity
+            // cityDataGridViewTextBoxColumn
             // 
-            this.dgvColAllTournamentsCity.DataPropertyName = "City";
-            this.dgvColAllTournamentsCity.HeaderText = "City";
-            this.dgvColAllTournamentsCity.Name = "dgvColAllTournamentsCity";
-            this.dgvColAllTournamentsCity.ReadOnly = true;
-            this.dgvColAllTournamentsCity.Width = 53;
+            this.cityDataGridViewTextBoxColumn.DataPropertyName = "City";
+            this.cityDataGridViewTextBoxColumn.HeaderText = "City";
+            this.cityDataGridViewTextBoxColumn.Name = "cityDataGridViewTextBoxColumn";
+            this.cityDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dgvColAllTournamentsStartDate
+            // minContestantsDataGridViewTextBoxColumn
             // 
-            this.dgvColAllTournamentsStartDate.DataPropertyName = "StartDate";
-            this.dgvColAllTournamentsStartDate.HeaderText = "StartDate";
-            this.dgvColAllTournamentsStartDate.Name = "dgvColAllTournamentsStartDate";
-            this.dgvColAllTournamentsStartDate.ReadOnly = true;
-            this.dgvColAllTournamentsStartDate.Width = 80;
+            this.minContestantsDataGridViewTextBoxColumn.DataPropertyName = "MinContestants";
+            this.minContestantsDataGridViewTextBoxColumn.HeaderText = "MinContestants";
+            this.minContestantsDataGridViewTextBoxColumn.Name = "minContestantsDataGridViewTextBoxColumn";
+            this.minContestantsDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dgvColAllTournamentsStatus
+            // maxContestantsDataGridViewTextBoxColumn
             // 
-            this.dgvColAllTournamentsStatus.DataPropertyName = "Status";
-            this.dgvColAllTournamentsStatus.HeaderText = "Status";
-            this.dgvColAllTournamentsStatus.Name = "dgvColAllTournamentsStatus";
-            this.dgvColAllTournamentsStatus.ReadOnly = true;
-            this.dgvColAllTournamentsStatus.Width = 64;
+            this.maxContestantsDataGridViewTextBoxColumn.DataPropertyName = "MaxContestants";
+            this.maxContestantsDataGridViewTextBoxColumn.HeaderText = "MaxContestants";
+            this.maxContestantsDataGridViewTextBoxColumn.Name = "maxContestantsDataGridViewTextBoxColumn";
+            this.maxContestantsDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dgvColAllTournamentsSystem
+            // startDateDataGridViewTextBoxColumn
             // 
-            this.dgvColAllTournamentsSystem.DataPropertyName = "System";
-            this.dgvColAllTournamentsSystem.HeaderText = "System";
-            this.dgvColAllTournamentsSystem.Name = "dgvColAllTournamentsSystem";
-            this.dgvColAllTournamentsSystem.ReadOnly = true;
-            this.dgvColAllTournamentsSystem.Width = 70;
+            this.startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            this.startDateDataGridViewTextBoxColumn.HeaderText = "StartDate";
+            this.startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            this.startDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // endDateDataGridViewTextBoxColumn
+            // 
+            this.endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            this.endDateDataGridViewTextBoxColumn.HeaderText = "EndDate";
+            this.endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            this.endDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // statusDataGridViewTextBoxColumn
+            // 
+            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
+            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
+            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
+            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // systemDataGridViewTextBoxColumn
+            // 
+            this.systemDataGridViewTextBoxColumn.DataPropertyName = "System";
+            this.systemDataGridViewTextBoxColumn.HeaderText = "System";
+            this.systemDataGridViewTextBoxColumn.Name = "systemDataGridViewTextBoxColumn";
+            this.systemDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -1257,10 +1257,10 @@
             this.tabTournaments.ResumeLayout(false);
             this.gpbTournamentUpdateStatus.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).EndInit();
             this.gpbModifyTournament.ResumeLayout(false);
             this.gpbTournamentCreation.ResumeLayout(false);
             this.gpbTournamentCreation.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMinContestants)).EndInit();
             this.tabMatches.ResumeLayout(false);
@@ -1289,7 +1289,6 @@
         private TabPage tabAccounts;
         private GroupBox gpbTournamentCreation;
         private GroupBox gpbModifyTournament;
-        private TextBox inputSport;
         private RichTextBox inputDescription;
         private TextBox inputTitle;
         private DateTimePicker pickStartDate;
@@ -1307,10 +1306,8 @@
         private TextBox inputCity;
         private Label label6;
         private Label label5;
-        private TextBox inputScoring;
-        private ComboBox comboContestantType;
+        private ComboBox comboTeamType;
         private Label label4;
-        private Label label3;
         private Label label2;
         private Label label1;
         private Button btnCreateTournament;
@@ -1366,12 +1363,16 @@
         private DataGridViewTextBoxColumn dgvColActiveTournamentsTitle;
         private DataGridViewTextBoxColumn dgvColActiveTournamentsType;
         private DataGridViewTextBoxColumn dgvColActiveTournamentsSystem;
+        private ComboBox comboSport;
         private DataGridViewTextBoxColumn dgvColAllTournamentsID;
-        private DataGridViewTextBoxColumn dgvColAllTournamentsTitle;
-        private DataGridViewTextBoxColumn dgvColAllTournamentsSport;
-        private DataGridViewTextBoxColumn dgvColAllTournamentsCity;
-        private DataGridViewTextBoxColumn dgvColAllTournamentsStartDate;
-        private DataGridViewTextBoxColumn dgvColAllTournamentsStatus;
-        private DataGridViewTextBoxColumn dgvColAllTournamentsSystem;
+        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn sportDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn minContestantsDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn maxContestantsDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn systemDataGridViewTextBoxColumn;
     }
 }

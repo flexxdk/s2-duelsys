@@ -1,18 +1,34 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+using DTO.Users;
+using BLL.Enums;
+
 namespace BLL.Objects.Users
 {
-    public abstract class Account
+    public class Account : Person
     {
-        [Key]
-        [Required]
+        [Required(ErrorMessage = "No role selected")]
+        [Display(Name = "Role")]
+        [EnumDataType(typeof(UserRole))]
+        public UserRole Role { get; set; }
+
+        [Required(ErrorMessage = "Specify team type")]
+        [Display(Name = "Team Type")]
+        [EnumDataType(typeof(TeamType))]
+        public TeamType Type { get; set; }
+
+        [Required(ErrorMessage = "Invalid email address")]
+        [Display(Name = "Email address")]
+        [EmailAddress]
+        public string? Email { get; set; }
+
+        [Required(ErrorMessage = "A password is required")]
+        [DataType(DataType.Password)]
         [Browsable(false)]
-        public int ID { get; set; }
+        public string? Password { get; set; }
 
-        [Required(ErrorMessage = "You must enter a first name")]
-        public string? Name { get; set; }
-
-        public string? SurName { get; set; }
+        [Browsable(false)]
+        public string? Salt { get; set; }
     }
 }

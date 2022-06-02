@@ -73,7 +73,7 @@ namespace DAL.Repositories
             try
             {
                 string query = @"INSERT INTO syn_tournaments (
-                                    title, description, sport, contestant_type, scoring, city, address, 
+                                    title, description, sport, team_type, scoring, city, address, 
                                     min_contestants, max_contestants, start_date, end_date, status, system
                                 ) 
                                 VALUES (
@@ -85,7 +85,6 @@ namespace DAL.Repositories
                 cmd.Parameters.AddWithValue("@Description", dto.Description);
                 cmd.Parameters.AddWithValue("@Sport", dto.Sport);
                 cmd.Parameters.AddWithValue("@Type", dto.Type);
-                cmd.Parameters.AddWithValue("@Scoring", dto.Scoring);
                 cmd.Parameters.AddWithValue("@City", dto.City);
                 cmd.Parameters.AddWithValue("@Address", dto.Address);
                 cmd.Parameters.AddWithValue("@MinContestants", dto.MinContestants);
@@ -108,7 +107,7 @@ namespace DAL.Repositories
             try
             {
                 string query = @"UPDATE syn_tournaments SET
-                                    title = @Title, description = @Description, sport = @Sport, contestant_type = @Type, scoring = @Scoring, city = @City, address = @Address, 
+                                    title = @Title, description = @Description, sport = @Sport, team_type = @Type, scoring = @Scoring, city = @City, address = @Address, 
                                     min_contestants = @MinContestants, max_contestants = @MaxContestants, start_date = @StartDate, end_date = @EndDate, status = @Status, system = @System
                                     WHERE id = @ID;";
                 MySqlCommand cmd = new MySqlCommand(query);
@@ -117,7 +116,6 @@ namespace DAL.Repositories
                 cmd.Parameters.AddWithValue("@Description", dto.Description);
                 cmd.Parameters.AddWithValue("@Sport", dto.Sport);
                 cmd.Parameters.AddWithValue("@Type", dto.Type);
-                cmd.Parameters.AddWithValue("@Scoring", dto.Scoring);
                 cmd.Parameters.AddWithValue("@City", dto.City);
                 cmd.Parameters.AddWithValue("@Address", dto.Address);
                 cmd.Parameters.AddWithValue("@MinContestants", dto.MinContestants);
@@ -190,8 +188,7 @@ namespace DAL.Repositories
                 row["title"].ToString()!,
                 row["description"].ToString()!,
                 row["sport"].ToString()!,
-                row["contestant_type"].ToString()!,
-                row["scoring"].ToString()!,
+                row["team_type"].ToString()!,
                 row["city"].ToString()!,
                 row["address"].ToString()!,
                 Convert.ToInt32(row["min_contestants"]),

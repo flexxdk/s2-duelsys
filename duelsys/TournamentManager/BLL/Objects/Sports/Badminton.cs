@@ -31,7 +31,6 @@ namespace BLL.Objects.Sports
                 }
                 if(homeScore >= 20 && awayScore >= 20 && homeScore <= 29 && awayScore <= 29)
                 {
-                   
                     if(homeScore >= awayScore + 2 || awayScore >= homeScore + 2)
                     {
                         return true;

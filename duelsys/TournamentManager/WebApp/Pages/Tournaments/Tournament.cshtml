@@ -2,3 +2,28 @@
 @model WebApp.Pages.Tournaments.TournamentModel
 @{
 }
+
+<div class="">
+    <p>Title: @Model.Tournament?.Title</p>
+    <p>Description: @Model.Tournament?.Description</p>
+    <p>City: @Model.Tournament?.City</p>
+    <p>Address: @Model.Tournament?.Address</p>
+    <p>Start Date: @Model.Tournament?.StartDate</p>
+    <p>End Date: @Model.Tournament?.EndDate</p>
+    <p>Minium Contestants: @Model.Tournament?.MinContestants</p>
+    <p>Maximum Contestants: @Model.Tournament?.MaxContestants</p>
+    <p>Tournament Status: @Model.Tournament?.Status</p>
+    <p>Sport: @Model.Tournament?.Sport!.Name</p>
+</div>
+
+<div>
+    @foreach(var contestant in Model.Leaderboard)
+    {
+        <p>
+        <span>Rank: @contestant.Rank</span>
+        <span> | @contestant.Name @contestant.SurName</span>
+        <span> | @contestant.Wins</span>
+        <span> | @contestant.Losses</span>
+        </p>
+    }
+</div>

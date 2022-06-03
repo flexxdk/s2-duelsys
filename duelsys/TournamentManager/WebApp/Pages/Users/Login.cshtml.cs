@@ -30,8 +30,8 @@ namespace WebApp.Pages.Users
             {
                 try
                 {
-                    User user = loginHandler.AuthenticateWebsite(LoginCredentials!);
-                    await CreateCookie(user);
+                    Account account = loginHandler.AuthenticateWebsite(LoginCredentials!);
+                    await CreateCookie(account);
                     return RedirectToPage("/Index");
                 }
                 catch (AuthenticationException)
@@ -53,12 +53,12 @@ namespace WebApp.Pages.Users
             return Page();
         }
 
-        public async Task CreateCookie(User user)
+        public async Task CreateCookie(Account account)
         {
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, string.Concat(user.Name, user.SurName)),
-                new Claim(ClaimTypes.NameIdentifier, user.ID.ToString())
+                new Claim(ClaimTypes.Name, string.Concat(account.Name, account.SurName)),
+                new Claim(ClaimTypes.NameIdentifier, account.ID.ToString())
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

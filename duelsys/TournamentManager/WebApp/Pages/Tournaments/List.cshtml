@@ -7,6 +7,8 @@
 <div>
 @foreach(Tournament tournament in Model.Tournaments!)
 {
-    <p>@tournament.Title</p>
+    <p>
+        <a href="Tournament?id=@tournament.ID">@tournament.Title</a>
+    </p>
 }
 </div>

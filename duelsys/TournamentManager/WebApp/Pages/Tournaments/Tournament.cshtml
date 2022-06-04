@@ -26,6 +26,14 @@
     <p>Sport: @Model.Tournament?.Sport!.Name</p>
 </div>
 
+@if(User.Identity?.IsAuthenticated == true)
+{
+    <form method="post">
+        <button class="btn btn-primary" asp-page-handler="register">Register</button>
+        <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
+    </form>
+}
+
 @if(Model.Leaderboard.Count > 0){
     <h2 class="text-center my-3">Leaderboard</h2>
     <table class="table table-striped">

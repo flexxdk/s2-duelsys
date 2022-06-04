@@ -58,6 +58,8 @@ namespace WebApp.Pages.Users
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, string.Concat(account.Name, account.SurName)),
+                new Claim(ClaimTypes.Role, account.Role.ToString()),
+                new Claim("TeamType", account.Type.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, account.ID.ToString())
             };
 

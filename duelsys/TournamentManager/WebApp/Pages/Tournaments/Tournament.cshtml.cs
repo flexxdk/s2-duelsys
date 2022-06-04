@@ -8,6 +8,7 @@ using DAL.Repositories;
 using BLL.Objects;
 using BLL.Registries;
 using BLL.Objects.Users;
+using System.Security.Claims;
 
 namespace WebApp.Pages.Tournaments
 {
@@ -15,6 +16,7 @@ namespace WebApp.Pages.Tournaments
     {
         private TournamentRegistry tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()));
         private MatchRegistry matchRegistry = new MatchRegistry(new MatchRepository(new DbContext()));
+        private ContestantRegistry contestantRegistry = new ContestantRegistry(new ContestantRepository(new DbContext()));
 
         public Tournament? Tournament { get; set; }
 
@@ -34,6 +36,13 @@ namespace WebApp.Pages.Tournaments
             {
                 return ;
             }
+        }
+
+        public IActionResult OnPostRegister()
+        {
+            int userID = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //if(contestantRegistry.Register(userID, Tournament.ID))
+            return Page();
         }
     }
 }

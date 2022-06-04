@@ -29,8 +29,10 @@ body {
     background-color: sandybrown;
 }
 
-.validation-summary-errors > ul{
+.validation-summary-errors > ul {
     list-style: none;
+    color: red;
+    text-align: center;
 }
 
 .field-validation-error{

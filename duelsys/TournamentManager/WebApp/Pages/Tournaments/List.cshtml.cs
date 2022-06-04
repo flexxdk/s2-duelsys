@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using DAL;
 using DAL.Repositories;
 using BLL.Objects;
-using BLL.Registries;
+using BLL.Registries; 
+using BLL.Enums;
 
 namespace WebApp.Pages.Tournaments
 {
@@ -20,6 +21,11 @@ namespace WebApp.Pages.Tournaments
         public void OnGet()
         {
             Tournaments = registry.GetAll(false).ToList();
+        }
+
+        public IEnumerable<Tournament> GetByStatus(TournamentStatus status)
+        {
+            return Tournaments!.Where(t => t.Status == status).OrderBy(t => t.StartDate);
         }
     }
 }

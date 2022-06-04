@@ -1,6 +1,16 @@
 ﻿@page
+@using BLL.Objects.Users;
 @model WebApp.Pages.Tournaments.TournamentModel
 @{
+    void RenderRow(Contestant contestant)
+    {
+        <tr>
+            <th scope="row">@contestant.Rank</th>
+            <td>@contestant.Name @contestant.SurName</td>
+            <td>@contestant.Wins</td>
+            <td>@contestant.Losses</td>
+        </tr>
+    }
 }
 
 <div class="">
@@ -16,14 +26,22 @@
     <p>Sport: @Model.Tournament?.Sport!.Name</p>
 </div>
 
-<div>
-    @foreach(var contestant in Model.Leaderboard)
-    {
-        <p>
-        <span>Rank: @contestant.Rank</span>
-        <span> | @contestant.Name @contestant.SurName</span>
-        <span> | @contestant.Wins</span>
-        <span> | @contestant.Losses</span>
-        </p>
-    }
-</div>
+@if(Model.Leaderboard.Count > 0){
+    <h2 class="text-center my-3">Leaderboard</h2>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Wins</th>
+                <th scope="col">Losses</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var contestant in Model.Leaderboard)
+            {
+                RenderRow(contestant);
+            }
+        </tbody>
+    </table>
+}

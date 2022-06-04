@@ -3,18 +3,24 @@
 @{
 }
 
-<div>
-    <form method="post">
-        <label asp-for="LoginCredentials.Email"></label>
-        <span asp-validation-for="LoginCredentials.Email"></span>
-        <input asp-for="LoginCredentials.Email" type="email"/>
-        <label asp-for="LoginCredentials.Password"></label>
-        <span asp-validation-for="LoginCredentials.Password"></span>
-        <input asp-for="LoginCredentials.Password" type="password"/>
-        <span>@Html.ValidationSummary(true)</span>
-        <input type="submit" value="Login" />
-        <input type="reset" value="Cancel" />
-    </form>
+<div class="row justify-content-center my-5">
+    <div class="col-md-4">
+        <form method="post">
+            <label class="form-label" asp-for="LoginCredentials.Email">Email:</label>
+            <input class="form-control" placeholder="user@email.com" asp-for="LoginCredentials.Email" type="email"/>
+            <span asp-validation-for="LoginCredentials.Email"></span>
+            <div class="my-2">
+                <label class="form-label" asp-for="LoginCredentials.Password">Password:</label>
+                <input class="form-control" asp-for="LoginCredentials.Password" type="password"/>
+                <span asp-validation-for="LoginCredentials.Password"></span>
+            </div>
+            <span>@Html.ValidationSummary(true)</span>
+            <div class="text-center">
+                <input class="btn btn-primary col-5" type="submit" value="Login" />
+                <input class="btn btn-outline-primary col-5" type="reset" value="Cancel" />
+            </div>
+        </form>
+    </div>
 </div>
 
 @section scripts{

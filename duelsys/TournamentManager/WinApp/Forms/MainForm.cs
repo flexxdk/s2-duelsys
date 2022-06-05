@@ -408,8 +408,8 @@ namespace WinApp.Forms
                     if (matchForm.DialogResult == DialogResult.OK)
                     {
                         Match result = matchForm.CurrentMatch;
-                        //contestantRegistry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
-                        matchRegistry.SaveResults(result);
+                        contestantRegistry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
+                        matchRegistry.SaveMatch(result);
                         MessageBox.Show("Match results saved!");
                         RefreshMatches(result.TournamentID);
                     }

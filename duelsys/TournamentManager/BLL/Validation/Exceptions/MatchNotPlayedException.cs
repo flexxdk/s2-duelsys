@@ -11,6 +11,5 @@ namespace BLL.Validation.Exceptions
         public MatchNotPlayedException(string message)
             : base(message)
         { }
-    {
     }
 }

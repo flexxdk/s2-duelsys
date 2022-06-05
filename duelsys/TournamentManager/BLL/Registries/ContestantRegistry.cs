@@ -101,7 +101,7 @@ namespace BLL.Registries
                 {
                     winner.Wins++;
                     loser.Losses++;
-                    repository.Update
+                    repository.SaveResults(tournamentID, winner.ID, winner.Wins, loser.ID, loser.Losses);
                 }
             }
             catch

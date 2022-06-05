@@ -135,5 +135,25 @@ namespace DAL.Repositories
                     Convert.ToInt32(row["losses"])
                 );
         }
+
+        public void SaveResults(int tournamentID, int winnerID, int wins, int loserID, int losses)
+        {
+            try
+            {
+                string query = @"UPDATE syn_contestants SET wins = @Wins WHERE tournament_id = @TournamentID AND user_id = @WinnerID;
+                                UPDATE syn_contestants SET losses = @Losses WHERE tournament_id = @TournamentID AND user_id = @LoserID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@TournamentID", tournamentID);
+                cmd.Parameters.AddWithValue("@WinnerID", winnerID);
+                cmd.Parameters.AddWithValue("@Wins", wins);
+                cmd.Parameters.AddWithValue("@LoserID", loserID);
+                cmd.Parameters.AddWithValue("@Losses", losses);
+                ExecuteNonQuery(cmd);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

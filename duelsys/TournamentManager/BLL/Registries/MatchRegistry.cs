@@ -74,17 +74,12 @@ namespace BLL.Registries
             return matchGenerator.CheckCanGenerate(tournamentID, system);
         }
 
-        public void SaveResults(Match match)
+        public void SaveMatch(Match match)
         {
             try
             {
                 ValidateModel(match);
-                int winner = match.GetWinner();
-                int loser = match.GetLoser();
-                if(winner != -1 || loser != -1)
-                {
-                    repository.SaveResults(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
-                }
+                repository.SaveResults(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
             }
             catch
             {

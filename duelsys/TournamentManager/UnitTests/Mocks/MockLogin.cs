@@ -7,7 +7,7 @@ namespace UnitTests.Mocks
 {
     public class MockLogin : ILoginRepository
     {
-        public UserDTO? GetCredentials(string email)
+        public AccountDTO? GetCredentials(string email)
         {
             throw new System.NotImplementedException();
         }

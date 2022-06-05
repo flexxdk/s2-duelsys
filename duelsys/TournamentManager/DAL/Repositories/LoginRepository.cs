@@ -10,7 +10,7 @@ namespace DAL.Repositories
     {
         public LoginRepository(DbContext dbContext) : base(dbContext) { }
 
-        public UserDTO? GetCredentials(string email)
+        public AccountDTO? GetCredentials(string email)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace DAL.Repositories
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@Email", email);
                 DataTable results = ExecuteReader(cmd);
-                return new UserDTO(
+                return new AccountDTO(
                     Convert.ToInt32(results.Rows[0]["id"]),
                     results.Rows[0]["name"].ToString()!,
                     results.Rows[0]["surname"].ToString()!,

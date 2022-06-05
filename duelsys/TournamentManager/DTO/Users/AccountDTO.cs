@@ -1,6 +1,6 @@
 ﻿namespace DTO.Users
 {
-    public class UserDTO
+    public class AccountDTO
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
@@ -11,7 +11,7 @@
         public string Password { get; private set; }
         public string Salt { get; private set; }
 
-        public UserDTO(int id, string name, string surName, string role, string type, string email, string password, string salt)
+        public AccountDTO(int id, string name, string surName, string role, string type, string email, string password, string salt)
         {
             ID = id;
             Name = name;

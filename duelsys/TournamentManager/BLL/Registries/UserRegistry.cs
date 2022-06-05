@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BLL.Registries
 {
-    public class UserRegistry
+    public class UserRegistry : BaseRegistry
     {
         private readonly IUserRepository repository;
         private Encryptor encryptor;
@@ -22,7 +22,7 @@ namespace BLL.Registries
 
         public Account? GetByID(int id)
         {
-            UserDTO? dto = repository.GetByID(id);
+            AccountDTO? dto = repository.GetByID(id);
             if(dto == null)
             {
                 return null;
@@ -39,17 +39,17 @@ namespace BLL.Registries
             };
         }
 
-        public bool RegisterAccount(Account user)
+        public bool RegisterAccount(Account account)
         {
             try
             {
-                ValidateModel(user);
-                if (!repository.CheckIfEmailExists(user.Email!))
+                ValidateModel(account);
+                if (!repository.CheckIfEmailExists(account.Email!))
                 {
-                    SaltKey hashed = encryptor.Hash(user.Password!);
-                    user.Password = hashed.Key;
-                    user.Salt = hashed.Salt;
-                    UserDTO dto = new UserDTO(0, user.Name!, user.SurName!, user.Role.ToString(), user.Type.ToString(), user.Email!, user.Password, user.Salt);
+                    SaltKey hashed = encryptor.Hash(account.Password!);
+                    account.Password = hashed.Key;
+                    account.Salt = hashed.Salt;
+                    AccountDTO dto = new AccountDTO(0, account.Name!, account.SurName!, account.Role.ToString(), account.Type.ToString(), account.Email!, account.Password, account.Salt);
                     return repository.Register(dto);
                 }
                 return false;
@@ -57,23 +57,6 @@ namespace BLL.Registries
             catch
             {
                 throw;
-            }
-        }
-
-        private void ValidateModel(Account user)
-        {
-            List<string> results = Validate.AsModel(user).ToList();
-
-            if (results.Any())
-            {
-                StringBuilder sbMessage = new StringBuilder();
-                sbMessage.AppendLine("The following errors have occurred: ");
-                foreach (string error in results)
-                {
-                    sbMessage.Append("- ");
-                    sbMessage.AppendLine(error);
-                }
-                throw new ValidationException(sbMessage.ToString());
             }
         }
     }

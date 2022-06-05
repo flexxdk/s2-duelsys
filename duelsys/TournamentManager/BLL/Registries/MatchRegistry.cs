@@ -17,9 +17,9 @@ namespace BLL.Registries
             matchGenerator = new MatchGenerator(repository);
         }
 
-        public Match? GetByID(int matchID)
+        public Match? GetByID(int id)
         {
-            MatchDTO? dto = repository.GetByID(matchID);
+            MatchDTO? dto = repository.GetByID(id);
             if(dto != null)
             {
                 return new Match()

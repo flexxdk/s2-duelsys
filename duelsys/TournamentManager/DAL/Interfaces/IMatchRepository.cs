@@ -7,7 +7,7 @@ namespace DAL.Interfaces
     {
         public MatchDTO? GetByID(int id);
         public IList<MatchDTO> GetMatches(int tournamentID);
-        public int Create(MatchDTO obj);
-        public int Update(MatchDTO obj);
+        public int Create(MatchDTO dto);
+        public int Update(MatchDTO dto);
     }
 }

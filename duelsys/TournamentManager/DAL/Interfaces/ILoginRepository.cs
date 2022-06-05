@@ -4,6 +4,6 @@ namespace DAL.Interfaces
 {
     public interface ILoginRepository
     {
-        public UserDTO? GetCredentials(string email);
+        public AccountDTO? GetCredentials(string email);
     }
 }

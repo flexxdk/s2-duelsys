@@ -5,12 +5,12 @@ namespace DAL.Interfaces
 {
     public interface ITournamentRepository
     {
-        public bool Delete(int tournamentID);
+        public IList<TournamentDTO> Load();
         public IList<ContestantDTO> GetStandings(int tournamentID);
         public IEnumerable<TournamentDTO> FilterTournamentsOnStatus(string filter);
         public TournamentDTO? GetByID(int id);
-        public int Create(TournamentDTO obj);
-        public int Update(TournamentDTO obj);
-        public IList<TournamentDTO> Load();
+        public int Create(TournamentDTO dto);
+        public int Update(TournamentDTO dto);
+        public bool Delete(int id);
     }
 }

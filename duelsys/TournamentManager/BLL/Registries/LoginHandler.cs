@@ -53,7 +53,7 @@ namespace BLL.Registries
 
         private Account VerifyCredentials(string email, string password)
         {
-            UserDTO? dto = repository.GetCredentials(email);
+            AccountDTO? dto = repository.GetCredentials(email);
 
             if (dto != null)
             {

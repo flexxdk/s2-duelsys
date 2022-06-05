@@ -61,15 +61,21 @@ namespace BLL.Registries
             if (Validate.AsEnum<TeamType>(userType))
             {
                 TournamentDTO? dto = repository.GetTournament(tournamentID);
-                if (dto != null && dto.Type == userType)
+                if (dto != null)
                 {
-                    if (GetContestant(userID, tournamentID) == null)
+                    if (dto.Type == userType)
                     {
-                        return repository.Register(userID, tournamentID);
+                        if (GetContestant(tournamentID, userID) == null)
+                        {
+                            return repository.Register(userID, tournamentID);
+                        }
+                        return false;
                     }
+                    throw new Exception($"Cannot register {userType} account for a {dto.Type} tournament.");
                 }
+                throw new Exception($"Could not find tournament.");
             }
-            return false;
+            throw new Exception($"Your account has an invalid team type. Please contact the system administrators.");
         }
 
         public bool Deregister(int userID, int tournamentID)
@@ -77,7 +83,7 @@ namespace BLL.Registries
             TournamentDTO? dto = repository.GetTournament(tournamentID);
             if(dto != null)
             {
-                if (GetContestant(userID, tournamentID) != null)
+                if (GetContestant(tournamentID, userID) != null)
                 {
                     return repository.Deregister(userID, tournamentID);
                 }

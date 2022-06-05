@@ -15,34 +15,85 @@ namespace WebApp.Pages.Tournaments
     public class TournamentModel : PageModel
     {
         private TournamentRegistry tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()));
+
         private MatchRegistry matchRegistry = new MatchRegistry(new MatchRepository(new DbContext()));
+
         private ContestantRegistry contestantRegistry = new ContestantRegistry(new ContestantRepository(new DbContext()));
 
+        [BindProperty]
         public Tournament? Tournament { get; set; }
 
+        [BindProperty]
+        public string StateMessage { get; set; } = string.Empty;
+
+        [BindProperty]
+        public int? TournamentID { get; set; }
+
+        [BindProperty]
         public List<Match> Matches { get; set; } = new List<Match>();
 
+        [BindProperty]
         public List<Contestant> Leaderboard { get; set; } = new List<Contestant>();
 
         public void OnGet(int? id)
         {
             if (id.HasValue)
             {
-                Tournament = tournamentRegistry.GetByID(id.Value);
-                Matches = matchRegistry.GetMatches(id.Value).ToList();
-                Leaderboard = tournamentRegistry.GetLeaderboard(id.Value).ToList();
-            }
-            else
-            {
-                return ;
+                LoadPageInfo(id.Value);
             }
         }
 
         public IActionResult OnPostRegister()
         {
-            int userID = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            //if(contestantRegistry.Register(userID, Tournament.ID))
+            if (TournamentID.HasValue)
+            {
+                Tournament = tournamentRegistry.GetByID(TournamentID.Value);
+                int userID = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                string userType = User.FindFirstValue("TeamType");
+                try
+                {
+                    if (contestantRegistry.Register(userID, userType, Tournament!.ID))
+                    {
+                        TempData["success"] = "You have succesfully registered for this tournament.";
+                    }
+                    else
+                    {
+                        TempData["error"] = "You have already been registered.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["error"] = ex.Message;
+                }
+                return RedirectToPage("./Tournament", new { id = Tournament!.ID });
+            }
             return Page();
+        }
+
+        public IActionResult OnPostDeregister()
+        {
+            if (TournamentID.HasValue)
+            {
+                Tournament = tournamentRegistry.GetByID(TournamentID.Value);
+                int userID = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                if (contestantRegistry.Deregister(userID, Tournament!.ID))
+                {
+                    TempData["success"] = "You have been deregistered.";
+                }
+                else
+                {
+                    TempData["error"] = "You have not registered for this tournament.";
+                }
+                return RedirectToPage("./Tournament", new { id = Tournament!.ID });
+            }
+            return Page();
+        }
+
+        public void LoadPageInfo(int id)
+        {
+            Tournament = tournamentRegistry.GetByID(id);
+            Matches = matchRegistry.GetMatches(id).ToList();
+            Leaderboard = tournamentRegistry.GetLeaderboard(id).ToList();
         }
     }
 }

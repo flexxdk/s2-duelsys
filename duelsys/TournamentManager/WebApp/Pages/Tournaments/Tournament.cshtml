@@ -24,6 +24,7 @@
     <p>Maximum Contestants: @Model.Tournament?.MaxContestants</p>
     <p>Tournament Status: @Model.Tournament?.Status</p>
     <p>Sport: @Model.Tournament?.Sport!.Name</p>
+    <p>Team Type: @Model.Tournament?.Type</p>
 </div>
 
 @if(User.Identity?.IsAuthenticated == true)
@@ -31,6 +32,15 @@
     <form method="post">
         <button class="btn btn-primary" asp-page-handler="register">Register</button>
         <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
+        <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
+        @if (TempData["success"] != null)
+        {
+            <span class="field-validation-success">@TempData["success"]</span>
+        }
+        @if (TempData["error"] != null)
+        {
+            <span class="field-validation-error">@TempData["error"]</span>
+        }
     </form>
 }
 

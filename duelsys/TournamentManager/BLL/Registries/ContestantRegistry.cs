@@ -90,5 +90,24 @@ namespace BLL.Registries
             }
             return false;
         }
+
+        public void SaveResults(int tournamentID, int winnerID, int loserID)
+        {
+            try
+            {
+                Contestant? winner = GetContestant(tournamentID, winnerID);
+                Contestant? loser = GetContestant(tournamentID, loserID);
+                if(winner != null && loser != null)
+                {
+                    winner.Wins++;
+                    loser.Losses++;
+                    repository.Update
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

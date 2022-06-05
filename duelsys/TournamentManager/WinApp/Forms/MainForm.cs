@@ -407,9 +407,11 @@ namespace WinApp.Forms
 
                     if (matchForm.DialogResult == DialogResult.OK)
                     {
-                        matchRegistry.SaveResults(matchForm.CurrentMatch);
+                        Match result = matchForm.CurrentMatch;
+                        //contestantRegistry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
+                        matchRegistry.SaveResults(result);
                         MessageBox.Show("Match results saved!");
-                        RefreshMatches(match.TournamentID);
+                        RefreshMatches(result.TournamentID);
                     }
                     else
                     {

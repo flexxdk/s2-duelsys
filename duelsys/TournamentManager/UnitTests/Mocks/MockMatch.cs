@@ -66,7 +66,7 @@ namespace UnitTests.Mocks
             return contestants.FindAll(c => c.TournamentID == tournamentID);
         }
 
-        public int Update(MatchDTO dto)
+        public int SaveResults(MatchDTO dto)
         {
             int index = matches.IndexOf(matches.Find(matches => matches.ID == dto.ID)!);
             if(index > -1)

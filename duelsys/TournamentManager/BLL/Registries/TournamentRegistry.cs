@@ -142,6 +142,7 @@ namespace BLL.Registries
                     Losses = dto.Losses,
                 });
             }
+            contestants.Sort();
             CalculateRankings(contestants);
             return contestants;
         }

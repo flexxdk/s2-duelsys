@@ -79,7 +79,12 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(match);
-                repository.Update(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
+                int winner = match.GetWinner();
+                int loser = match.GetLoser();
+                if(winner != -1 || loser != -1)
+                {
+                    repository.SaveResults(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
+                }
             }
             catch
             {

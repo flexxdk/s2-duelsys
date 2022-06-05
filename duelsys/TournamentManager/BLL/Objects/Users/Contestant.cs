@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Objects.Users
 {
-    public class Contestant : Person
+    public class Contestant : Person, IComparable<Contestant>
     {
         [Required]
         [Browsable(false)]
@@ -16,5 +16,29 @@ namespace BLL.Objects.Users
 
         [Required]
         public int Losses { get; set; }
+
+        public int CompareTo(Contestant? other)
+        {
+            if(other.Wins > this.Wins)
+            {
+                return 1;
+            }
+            else if(other.Wins < this.Wins)
+            {
+                return -1;
+            }
+            else
+            {
+                if(other.Losses < this.Losses)
+                {
+                    return 1;
+                }
+                else if(other.Losses > this.Losses)
+                {
+                    return -1;
+                }  
+            }
+            return 0;
+        }
     }
 }

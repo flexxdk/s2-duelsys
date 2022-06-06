@@ -58,24 +58,29 @@ namespace BLL.Registries
 
         public bool Register(int userID, string userType, int tournamentID)
         {
+            string error = string.Empty;
             if (Validate.AsEnum<TeamType>(userType))
             {
                 TournamentDTO? dto = repository.GetTournament(tournamentID);
                 if (dto != null)
                 {
-                    if (dto.Type == userType)
+                    if(DateTime.Now.AddDays(7) < DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")))
                     {
-                        if (GetContestant(tournamentID, userID) == null)
+                        if (dto.Type == userType)
                         {
-                            return repository.Register(userID, tournamentID);
+                            if (GetContestant(tournamentID, userID) == null)
+                            {
+                                return repository.Register(userID, tournamentID);
+                            }
+                            return false;
                         }
-                        return false;
+                        error = $"Cannot register {userType} account for a {dto.Type} tournament.";
                     }
-                    throw new Exception($"Cannot register {userType} account for a {dto.Type} tournament.");
+                    error = "Cannot register for a tournament that is starting in less than a week.";
                 }
-                throw new Exception($"Could not find tournament.");
+                error = $"Could not find tournament.";
             }
-            throw new Exception($"Your account has an invalid team type. Please contact the system administrators.");
+            throw new Exception(error);
         }
 
         public bool Deregister(int userID, int tournamentID)

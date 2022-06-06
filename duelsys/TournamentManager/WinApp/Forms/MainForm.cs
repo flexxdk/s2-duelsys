@@ -14,6 +14,8 @@ namespace WinApp.Forms
 {
     public partial class MainForm : Form
     {
+        private Account ActiveUser { get; }
+
         private MatchForm? matchForm;
 
         private TournamentRegistry tournamentRegistry;
@@ -21,9 +23,11 @@ namespace WinApp.Forms
         private MatchRegistry matchRegistry;
         private ContestantRegistry contestantRegistry;
 
-        public MainForm()
+        public MainForm(Account account)
         {
             InitializeComponent();
+            ActiveUser = account;
+
             SetupFormGUI();
 
             tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()));
@@ -53,6 +57,8 @@ namespace WinApp.Forms
             comboTypes.DataSource = Enum.GetValues(typeof(TeamType));
             comboRoles.DataSource = Enum.GetValues(typeof(UserRole));
             comboSport.DataSource = SportAssigner.GetNames();
+
+            lblUserName.Text = ActiveUser.Name;
         }
 
         private void SwitchTab(TabPage tab)
@@ -413,12 +419,12 @@ namespace WinApp.Forms
                         MessageBox.Show("Match results saved!");
                         RefreshMatches(result.TournamentID);
                     }
-                    else
-                    {
-                        
-                    }
 
                     matchForm.Dispose();
+                }
+                else
+                {
+                    MessageBox.Show("This match has already been finished.");
                 }
             }
         }

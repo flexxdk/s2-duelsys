@@ -1,5 +1,6 @@
 ﻿@page
 @using BLL.Objects.Users;
+@using BLL.Enums;
 @model WebApp.Pages.Tournaments.TournamentModel
 @{
     void RenderRow(Contestant contestant)
@@ -10,6 +11,15 @@
             <td>@contestant.Wins</td>
             <td>@contestant.Losses</td>
         </tr>
+    }
+
+    bool CheckDisplayRegisterOptions()
+    {
+        if(Model.Tournament != null)
+        {
+            return DateTime.Now.AddDays(7) < Model.Tournament.StartDate && Model.Tournament.Status == TournamentStatus.Planned;
+        }
+        return false;
     }
 }
 
@@ -27,21 +37,36 @@
     <p>Team Type: @Model.Tournament?.Type</p>
 </div>
 
-@if(User.Identity?.IsAuthenticated == true)
+@if (CheckDisplayRegisterOptions())
 {
-    <form method="post">
-        <button class="btn btn-primary" asp-page-handler="register">Register</button>
-        <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
-        <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
-        @if (TempData["success"] != null)
-        {
-            <span class="field-validation-success">@TempData["success"]</span>
-        }
-        @if (TempData["error"] != null)
-        {
-            <span class="field-validation-error">@TempData["error"]</span>
-        }
-    </form>
+    if(User.Identity?.IsAuthenticated == true)
+    {
+        <form method="post">
+            <button class="btn btn-primary" asp-page-handler="register">Register</button>
+            <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
+            <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
+            @if (TempData["success"] != null)
+            {
+                <span class="field-validation-success">@TempData["success"]</span>
+            }
+            @if (TempData["error"] != null)
+            {
+                <span class="field-validation-error">@TempData["error"]</span>
+            }
+        </form>
+    }
+    else
+    {
+        <div>
+            Log in to register for this tournament.
+        </div>
+    }
+}
+else
+{
+    <div>
+        This tournament is closed for registration.
+    </div>
 }
 
 @if(Model.Leaderboard.Count > 0){

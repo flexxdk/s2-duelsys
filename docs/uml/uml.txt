@@ -1,173 +1,336 @@
 @startuml
-interface IObjectLoader<T>{
-+ GetAll() : IList<T>
-}
-
-interface IObjectManipulator<T>{
-+ Create(object : T) : void
-+ Update(object : T) : void
+interface IMatchRepository{
++ GetByID(id : int) : MatchDTO?
++ GetMatches(tournamentID : int) : IList<MatchDTO>
++ Create(dto : MatchDTO) : int
++ Update(dto : MatchDTO) : int
 }
 
 interface ITournamentRepository{
-+ DeleteTournament(id : int) : void
-+ GetLeaderboard(id : int) : IList<Contestant>
-}
-
-interface IMatchRepository{
-+ GetMatches(tournamentID : int)
++ Load() : IList<TournamentDTO>
++ GetStandings(tournamentID : int) : IList<ContestantDTO>
++ FilterTournamentsOnStatus(status : string) : IList<TournamentDTO>
++ GetByID(int id) : TournamentDTO?
++ Create(dto : TournamentDTO) : int
++ Update(dto : TournamentDTO) : int
++ Delete(id : int) : bool
 }
 
 interface IUserRepository{
-+ Register(user : User) : void
++ GetByID(id : int) : AccountDTO?
++ Register(dto : AccountDTO) : bool
++ CheckIfEmailExists(email : string) : bool
 }
 
 interface IContestantRepository{
-+ GetContestantInfo(userID : int) : User
-+ GetTournamentContestants(tournamentID : int) : IList<Contestant>
-+ Register(tournamentID : int, userID : int) : void 
-+ Deregister(tournamentID : int, userID : int) : void
++ GetContestant(tournamentID : int, contestantID : int) : ContestantDTO?
++ GetContestants(tournamentID : int) : IList<ContestantDTO>
++ Register(userID : int, tournamentID : int) : bool
++ Deregister(userID : int, tournamentID : int) : bool
++ GetTournament(tournamentID : int) : TournamentDTO?
 }
 
 interface ILoginRepository{
-+ CheckfIfEmailExists(email : string) : bool
-+ VerifyCredentials(creds : Credentials) : bool
++ GetCredentials(email : string) : AccountDTO
 }
 
-IUserRepository ..|> IObjectLoader : implements
-IMatchRepository  ...|> IObjectManipulator : implements
-IObjectLoader ...|> IObjectManipulator : implements
-IContestantRepository ..|> IObjectLoader : implements
-ITournamentRepository ...|> IObjectManipulator : implements
-ILoginRepository ...|> IObjectLoader : implements
-
-class TournamentRepository{
-+ GetAll() : IList<Tournament>
-+ GetByID(id : int) : Tournament
-+ CreateTournament(tournament : Tournament) : void
-+ UpdateTournament(tournament : Tournament) : void
-+ DeleteTournament(id: int) : void
-+ GetLeaderboard(id : int) : IList<Contestant>
+abstract class BaseRepository{
++ BaseRepository(dbContext : DbContext)
+# GetConnection() : MySqlConnection
+# OpenConnection(connection : MySqlConnection)
+# ExecuteNonQuery(command : MySqlCommand) : int
+# ExecuteScalar(command : MySqlCommand) : object?
+# ExecuteReader(command : MySqlCommand) : DataTable
 }
 
 class MatchRepository{
-+ GetByID(id : int) : Match
-+ GetMatches(tournamentID : int) : IList<Match>
-+ Create(match : Match) : void
-+ Update(match : Match) : void
++ GetByID(id : int) : MatchDTO?
++ GetMatches(tournamentID : int) : IList<MatchDTO>
++ Create(dto : MatchDTO) : int
++ Update(dto : MatchDTO) : int
+- InstantiateDTO(row : DataRow) : MatchDTO
+}
+
+class TournamentRepository{
++ Load() : IList<TournamentDTO>
++ GetStandings(tournamentID : int) : IList<ContestantDTO>
++ FilterTournamentsOnStatus(status : string) : IList<TournamentDTO>
++ GetByID(int id) : TournamentDTO?
++ Create(dto : TournamentDTO) : int
++ Update(dto : TournamentDTO) : int
++ Delete(id : int) : bool
+- InstantiateDTO(row : DataRow) : TournamentDTO
 }
 
 class UserRepository{
-+ GetAll() : IList<User>
-+ GetByID(id : int) : User
-+ Register(User : user) : void
-+ CheckfIfEmailExists(email : string)
++ GetByID(id : int) : AccountDTO?
++ Register(dto : AccountDTO) : bool
++ CheckIfEmailExists(email : string) : bool
 }
 
 class ContestantRepository{
-+ GetAll() : IList<Contestant>
-+ GetContestantInfo(userID : int) : User
-+ GetTournamentContestants(tournamentID : int) : IList<Contestant>
-+ RegisterContestant(tournamentID : int, userID : int) : bool
-+ DeregisterContestant(tournamentID : int, userID : int) : bool
++ GetContestant(tournamentID : int, contestantID : int) : ContestantDTO?
++ GetContestants(tournamentID : int) : IList<ContestantDTO>
++ Register(userID : int, tournamentID : int) : bool
++ Deregister(userID : int, tournamentID : int) : bool
++ GetTournament(tournamentID : int) : TournamentDTO?
 }
 
-TournamentRepository ..|> ITournamentRepository  : implements
+class LoginRepository{
++ GetCredentials(email : string) : AccountDTO?
+}
+
 MatchRepository ..|> IMatchRepository : implements
+TournamentRepository ..|> ITournamentRepository  : implements
 UserRepository ..|> IUserRepository : implements
 ContestantRepository ..|> IContestantRepository : implements
+LoginRepository ..|> ILoginRepository : implements
 
-class TournamentRegistry{
-+ GetAll() : IList<Tournament>
-+ GetByID(id : int) : Tournament
-+ CreateTournament(name : string, minEntrants : int,\n maxEntrants : int, startDate : string, endDate : string) : void
+BaseRepository <|.. MatchRepository : inherits
+BaseRepository <|.. UserRepository : inherits
+BaseRepository <|.. ContestantRepository : inherits
+BaseRepository <|.. LoginRepository : inherits
+BaseRepository <|.. TournamentRepository : inherits
+
+class Encryptor{
++ Encryptor()
++ Hash(password : string) : SaltKey
++ Verify(password : string, dbkey : string,\ndbsalt : string) : bool
+- ConvertToString(value : byte[]) : string
+- ConvertToByte(value : string) : byte[]
 }
 
-class MatchScheduler{
-+ GetMatch(id : int) : Match
+class SaltKey {
++ Salt { get; private set; } : string
++ Key { get; private set; } : string
++ SaltKey(salt : string, key : string)
+}
+
+Encryptor --> SaltKey
+
+class MatchGenerator{
+- repository : IMatchRepository
++ MatchGenerator(repository : IMatchRepository)
++ GenerateMatches(system : TournamentSystem,\ntournamentID : int contestants : \nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
++ CheckCanGenerate(tournamentID : int, system : TournamentSystem) : bool
+- RoundRobin(tournamentID : int, contestants : IEnumerable<Contestant>) :\nIEnumerable<MatchDTO>
+- RecursiveRoundRobin(tournamentID : int, contestants :\nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
+- SingleElimination(tournamentID : int, contestants :\nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
+- CalculateNextPowerOfTwo(n : int) : int
+}
+
+class SportAssigner {
+- {static} sports : List<ISport?>
++ {static} SportAssigner()
++ {static} RetrieveSport(index : int) : ISport?
++ {static} RetrieveSport(name : string) : ISport?
++ {static} GetSports() : List<ISport?>
++ {static} GetNames() : List<string>
+}
+
+class Validate{
++ {static} AsString(input : string) : bool
++ {static} AsEnum<T>(input : string) : bool
++ {static} AsDouble{object : input) : bool
++ {static} AsInt(object : input) : bool
++ {static} AsModel(object : input) : IEnumerable<string>
+}
+
+abstract class BaseRegistry{
+# ValidateModel(model : object) : void
+# ValidateModel(model : object,\npregenerated : IEnumerable<string>) : void
+- BuildError(errors : IEnumerable<string>) : string
+}
+
+class MatchRegistry{
+- repository : IMatchRepository
+- matchGenerator : MatchGenerator
++ GetByID(id : int) : Match?
 + GetMatches(tournamentID : int) : IList<Match>
-+ GenerateMatches(tournament : Tournament) : void
++ GenerateMatches(tournament : Tournament,\ncontestants : IEnumerable<Contestant>) : bool
++ CheckCanGenerate(tournamentID : int,\nsystem : TournamentSystem) : bool
 + SaveResults(match : Match) : void
 }
 
-class UserRegistry{
-+ GetAll() : IList<User>
-+ GetByID(id : int) : User
-+ Register(firstName : string, lastName : string,\n email : string, role : string, password : string) : bool
+class TournamentRegistry{
+- repository : ITournamentRepository
+- tournaments : Dictionary<int, Tournament>
++ TournamentRegistry(repository : ITournamentRepository)
++ LoadTournaments() : void
++ GetAll(refresh : bool) : IList<Tournament>
++ GetByID(id : int) : Tournament
++ CreateTournament(tournament : Tournament) : bool
++ UpdateTournament(tournament : Tournament) : bool
++ DeleteTournament(id : int) : bool
++ GetActiveTournaments() : IEnumerable<Tournament>
++ GetLeaderboard(tournamentID : int) : IList<Contestant>
+- CalculateRankings(contestants : IList<Contestants>) : void
+- InstantiateTournament(dto : TournamentDTO) : Tournament
+- InstantiateDTO(tournament : Tournament) : TournamentDTO
+- ValidateModel(Tournament model) : void
 }
 
+class UserRegistry{
+- repository : IUserRepository
+- encryptor : Encryptor
++ UserRegistry(repository : IUserRepository)
++ GetByID(id : int) : Account?
++ RegisterAccount(account Account) : bool
+}
 
 class ContestantRegistry{
-+ GetAll() : IList<Contestant>
-+ GetByID(id : int) : Contestant
-+ GetContestantInfo(userID : int) : User
-+ GetTournamentContestants(tournamentID : int) : IList<Contestant>
-+ RegisterContestant(tournamentID : int, userID : int) : bool
-+ DeregisterContestant(tournamentID : int, userID : int) : bool
+- repository : IContestantRepository
++ ContestantRegistry()
++ GetContestant(tournamentID : int, contestantID : int) : Contestant?
++ GetContestants(tournamentID : int) : IList<Contestant>
++ Register(userID : int, userType : string, tournamentID : int) : bool
++ Deregister(userID : int, tournamentID : int) : bool
 }
 
 class LoginHandler{
+- repository : ILoginRepository
+- encryptor : Encryptor
++ LoginHandler(repository : IRepository)
++ AuthenticateForm(creds : Credentials) : Account
++ AuthenticateWebsite(creds : Credentials) : Account
++ VerifyCredential(email : string, password : string) : Account
 }
 
-IUserRepository <-- UserRegistry
-IContestantRepository <-- ContestantRegistry  
-IMatchRepository <-- MatchScheduler 
-ITournamentRepository <-- TournamentRegistry
+IMatchRepository <--- MatchRegistry 
+IMatchRepository <--- MatchGenerator
+IUserRepository <--- UserRegistry
+IContestantRepository <--- ContestantRegistry  
+ITournamentRepository <--- TournamentRegistry
+ILoginRepository <--- LoginHandler
+
+BaseRegistry <|.. MatchRegistry 
+BaseRegistry <|.. TournamentRegistry 
+BaseRegistry <|.. ContestantRegistry 
+BaseRegistry <|.. UserRegistry 
+
+LoginHandler --> Encryptor : reference
+UserRegistry --> Encryptor : reference
+MatchRegistry --> MatchGenerator : reference
 
 enum TournamentSystem{
 RoundRobin,
 SingleElimination
 }
 
-enum UserRoles{
-Administrator,
-Staff,
-Player
+enum TournamentStatus{
+Planned,
+Running,
+Finished,
+Cancelled
 }
 
-class Tournament{
-+ ID { get; private set; } : int
-+ Title { get; private set; } : string
-+ AllowRegistration { get; private set; } : bool
-+ MinContestants { get; private set; } : int
-+ MaxContestants { get; private set; } : int
-+ StartDate { get; private set; } : string
-+ EndDate { get; private set; } : string
-- System : TournamentSystem 
-- matches : List<Match>
+enum UserRoles{
+Player,
+Staff,
+Administrator
+}
+
+enum TeamType{
+Solo,
+Team
+}
+
+class DbContext{
++ DbConnectionString { get; }
++ DbContext()
++ DbContext(server : string?, uid : string?, pwd : string?)
 }
 
 class Match{
-- int id
-- string sport
-- bool isFinished
-- int homeScore
-- int awayScore
-- int homePlayerID
-- int awayPlayerID
++ ID { get; set; } : int
++ TournamentID { get; set; } : int
++ HomeID { get; set; } : int
++ HomeName { get; set; } : string?
++ HomeScore { get; set; } : int
++ AwayID { get; set; } : int
++ AwayName { get; set; } : string?
++ AwayScore { get; set; } : int
++ IsFinished { get; set; } : bool
 }
 
-class User {
-+ ID { get; private set; } : int
-- FirstName
-- LastName
-- Password { get; private set; } : Password
-- Email { get; private set; } : string
-- Role { get; private set; } : UserRole
+class Tournament{
++ ID { get; set; } : int
++ Title { get; set; } : string?
++ Description { get; set; } : string?
++ Sport { get; set; } : ISport?
++ City { get; set; } : string?
++ Address { get; set; } : string?
++ MinContestants { get; set; } : int
++ MaxContestants { get; set; } : int
++ StartDate { get; set; } : DateTime
++ EndDate { get; set; } : DateTime
++ Status { get; set; } : TournamentStatus
++ System { get; set; } : TournamentSystem 
++ Type { get; set; } : TeamType
+}
+
+abstract class Person{
++ ID { get; set; } : int
++ Name { get; set; } : string?
++ SurName { get; set; } : string?
+}
+
+class Account{
++ Role { get; set; } : UserRole
++ Type { get; set; } : TeamType
++ Email { get; set; } : string?
++ Password { get; set; } : string?
++ Salt { get; set; } : string?
 }
 
 class Contestant {
-- UserID : int
-- TournamentID : int
-+ Wins { get; } : int
-+ Losses { get; } : int
-+ Draws { get; } : int
++ TournamentID { get; set; } : int
++ Rank { get; set; } : int
++ Wins { get; set; } : int
++ Losses { get; set; } : int
 }
 
-TournamentRegistry ---> Tournament
-MatchScheduler ---> Match
-UserRegistry ---> User
-ContestantRegistry ---> Contestant
+class Credentials {
++ Email { get; set; } : string?
++ Password { get; set; } : string?
+}
 
+interface ISport{
++ Name { get; } : string
++ Scoring { get; } : string
++ ScoreIsValid(object home, object away) : bool
++ ToString() : string
+}
+
+class Badminton{
++ Name { get; } : string
++ Scoring { get; } : string
++ Badminton()
++ ScoreIsValid(object home, object away) : bool
++ ToString() : string
+}
+
+MatchRegistry --> Match
+TournamentRegistry --> Tournament
+UserRegistry --> Account
+ContestantRegistry --> Contestant
+LoginHandler --> Credentials
+
+Account --|> Person : inherits
+Contestant --|> Person : inherits
+Account ..> UserRoles
+Account ..> TeamType
+Tournament ..> TeamType
+
+Tournament --> ISport
 Tournament ..> TournamentSystem
-User ..> UserRoles
+Tournament ..> TournamentStatus
+
+Badminton --> Validate
+BaseRegistry --> Validate
+ContestantRegistry --> Validate
+UserRegistry --> Validate
+
+
+ISport <|.. Badminton : implements
 @enduml

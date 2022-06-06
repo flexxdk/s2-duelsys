@@ -1,0 +1,106 @@
+﻿@page
+@using BLL.Objects
+@using BLL.Enums;
+@using System.Globalization;
+@model WebApp.Pages.Tournaments.ListModel
+@{
+    void TryGenerateCards(TournamentStatus status, string header)
+    {
+        var list = Model.GetByStatus(status);
+        if (list.Any())
+        {
+            <h2 class="text-center my-3">@header</h2>
+            foreach(Tournament tournament in list)
+            {
+                RenderCard(tournament);
+            }
+        }
+        else
+        {
+            <h2 class="text-center my-3">No tournaments found.</h2>
+        }
+    }
+
+    void RenderCard(Tournament tournament)
+    {
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    @tournament.Title
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">@tournament.Sport!.Name</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            Start date: 
+                        </div>
+                        <div class="col-6">
+                            @tournament.StartDate.ToString("D", CultureInfo.GetCultureInfo("en-US"))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            End date: 
+                        </div>
+                        <div class="col-6">
+                            @tournament.EndDate.ToString("D", CultureInfo.GetCultureInfo("en-US"))
+                        </div>
+                    </div>
+                    <p class="card-text">@tournament.Description</p>
+                    <a href="Tournament?id=@tournament.ID" class="card-link btn btn-primary">Click here for more details</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<ul class="nav nav-pills" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="planned-tab" data-bs-toggle="tab" data-bs-target="#planned" type="button" role="tab" aria-controls="home" aria-selected="true">Planned</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="running-tab" data-bs-toggle="tab" data-bs-target="#running" type="button" role="tab" aria-controls="running" aria-selected="false">Running</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="passed-tab" data-bs-toggle="tab" data-bs-target="#passed" type="button" role="tab" aria-controls="passed" aria-selected="false">Passed</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">Cancelled</button>
+    </li>
+</ul>
+
+<div class="container-lg">
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="planned" role="tabpanel" aria-labelledby="planned-tab">
+            <div class="row">
+                @{
+                    TryGenerateCards(TournamentStatus.Planned, "Planned Tournaments");
+                }
+            </div>
+        </div>
+    
+        <div class="tab-pane fade" id="running" role="tabpanel" aria-labelledby="running-tab">
+            <div class="row">
+                @{
+                    TryGenerateCards(TournamentStatus.Running, "Running Tournaments");
+                }
+            </div>
+        </div>
+    
+        <div class="tab-pane fade" id="passed" role="tabpanel" aria-labelledby="passed-tab">
+            <div class="row">
+                @{
+                    TryGenerateCards(TournamentStatus.Finished, "Finished Tournaments");
+                }
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+            <div class="row">
+                @{
+                    TryGenerateCards(TournamentStatus.Cancelled, "Cancelled Tournaments");
+                }
+            </div>
+        </div>
+    </div>
+</div>

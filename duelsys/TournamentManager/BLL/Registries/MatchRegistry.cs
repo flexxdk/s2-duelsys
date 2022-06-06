@@ -17,9 +17,9 @@ namespace BLL.Registries
             matchGenerator = new MatchGenerator(repository);
         }
 
-        public Match? GetByID(int matchID)
+        public Match? GetByID(int id)
         {
-            MatchDTO? dto = repository.GetByID(matchID);
+            MatchDTO? dto = repository.GetByID(id);
             if(dto != null)
             {
                 return new Match()
@@ -74,12 +74,12 @@ namespace BLL.Registries
             return matchGenerator.CheckCanGenerate(tournamentID, system);
         }
 
-        public void SaveResults(Match match)
+        public void SaveMatch(Match match)
         {
             try
             {
                 ValidateModel(match);
-                repository.Update(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
+                repository.SaveResults(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
             }
             catch
             {

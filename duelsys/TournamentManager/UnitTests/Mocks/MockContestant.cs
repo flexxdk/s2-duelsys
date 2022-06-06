@@ -9,19 +9,19 @@ namespace UnitTests.Mocks
     public class MockContestant : IContestantRepository
     {
         private List<ContestantDTO> contestants;
-        private List<UserDTO> users;
+        private List<AccountDTO> users;
         private List<TournamentDTO> tournaments;
 
         public MockContestant()
         {
-            users = new List<UserDTO>()
+            users = new List<AccountDTO>()
             {
-                new UserDTO(1, "Lex", "de Kort", "Administrator", "Solo", "lexdekort@gmail.com", "1234", "1234"),
-                new UserDTO(2, "Nick", "Blom", "Player", "Solo", "nickmeister@gmail.com", "abcd", "abcd"),
-                new UserDTO(3, "Sem", "Storms", "Staff", "Solo", "localcoholic@gmail.com", "hello", "world"),
-                new UserDTO(4, "Emilia", "Stoyanova", "Staff", "Solo", "devops@gmail.com", "linux", "rules"),
-                new UserDTO(5, "John", "Doe", "Player", "Solo", "johndoe@gmail.com", "leave her johnny", "sea shanty"),
-                new UserDTO(6, "Pepe", "Silvia", "Player", "Solo", "pepesilvia@gmail.com", "it's always sunny", "iasip")
+                new AccountDTO(1, "Lex", "de Kort", "Administrator", "Solo", "lexdekort@gmail.com", "1234", "1234"),
+                new AccountDTO(2, "Nick", "Blom", "Player", "Solo", "nickmeister@gmail.com", "abcd", "abcd"),
+                new AccountDTO(3, "Sem", "Storms", "Staff", "Solo", "localcoholic@gmail.com", "hello", "world"),
+                new AccountDTO(4, "Emilia", "Stoyanova", "Staff", "Solo", "devops@gmail.com", "linux", "rules"),
+                new AccountDTO(5, "John", "Doe", "Player", "Solo", "johndoe@gmail.com", "leave her johnny", "sea shanty"),
+                new AccountDTO(6, "Pepe", "Silvia", "Player", "Solo", "pepesilvia@gmail.com", "it's always sunny", "iasip")
             };
 
             contestants = new List<ContestantDTO>()
@@ -63,7 +63,7 @@ namespace UnitTests.Mocks
         public bool Register(int userID, int tournamentID)
         {
             ContestantDTO? contestant = GetContestant(tournamentID, userID);
-            UserDTO? user = users.Find(user => user.ID == userID);
+            AccountDTO? user = users.Find(user => user.ID == userID);
             if (contestant == null && user != null)
             {
                 contestants.Add(new ContestantDTO(userID, user.Name, user.SurName, tournamentID, 0, 0));

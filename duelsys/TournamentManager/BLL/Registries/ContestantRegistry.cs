@@ -58,18 +58,29 @@ namespace BLL.Registries
 
         public bool Register(int userID, string userType, int tournamentID)
         {
+            string error = string.Empty;
             if (Validate.AsEnum<TeamType>(userType))
             {
                 TournamentDTO? dto = repository.GetTournament(tournamentID);
-                if (dto != null && dto.Type == userType)
+                if (dto != null)
                 {
-                    if (GetContestant(userID, tournamentID) == null)
+                    if(DateTime.Now.AddDays(7) < DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")))
                     {
-                        return repository.Register(userID, tournamentID);
+                        if (dto.Type == userType)
+                        {
+                            if (GetContestant(tournamentID, userID) == null)
+                            {
+                                return repository.Register(userID, tournamentID);
+                            }
+                            return false;
+                        }
+                        error = $"Cannot register {userType} account for a {dto.Type} tournament.";
                     }
+                    error = "Cannot register for a tournament that is starting in less than a week.";
                 }
+                error = $"Could not find tournament.";
             }
-            return false;
+            throw new Exception(error);
         }
 
         public bool Deregister(int userID, int tournamentID)
@@ -77,12 +88,31 @@ namespace BLL.Registries
             TournamentDTO? dto = repository.GetTournament(tournamentID);
             if(dto != null)
             {
-                if (GetContestant(userID, tournamentID) != null)
+                if (GetContestant(tournamentID, userID) != null)
                 {
                     return repository.Deregister(userID, tournamentID);
                 }
             }
             return false;
+        }
+
+        public void SaveResults(int tournamentID, int winnerID, int loserID)
+        {
+            try
+            {
+                Contestant? winner = GetContestant(tournamentID, winnerID);
+                Contestant? loser = GetContestant(tournamentID, loserID);
+                if(winner != null && loser != null)
+                {
+                    winner.Wins++;
+                    loser.Losses++;
+                    repository.SaveResults(tournamentID, winner.ID, winner.Wins, loser.ID, loser.Losses);
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

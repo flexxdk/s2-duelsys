@@ -4,7 +4,7 @@ namespace DAL
 {
     public class DbContext
     {
-        public string DbConnectionString { get; private set; }
+        public string DbConnectionString { get; }
 
         public DbContext()
         {

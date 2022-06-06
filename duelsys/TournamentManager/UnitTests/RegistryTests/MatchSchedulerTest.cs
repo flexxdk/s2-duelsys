@@ -108,7 +108,7 @@ namespace UnitTests.RegistryTests
             MatchRegistry scheduler = new MatchRegistry(new MockMatch());
             Match? match = scheduler.GetByID(1);
 
-            scheduler.SaveResults(new Match()
+            scheduler.SaveMatch(new Match()
             {
                 ID = match!.ID,
                 TournamentID = match!.TournamentID,

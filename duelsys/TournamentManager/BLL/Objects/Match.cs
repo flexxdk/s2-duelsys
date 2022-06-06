@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using DTO;
+using BLL.Validation.Exceptions;
 
 namespace BLL.Objects
 {
@@ -39,5 +39,46 @@ namespace BLL.Objects
         [Required]
         [DisplayName("Match Played")]
         public bool IsFinished { get; set; }
+
+        public int GetWinner()
+        {
+            if (IsFinished)
+            {
+                if (HomeScore > AwayScore)
+                {
+                    return HomeID;
+                }
+                else if (HomeScore < AwayScore)
+                {
+                    return AwayID;
+                }
+                else
+                {
+                    //Use '-1' to denote draw
+                    return -1;
+                }
+            }
+            throw new MatchNotPlayedException("This match has not taken place.");
+        }
+        public int GetLoser()
+        {
+            if (IsFinished)
+            {
+                if (HomeScore < AwayScore)
+                {
+                    return HomeID;
+                }
+                else if (HomeScore > AwayScore)
+                {
+                    return AwayID;
+                }
+                else
+                {
+                    //Use '-1' to denote draw
+                    return -1;
+                }
+            }
+            throw new MatchNotPlayedException("This match has not taken place.");
+        }
     }
 }

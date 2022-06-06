@@ -86,7 +86,7 @@ namespace DAL.Repositories
             }
         }
 
-        public int Update(MatchDTO dto)
+        public int SaveResults(MatchDTO dto)
         {
             try
             {

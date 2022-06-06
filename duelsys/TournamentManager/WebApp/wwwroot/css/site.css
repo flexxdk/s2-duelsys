@@ -16,3 +16,32 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.first > div {
+    background-color: yellow;
+}
+
+.second > div {
+    background-color: #dcdcdc;
+}
+
+.third> div {
+    background-color: sandybrown;
+}
+
+.validation-summary-errors > ul {
+    list-style: none;
+    color: red;
+    text-align: center;
+}
+
+.field-validation-error{
+    color: red;
+}
+
+.field-validation-success{
+    color: green;
+}
+
+/* ------------------------- LOGIN FORM ------------------------- */
+

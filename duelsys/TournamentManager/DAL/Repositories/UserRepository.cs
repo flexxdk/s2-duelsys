@@ -10,7 +10,7 @@ namespace DAL.Repositories
     {
         public UserRepository(DbContext dbContext) : base(dbContext) { }
 
-        public UserDTO? GetByID(int id)
+        public AccountDTO? GetByID(int id)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace DAL.Repositories
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@ID", id);
                 DataTable results = ExecuteReader(cmd);
-                return new UserDTO(
+                return new AccountDTO(
                     Convert.ToInt32(results.Rows[0]["id"]),
                     results.Rows[0]["name"].ToString()!,
                     results.Rows[0]["surname"].ToString()!,
@@ -35,7 +35,7 @@ namespace DAL.Repositories
             }
         }
 
-        public bool Register(UserDTO dto)
+        public bool Register(AccountDTO dto)
         {
             try
             {

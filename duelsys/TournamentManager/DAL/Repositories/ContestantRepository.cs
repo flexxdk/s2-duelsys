@@ -40,7 +40,8 @@ namespace DAL.Repositories
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@UserID", contestantID);
                 cmd.Parameters.AddWithValue("@TournamentID", tournamentID);
-                DataRow? row = ExecuteReader(cmd).Rows[0];
+                DataTable dt = ExecuteReader(cmd);
+                DataRow row = dt.Rows[0];
                 return InstantiateDTO(row);
             }
             catch
@@ -78,10 +79,12 @@ namespace DAL.Repositories
         {
             try
             {
-                string query = "INSERT INTO syn_contestants (user_id, tournament_id) VALUES (@UserID, @TournamentID);";
+                string query = "INSERT INTO syn_contestants (user_id, tournament_id, wins, losses) VALUES (@UserID, @TournamentID, @Wins, @Losses);";
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@UserID", userID);
                 cmd.Parameters.AddWithValue("@TournamentID", tournamentID);
+                cmd.Parameters.AddWithValue("@Wins", 0);
+                cmd.Parameters.AddWithValue("@Losses", 0);
                 ExecuteNonQuery(cmd);
                 return true;
             }
@@ -95,12 +98,12 @@ namespace DAL.Repositories
         {
             try
             {
-                string query = "SELECT * FROM syn_tournaments WHERE user_id = @UserID;";
+                string query = "SELECT * FROM syn_tournaments WHERE id = @ID;";
                 MySqlCommand cmd = new MySqlCommand(query);
-                cmd.Parameters.AddWithValue("@UserID", tournamentID);
+                cmd.Parameters.AddWithValue("@ID", tournamentID);
                 DataRow? row = ExecuteReader(cmd).Rows[0];
                 return new TournamentDTO(
-                    Convert.ToInt32(row["user_id"]),
+                    Convert.ToInt32(row["ID"]),
                     row["title"].ToString()!,
                     row["description"].ToString()!,
                     row["sport"].ToString()!,
@@ -131,6 +134,26 @@ namespace DAL.Repositories
                     Convert.ToInt32(row["wins"]),
                     Convert.ToInt32(row["losses"])
                 );
+        }
+
+        public void SaveResults(int tournamentID, int winnerID, int wins, int loserID, int losses)
+        {
+            try
+            {
+                string query = @"UPDATE syn_contestants SET wins = @Wins WHERE tournament_id = @TournamentID AND user_id = @WinnerID;
+                                UPDATE syn_contestants SET losses = @Losses WHERE tournament_id = @TournamentID AND user_id = @LoserID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@TournamentID", tournamentID);
+                cmd.Parameters.AddWithValue("@WinnerID", winnerID);
+                cmd.Parameters.AddWithValue("@Wins", wins);
+                cmd.Parameters.AddWithValue("@LoserID", loserID);
+                cmd.Parameters.AddWithValue("@Losses", losses);
+                ExecuteNonQuery(cmd);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

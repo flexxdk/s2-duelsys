@@ -25,7 +25,6 @@ namespace BLL.Registries
             switch (system)
             {
                 default:
-                case TournamentSystem.RoundRobin:
                     matches = RoundRobin(tournamentID, contestants);
                     //matches = RecursiveRoundRobin(0, tournamentID, contestants.ToList());
                     break;
@@ -50,7 +49,7 @@ namespace BLL.Registries
             }
         }
 
-        public IEnumerable<MatchDTO> RoundRobin(int tournamentID, IEnumerable<Contestant> contestants)
+        private IEnumerable<MatchDTO> RoundRobin(int tournamentID, IEnumerable<Contestant> contestants)
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 
@@ -67,7 +66,7 @@ namespace BLL.Registries
             return generated;
         }
 
-        public IEnumerable<MatchDTO> RecursiveRoundRobin(int start, int tournamentID, IList<Contestant> contestants)
+        private IEnumerable<MatchDTO> RecursiveRoundRobin(int start, int tournamentID, IList<Contestant> contestants)
         {
             List<MatchDTO> generated = new List<MatchDTO>();
             if(start + 1 <= contestants.Count())
@@ -81,7 +80,7 @@ namespace BLL.Registries
             return generated;
         }
 
-        public IEnumerable<MatchDTO> SingleElimination(int tournamentID, IEnumerable<Contestant> contestants)
+        private IEnumerable<MatchDTO> SingleElimination(int tournamentID, IEnumerable<Contestant> contestants)
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 

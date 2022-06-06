@@ -12,6 +12,7 @@ using BLL.Registries;
 using BLL.Objects.Users;
 using DAL.Repositories;
 using DAL;
+using System.Security.Authentication;
 
 namespace WinApp.Forms
 {
@@ -35,24 +36,20 @@ namespace WinApp.Forms
             };
             try
             {
-                Account? user = loginHandler.VerifyCredentials(creds);
-
-                if (user != null)
-                {
-                    mainForm ??= new MainForm();
-                    mainForm.FormClosing += MainForm_FormClosing;
-                    mainForm.VisibleChanged += MainForm_VisibleChanged;
-                    mainForm.Show();
-                    this.Hide();
-                }
-                else
-                {
-                    MessageBox.Show("Could not find an account with the entered credentials.");
-                }
+                Account account = loginHandler.AuthenticateForm(creds);
+                mainForm ??= new MainForm(account);
+                mainForm.FormClosing += MainForm_FormClosing;
+                mainForm.VisibleChanged += MainForm_VisibleChanged;
+                mainForm.Show();
+                this.Hide();
+            }
+            catch(AuthenticationException)
+            {
+                MessageBox.Show("The credentials are invalid.");
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "An unknown error has occured");
             }
         }
 

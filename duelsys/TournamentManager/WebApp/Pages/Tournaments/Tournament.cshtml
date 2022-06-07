@@ -1,16 +1,51 @@
 ﻿@page
 @using BLL.Objects.Users;
+@using BLL.Objects;
 @using BLL.Enums;
 @model WebApp.Pages.Tournaments.TournamentModel
 @{
-    void RenderRow(Contestant contestant)
+    void RenderRowLeaderboard(Contestant contestant)
     {
-        <tr>
-            <th scope="row">@contestant.Rank</th>
-            <td>@contestant.Name @contestant.SurName</td>
-            <td>@contestant.Wins</td>
-            <td>@contestant.Losses</td>
-        </tr>
+    <tr>
+        <th scope="row">@contestant.Rank</th>
+        <td>@contestant.Name @contestant.SurName</td>
+        <td>@contestant.Wins</td>
+        <td>@contestant.Losses</td>
+    </tr>
+    }
+
+    void RenderMatch(Match match)
+    {
+    <div class="col-md-3  my-3 justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 fw-bold text-center">
+                        @match.HomeName 
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        vs.
+                    </div>
+                    <div class="col-lg-5 fw-bold text-center">
+                        @match.AwayName 
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 text-center">
+                        @match.HomeScore
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        -
+                    </div>
+                    <div class="col-lg-5 text-center">
+                        @match.AwayScore
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     }
 
     bool CheckDisplayRegisterOptions()
@@ -25,68 +60,85 @@
     }
 }
 
-<div class="">
-    <p>Title: @Model.Tournament?.Title</p>
-    <p>Description: @Model.Tournament?.Description</p>
-    <p>City: @Model.Tournament?.City</p>
-    <p>Address: @Model.Tournament?.Address</p>
-    <p>Start Date: @Model.Tournament?.StartDate</p>
-    <p>End Date: @Model.Tournament?.EndDate</p>
-    <p>Minium Contestants: @Model.Tournament?.MinContestants</p>
-    <p>Maximum Contestants: @Model.Tournament?.MaxContestants</p>
-    <p>Tournament Status: @Model.Tournament?.Status</p>
-    <p>Sport: @Model.Tournament?.Sport!.Name</p>
-    <p>Team Type: @Model.Tournament?.Type</p>
-</div>
-
-@if (CheckDisplayRegisterOptions())
+@if (Model.Tournament != null)
 {
-    if(User.Identity?.IsAuthenticated == true)
+    <div class="">
+        <p>Title: @Model.Tournament?.Title</p>
+        <p>Description: @Model.Tournament?.Description</p>
+        <p>City: @Model.Tournament?.City</p>
+        <p>Address: @Model.Tournament?.Address</p>
+        <p>Start Date: @Model.Tournament?.StartDate.ToString("d")</p>
+        <p>End Date: @Model.Tournament?.EndDate.ToString("d")</p>
+        <p>Minium Contestants: @Model.Tournament?.MinContestants</p>
+        <p>Maximum Contestants: @Model.Tournament?.MaxContestants</p>
+        <p>Tournament Status: @Model.Tournament?.Status</p>
+        <p>Sport: @Model.Tournament?.Sport!.Name</p>
+        <p>Team Type: @Model.Tournament?.Type</p>
+     </div>
+
+    if (CheckDisplayRegisterOptions())
     {
-        <form method="post">
-            <button class="btn btn-primary" asp-page-handler="register">Register</button>
-            <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
-            <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
-            @if (TempData["success"] != null)
-            {
-                <span class="field-validation-success">@TempData["success"]</span>
-            }
-            @if (TempData["error"] != null)
-            {
-                <span class="field-validation-error">@TempData["error"]</span>
-            }
-        </form>
+        if(User.Identity?.IsAuthenticated == true)
+        {
+            <form method="post">
+                <button class="btn btn-primary" asp-page-handler="register">Register</button>
+                <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
+                <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
+                @if (TempData["success"] != null)
+                {
+                    <span class="field-validation-success">@TempData["success"]</span>
+                }
+                @if (TempData["error"] != null)
+                {
+                    <span class="field-validation-error">@TempData["error"]</span>
+                }
+            </form>
+        }
+        else
+        {
+            <div>
+                Log in to register for this tournament.
+            </div>
+        }
     }
     else
     {
         <div>
-            Log in to register for this tournament.
+            This tournament is closed for registration.
         </div>
+    }
+
+    if(Model.Matches.Count > 0)
+    {
+        <h2 class="text-center my-3">Matches</h2>
+        <div class="row">
+            @foreach(Match match in Model.Matches){
+                RenderMatch(match);
+            }
+        </div>
+    }
+
+    if(Model.Leaderboard.Count > 0 && Model.Tournament?.Status != TournamentStatus.Planned){
+        <h2 class="text-center my-3">Leaderboard</h2>
+        <table class="leaderboard table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Wins</th>
+                    <th scope="col">Losses</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var contestant in Model.Leaderboard)
+                {
+                    RenderRowLeaderboard(contestant);
+                }
+            </tbody>
+        </table>
     }
 }
 else
 {
-    <div>
-        This tournament is closed for registration.
-    </div>
-}
-
-@if(Model.Leaderboard.Count > 0 && Model.Tournament?.Status != TournamentStatus.Planned){
-    <h2 class="text-center my-3">Leaderboard</h2>
-    <table class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Wins</th>
-                <th scope="col">Losses</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var contestant in Model.Leaderboard)
-            {
-                RenderRow(contestant);
-            }
-        </tbody>
-    </table>
+    <h2>This tournament does not exist.</h2>
 }

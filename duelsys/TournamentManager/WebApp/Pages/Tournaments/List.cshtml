@@ -9,7 +9,7 @@
         var list = Model.GetByStatus(status);
         if (list.Any())
         {
-            <h2 class="text-center my-3">@header</h2>
+    <h2 class="text-center my-3">@header</h2>
             foreach(Tournament tournament in list)
             {
                 RenderCard(tournament);
@@ -17,19 +17,20 @@
         }
         else
         {
-            <h2 class="text-center my-3">No tournaments found.</h2>
+    <h2 class="text-center my-3">No tournaments found.</h2>
         }
     }
 
     void RenderCard(Tournament tournament)
     {
-        <div class="col-lg-4">
+    <div class="col-lg-6 my-3">
             <div class="card">
                 <div class="card-header">
-                    @tournament.Title
+                    @tournament.Title - @tournament.SportName
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">@tournament.Sport!.Name</h6>
+                    <div class="card-subtitle mb-2 text-muted">Sport: @tournament.SportName</div>
+                    <div class="card-text mb-2">@tournament.Description</div>
                     <div class="row">
                         <div class="col-6">
                             Start date: 
@@ -46,11 +47,10 @@
                             @tournament.EndDate.ToString("D", CultureInfo.GetCultureInfo("en-US"))
                         </div>
                     </div>
-                    <p class="card-text">@tournament.Description</p>
-                    <a href="Tournament?id=@tournament.ID" class="card-link btn btn-primary">Click here for more details</a>
+                    <a href="Tournament?id=@tournament.ID" class="card-link btn btn-primary w-100 mt-2">Click here for more details</a>
                 </div>
             </div>
-        </div>
+    </div>
     }
 }
 

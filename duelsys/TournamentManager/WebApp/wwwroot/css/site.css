@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .first > div {
@@ -43,5 +43,6 @@ body {
     color: green;
 }
 
-/* ------------------------- LOGIN FORM ------------------------- */
-
+.navbar-custom{
+    background-color: rgb(153, 180, 209);
+}

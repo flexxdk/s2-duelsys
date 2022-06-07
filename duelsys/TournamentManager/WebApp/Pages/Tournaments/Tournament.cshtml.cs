@@ -41,6 +41,10 @@ namespace WebApp.Pages.Tournaments
             {
                 LoadPageInfo(id.Value);
             }
+            else
+            {
+                RedirectToPage("Error");
+            }
         }
 
         public IActionResult OnPostRegister()

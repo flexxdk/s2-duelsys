@@ -69,9 +69,9 @@ namespace BLL.Registries
             return matches.Any();
         }
 
-        public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
+        public bool CheckCanGenerate(Tournament tournament)
         {
-            return matchGenerator.CheckCanGenerate(tournamentID, system);
+            return matchGenerator.CheckCanGenerate(tournament.ID, tournament.System);
         }
 
         public void SaveMatch(Match match)

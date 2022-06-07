@@ -73,11 +73,11 @@ namespace DAL.Repositories
             try
             {
                 string query = @"INSERT INTO syn_tournaments (
-                                    title, description, sport, team_type, scoring, city, address, 
+                                    title, description, sport, team_type, city, address, 
                                     min_contestants, max_contestants, start_date, end_date, status, system
                                 ) 
                                 VALUES (
-                                    @Title, @Description, @Sport, @Type, @Scoring, @City, @Address,
+                                    @Title, @Description, @Sport, @Type, @City, @Address,
                                     @MinContestants, @MaxContestants, @StartDate, @EndDate, @Status, @System
                                 );";
                 MySqlCommand cmd = new MySqlCommand(query);

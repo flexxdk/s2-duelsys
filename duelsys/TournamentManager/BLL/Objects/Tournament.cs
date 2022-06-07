@@ -22,6 +22,8 @@ namespace BLL.Objects
         [Required(ErrorMessage = "No sport was given")]
         public ISport? Sport { get; set; }
 
+        public string SportName { get => Sport!.Name; }
+
         [Required(ErrorMessage = "Specify the city of the event")]
         public string? City { get; set; }
 
@@ -54,5 +56,10 @@ namespace BLL.Objects
 
         [Required(ErrorMessage = "Invalid team type")]
         public TeamType Type { get; set; }
+
+        public bool CanStart(int totalContestants)
+        {
+            return totalContestants >= MinContestants;
+        }
     }
 }

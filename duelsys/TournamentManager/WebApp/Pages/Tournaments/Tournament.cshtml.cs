@@ -58,16 +58,16 @@ namespace WebApp.Pages.Tournaments
                 {
                     if (contestantRegistry.Register(userID, userType, Tournament!.ID))
                     {
-                        TempData["success"] = "You have succesfully registered for this tournament.";
+                        ViewData["success"] = "You have succesfully registered for this tournament.";
                     }
                     else
                     {
-                        TempData["error"] = "You have already been registered.";
+                        ViewData["error"] = "You have already been registered.";
                     }
                 }
                 catch (Exception ex)
                 {
-                    TempData["error"] = ex.Message;
+                    ViewData["error"] = ex.Message;
                 }
                 return RedirectToPage("./Tournament", new { id = Tournament!.ID });
             }
@@ -82,11 +82,11 @@ namespace WebApp.Pages.Tournaments
                 int userID = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 if (contestantRegistry.Deregister(userID, Tournament!.ID))
                 {
-                    TempData["success"] = "You have been deregistered.";
+                    ViewData["success"] = "You have been deregistered.";
                 }
                 else
                 {
-                    TempData["error"] = "You have not registered for this tournament.";
+                    ViewData["error"] = "You have not registered for this tournament.";
                 }
                 return RedirectToPage("./Tournament", new { id = Tournament!.ID });
             }

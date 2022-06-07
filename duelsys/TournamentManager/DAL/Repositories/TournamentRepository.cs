@@ -107,7 +107,7 @@ namespace DAL.Repositories
             try
             {
                 string query = @"UPDATE syn_tournaments SET
-                                    title = @Title, description = @Description, sport = @Sport, team_type = @Type, scoring = @Scoring, city = @City, address = @Address, 
+                                    title = @Title, description = @Description, sport = @Sport, team_type = @Type, city = @City, address = @Address, 
                                     min_contestants = @MinContestants, max_contestants = @MaxContestants, start_date = @StartDate, end_date = @EndDate, status = @Status, system = @System
                                     WHERE id = @ID;";
                 MySqlCommand cmd = new MySqlCommand(query);

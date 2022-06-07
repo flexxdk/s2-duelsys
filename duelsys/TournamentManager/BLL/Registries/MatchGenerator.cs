@@ -59,7 +59,7 @@ namespace BLL.Registries
                 Contestant home = contestantQueue.Dequeue();
                 foreach(Contestant away in contestantQueue)
                 {
-                    generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name, 0, away.ID, away.Name, 0));
+                    generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name!, 0, away.ID, away.Name!, 0));
                 }
             }
 
@@ -73,7 +73,7 @@ namespace BLL.Registries
             {
                 for(int i = start + 1; i < contestants.Count(); i++)
                 {
-                    generated.Add(new MatchDTO(0, tournamentID, false, contestants[start].ID, contestants[start].Name, 0, contestants[i].ID, contestants[i].Name, 0));
+                    generated.Add(new MatchDTO(0, tournamentID, false, contestants[start].ID, contestants[start].Name!, 0, contestants[i].ID, contestants[i].Name!, 0));
                 }
                 generated.AddRange(RecursiveRoundRobin(start + 1, tournamentID, contestants));
             }
@@ -102,7 +102,7 @@ namespace BLL.Registries
                 {
                     Contestant home = validContestants.ElementAt(i);
                     Contestant away = validContestants.ElementAt(i + 1); 
-                    generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name, 0, away.ID, away.Name, 0));
+                    generated.Add(new MatchDTO(0, tournamentID, false, home.ID, home.Name!, 0, away.ID, away.Name!, 0));
                 }
             }
 

@@ -181,9 +181,7 @@ namespace WinApp.Forms
             numMinContestants.Enabled = true;
             numMaxContestants.Value = numMaxContestants.Minimum;
             numMaxContestants.Enabled = true;
-            pickStartDate.MinDate = DateTime.Now;
             pickStartDate.Value = DateTime.Now;
-            pickEndDate.MinDate = DateTime.Now;
             pickEndDate.Value = DateTime.Now;
             comboTeamType.Enabled = true;
             comboTeamType.SelectedIndex = 0;
@@ -192,6 +190,11 @@ namespace WinApp.Forms
             comboSport.SelectedIndex = 0;
             comboSport.Enabled = true;
             gpbTournamentCreation.Text = "Create Tournament";
+
+            inputTitle.Clear();
+            inputDescription.Clear();
+            inputCity.Clear();
+            inputAddress.Clear();
         }
 
         private void btnStartTournament_Click(object sender, EventArgs e)
@@ -263,13 +266,21 @@ namespace WinApp.Forms
                     gpbModifyTournament.Enabled = false;
                     btnCreateTournament.Enabled = false;
                     btnUpdateTournament.Enabled = true;
-                    pickStartDate.MinDate = tournament.StartDate;
-                    pickEndDate.MinDate = tournament.EndDate;
                     comboTeamType.Enabled = false;
                     comboSport.Enabled = false;
                     comboSport.SelectedItem = tournament.Sport!;
-                    tournamentBindingSource.DataSource = tournament;
                     gpbTournamentCreation.Text = "Adjust Tournament";
+
+                    inputTitle.Text = tournament.Title;
+                    inputDescription.Text = tournament.Description;
+                    inputCity.Text = tournament.City;
+                    inputAddress.Text = tournament.Address;
+                    pickStartDate.MinDate = (tournament.StartDate < DateTime.Now) ? tournament.StartDate : DateTime.Now;
+                    pickStartDate.Value = tournament.StartDate;
+                    pickEndDate.MinDate = (tournament.StartDate < DateTime.Now) ? tournament.StartDate : DateTime.Now;
+                    pickEndDate.Value = tournament.EndDate;
+                    numMinContestants.Value = tournament.MinContestants;
+                    numMaxContestants.Value = tournament.MaxContestants;
 
                     if (tournament.Status != TournamentStatus.Planned)
                     {
@@ -363,7 +374,7 @@ namespace WinApp.Forms
         {
             if (dgvActiveTournaments.SelectedRows[0] != null)
             {
-                int id = GetIDFromDataGridView(dgvActiveTournaments, "dgvColMatchesTournamentID");
+                int id = GetIDFromDataGridView(dgvActiveTournaments, "dgvColActiveTournamentsID");
                 Tournament? tournament = tournamentRegistry.GetByID(id);
                 if (tournament != null)
                 {
@@ -387,7 +398,6 @@ namespace WinApp.Forms
                     }
                 }
             }
-            btnGenerateMatches.Enabled = false;
         }
 
         private void dgvActiveTournaments_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -396,8 +406,6 @@ namespace WinApp.Forms
             {
                 int id = GetIDFromDataGridView(dgvActiveTournaments, "dgvColActiveTournamentsID");
                 Tournament? tournament = tournamentRegistry.GetByID(id);
-                if (tournament != null) btnGenerateMatches.Enabled = matchRegistry.CheckCanGenerate(tournament);
-                else btnGenerateMatches.Enabled = false;
                 RefreshMatches(id);
             }
         }

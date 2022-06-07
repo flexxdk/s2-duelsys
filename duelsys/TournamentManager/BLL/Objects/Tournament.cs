@@ -22,7 +22,7 @@ namespace BLL.Objects
         [Required(ErrorMessage = "No sport was given")]
         public ISport? Sport { get; set; }
 
-        public string SportName { get => Sport!.Name; }
+        public string? SportName { get => Sport?.Name; }
 
         [Required(ErrorMessage = "Specify the city of the event")]
         public string? City { get; set; }

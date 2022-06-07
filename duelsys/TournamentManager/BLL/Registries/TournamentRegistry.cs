@@ -84,7 +84,7 @@ namespace BLL.Registries
             {
                 ValidateModel(tournament);
                 bool found = tournaments.ContainsKey(tournament.ID);
-                if (found) 
+                if (found)
                 {
                     tournaments[tournament.ID] = tournament;
                     repository.Update(InstantiateDTO(tournament));
@@ -169,7 +169,7 @@ namespace BLL.Registries
                 ID = dto.ID,
                 Title = dto.Title,
                 Description = dto.Description,
-                Sport = new Badminton(),
+                Sport = SportAssigner.RetrieveSport(dto.Sport),
                 City = dto.City,
                 Address = dto.Address,
                 MinContestants = dto.MinContestants,
@@ -183,7 +183,7 @@ namespace BLL.Registries
 
         private TournamentDTO InstantiateDTO(Tournament obj)
         {
-            return new TournamentDTO(obj.ID, obj.Title!, obj.Description!, obj.Sport!.ToString(), obj.Type.ToString(), obj.City!, obj.Address!, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
+            return new TournamentDTO(obj.ID, obj.Title!, obj.Description!, obj.SportName!, obj.Type.ToString(), obj.City!, obj.Address!, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
         }
 
         private bool AddToDictionary(Tournament tournament)

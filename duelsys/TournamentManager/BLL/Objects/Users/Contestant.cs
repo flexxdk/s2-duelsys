@@ -19,24 +19,27 @@ namespace BLL.Objects.Users
 
         public int CompareTo(Contestant? other)
         {
-            if(other.Wins > this.Wins)
+            if(other != null)
             {
-                return 1;
-            }
-            else if(other.Wins < this.Wins)
-            {
-                return -1;
-            }
-            else
-            {
-                if(other.Losses < this.Losses)
+                if (other.Wins > this.Wins)
                 {
                     return 1;
                 }
-                else if(other.Losses > this.Losses)
+                else if (other.Wins < this.Wins)
                 {
                     return -1;
-                }  
+                }
+                else
+                {
+                    if (other.Losses < this.Losses)
+                    {
+                        return 1;
+                    }
+                    else if (other.Losses > this.Losses)
+                    {
+                        return -1;
+                    }
+                }
             }
             return 0;
         }

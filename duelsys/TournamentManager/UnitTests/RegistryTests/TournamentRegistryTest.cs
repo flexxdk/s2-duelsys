@@ -6,6 +6,7 @@ using System;
 using BLL.Objects;
 using BLL.Registries;
 using BLL.Enums;
+using BLL.Objects.Sports;
 using BLL.Objects.Users;
 using UnitTests.Mocks;
 using System.ComponentModel.DataAnnotations;
@@ -54,8 +55,7 @@ namespace UnitTests.RegistryTests
             {
                 Title = "Average-Minton",
                 Description = "It's also badminton!",
-                Sport = "Badminton",
-                Scoring = "Points",
+                Sport = new Badminton(),
                 City = "Eindhoven",
                 Address = "Eindhovense Straat 1",
                 MinContestants = 8,
@@ -81,8 +81,7 @@ namespace UnitTests.RegistryTests
                 {
                     ID = 0,
                     Title = "Mario Kart Grand Prix",
-                    Sport = "eGames",
-                    Scoring = "Points",
+                    Sport = new Badminton(),
                     City = "Eindhoven",
                     Address = "Eindhovense Straat 1",
                     MinContestants = 8,
@@ -106,8 +105,7 @@ namespace UnitTests.RegistryTests
                 ID = tournament!.ID,
                 Title = "Mario Kart Grand Prix",
                 Description = "Now it's karting!",
-                Sport = "eGames",
-                Scoring = "Cups",
+                Sport = new Badminton(),
                 City = "Eindhoven",
                 Address = "Eindhovense Straat 1",
                 MinContestants = 4,
@@ -123,7 +121,6 @@ namespace UnitTests.RegistryTests
             Assert.AreEqual(updatedTournament.ID, tournament!.ID);
             Assert.AreNotEqual(updatedTournament.Title, tournament!.Title);
             Assert.AreNotEqual(updatedTournament.Sport, tournament!.Sport);
-            Assert.AreNotEqual(updatedTournament.Scoring, tournament!.Scoring);
             Assert.AreNotEqual(updatedTournament.City, tournament!.City);
             Assert.AreNotEqual(updatedTournament.Address, tournament!.Address);
             Assert.AreNotEqual(updatedTournament.MinContestants, tournament!.MinContestants);
@@ -146,8 +143,7 @@ namespace UnitTests.RegistryTests
                 {
                     ID = tournament!.ID,
                     Title = "",
-                    Sport = "",
-                    Scoring = "",
+                    Sport = new Badminton(),
                     City = "",
                     Address = "",
                     MinContestants = 0,

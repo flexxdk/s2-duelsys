@@ -23,6 +23,8 @@ namespace WinApp.Forms
             InitializeComponent();
             this.sport = sport;
             CurrentMatch = match;
+            numHomeScore.Maximum = sport.MaxScore;
+            numAwayScore.Maximum = sport.MaxScore;
             SetupForm();
         }
 

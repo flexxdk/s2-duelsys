@@ -5,6 +5,7 @@ using System;
 
 using BLL.Objects;
 using BLL.Registries;
+using BLL.Objects.Sports;
 using DTO;
 using DTO.Users;
 using BLL.Enums;
@@ -18,10 +19,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetMatchByID()
         {
-            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
             int matchID = 1;
 
-            Match? match = scheduler.GetByID(matchID);
+            Match? match = matchRegistry.GetByID(matchID);
 
             Assert.IsNotNull(match);
             Assert.AreEqual(match.ID, matchID);
@@ -30,10 +31,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetMatchWithNonexistentID()
         {
-            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
             int matchID = 12;
 
-            Match? match = scheduler.GetByID(matchID);
+            Match? match = matchRegistry.GetByID(matchID);
 
             Assert.IsNull(match);
         }
@@ -41,9 +42,9 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetTournamentMatches()
         {
-            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
 
-            List<Match> matches = scheduler.GetMatches(1).ToList();
+            List<Match> matches = matchRegistry.GetMatches(1).ToList();
 
             Assert.AreEqual(6, matches.Count);
         }
@@ -51,14 +52,14 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGenerateMatchesRoundRobin()
         {
-            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant()); 
 
             Tournament tournament = new Tournament()
             {
                 ID = 2,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Points",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -69,23 +70,23 @@ namespace UnitTests.RegistryTests
                 System = TournamentSystem.RoundRobin
             };
 
-            scheduler.GenerateMatches(tournament);
-            List<Match> matches = scheduler.GetMatches(tournament.ID).ToList();
+            matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(tournament.ID));
+            List<Match> matches = matchRegistry.GetMatches(tournament.ID).ToList();
 
-            Assert.AreEqual(28, matches.Count);
+            Assert.AreEqual(10, matches.Count);
         }
 
         [TestMethod]
         public void TestGenerateMatchesSingleElimination()
         {
-            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant());
 
             Tournament tournament = new Tournament()
             {
                 ID = 2,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Points",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -96,8 +97,8 @@ namespace UnitTests.RegistryTests
                 System = TournamentSystem.SingleElimination
             };
 
-            scheduler.GenerateMatches(tournament);
-            List<Match> matches = scheduler.GetMatches(tournament.ID).ToList();
+            matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(tournament.ID));
+            List<Match> matches = matchRegistry.GetMatches(tournament.ID).ToList();
 
             Assert.AreEqual(4, matches.Count);
         }
@@ -105,10 +106,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestSaveMatchResults()
         {
-            MatchRegistry scheduler = new MatchRegistry(new MockMatch());
-            Match? match = scheduler.GetByID(1);
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
+            Match? match = matchRegistry.GetByID(1);
 
-            scheduler.SaveMatch(new Match()
+            matchRegistry.SaveMatch(new Match()
             {
                 ID = match!.ID,
                 TournamentID = match!.TournamentID,
@@ -120,7 +121,7 @@ namespace UnitTests.RegistryTests
                 AwayName = match!.AwayName,
                 AwayScore = 1
             });
-            Match? updatedMatch = scheduler.GetByID(1);
+            Match? updatedMatch = matchRegistry.GetByID(1);
 
             Assert.IsNotNull(updatedMatch);
             Assert.AreEqual(updatedMatch.ID, match!.ID);

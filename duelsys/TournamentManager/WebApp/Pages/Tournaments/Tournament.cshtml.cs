@@ -34,7 +34,7 @@ namespace WebApp.Pages.Tournaments
 
         [BindProperty]
         public List<Contestant> Leaderboard { get; set; } = new List<Contestant>();
-
+        
         public void OnGet(int? id)
         {
             if (id.HasValue)
@@ -94,6 +94,15 @@ namespace WebApp.Pages.Tournaments
             Tournament = tournamentRegistry.GetByID(id);
             Matches = matchRegistry.GetMatches(id).ToList();
             Leaderboard = tournamentRegistry.GetLeaderboard(id).ToList();
+        }
+
+        public bool CheckForFreeSpots()
+        {
+            if(Tournament != null)
+            {
+                return contestantRegistry.GetContestants(Tournament.ID).Count < Tournament.MaxContestants;
+            }
+            return false;
         }
     }
 }

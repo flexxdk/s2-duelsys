@@ -10,7 +10,7 @@ namespace BLL.Objects.Sports
     {
         public string Name { get; }
         public string Scoring { get; }
+        public int MaxScore { get;  }
         public bool ScoreIsValid(object home, object away);
-        public string ToString();
     }
 }

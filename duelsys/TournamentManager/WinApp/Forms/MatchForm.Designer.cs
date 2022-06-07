@@ -46,6 +46,11 @@
             // 
             this.numAwayScore.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.numAwayScore.Location = new System.Drawing.Point(314, 203);
+            this.numAwayScore.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numAwayScore.Name = "numAwayScore";
             this.numAwayScore.Size = new System.Drawing.Size(137, 29);
             this.numAwayScore.TabIndex = 2;
@@ -54,6 +59,11 @@
             // 
             this.numHomeScore.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.numHomeScore.Location = new System.Drawing.Point(47, 203);
+            this.numHomeScore.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numHomeScore.Name = "numHomeScore";
             this.numHomeScore.Size = new System.Drawing.Size(137, 29);
             this.numHomeScore.TabIndex = 3;

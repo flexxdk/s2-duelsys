@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace BLL.Registries
 {
-    public class ContestantRegistry
+    public class ContestantRegistry : BaseRegistry
     {
         private readonly IContestantRepository repository;
 
@@ -66,21 +66,25 @@ namespace BLL.Registries
                 {
                     if(DateTime.Now.AddDays(7) < DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")))
                     {
-                        if (dto.Type == userType)
+                        if (GetContestants(dto.ID).Count < dto.MaxContestants)
                         {
-                            if (GetContestant(tournamentID, userID) == null)
+                            if (dto.Type == userType)
                             {
-                                return repository.Register(userID, tournamentID);
+                                if (GetContestant(tournamentID, userID) == null)
+                                {
+                                    return repository.Register(userID, tournamentID);
+                                }
+                                return false;
                             }
-                            return false;
+                            throw new Exception($"Cannot register {userType} account for a {dto.Type} tournament.");
                         }
-                        error = $"Cannot register {userType} account for a {dto.Type} tournament.";
+                        throw new Exception("There are no more spots left in this tournament.");
                     }
-                    error = "Cannot register for a tournament that is starting in less than a week.";
+                    throw new Exception("Cannot register for a tournament that is starting in less than a week.");
                 }
-                error = $"Could not find tournament.";
+                throw new Exception("Could not find tournament.");
             }
-            throw new Exception(error);
+            throw new Exception("Invalid team type, please contact website administrators.");
         }
 
         public bool Deregister(int userID, int tournamentID)

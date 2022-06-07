@@ -17,7 +17,9 @@
     {
         if(Model.Tournament != null)
         {
-            return DateTime.Now.AddDays(7) < Model.Tournament.StartDate && Model.Tournament.Status == TournamentStatus.Planned;
+            return DateTime.Now.AddDays(7) < Model.Tournament.StartDate 
+            && Model.Tournament.Status == TournamentStatus.Planned 
+            && Model.CheckForFreeSpots();
         }
         return false;
     }
@@ -69,7 +71,7 @@ else
     </div>
 }
 
-@if(Model.Leaderboard.Count > 0){
+@if(Model.Leaderboard.Count > 0 && Model.Tournament?.Status != TournamentStatus.Planned){
     <h2 class="text-center my-3">Leaderboard</h2>
     <table class="table table-striped">
         <thead class="table-dark">

@@ -32,6 +32,10 @@ namespace UnitTests.Mocks
 
                 new ContestantDTO(4, "Emilia", "Stoyanova", 2, 1, 1),
                 new ContestantDTO(2, "Nick", "Blom",  2, 1, 1),
+                new ContestantDTO(3, "Sem", "Storms",  2, 3, 0),
+                new ContestantDTO(6, "Sem", "Storms",  2, 3, 0),
+                new ContestantDTO(1, "Lex", "de Kort", 2, 2, 1),
+                new ContestantDTO(5, "John", "Doe", 2, 2, 1),
 
                 new ContestantDTO(3, "Sem", "Storms",  3, 3, 0),
                 new ContestantDTO(1, "Lex", "de Kort", 3, 2, 1),
@@ -41,7 +45,7 @@ namespace UnitTests.Mocks
 
             tournaments = new List<TournamentDTO>()
             {
-                new TournamentDTO(1, "BAD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Points", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.UtcNow.ToString("d"), DateTime.UtcNow.AddDays(7).ToString("d"), "Planned", "SingleElimination")
+                new TournamentDTO(1, "BAD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.UtcNow.ToString("d"), DateTime.UtcNow.AddDays(7).ToString("d"), "Planned", "SingleElimination")
             };
         }
 
@@ -81,6 +85,11 @@ namespace UnitTests.Mocks
                 return true;
             }
             return false;
+        }
+
+        public void SaveResults(int tournamentID, int winnerID, int wins, int loserID, int losses)
+        {
+            throw new NotImplementedException();
         }
     }
 }

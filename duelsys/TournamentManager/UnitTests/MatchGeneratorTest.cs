@@ -5,6 +5,7 @@ using System;
 
 using BLL.Objects;
 using BLL.Registries;
+using BLL.Objects.Sports;
 using DTO;
 using DTO.Users;
 using UnitTests.Mocks;
@@ -20,14 +21,14 @@ namespace UnitTests
         [TestMethod]
         public void TestGenerateMatchesRoundRobinEvenContestants()
         {
-            MatchGenerator matchGenerator = new MatchGenerator();
+            MatchGenerator matchGenerator = new MatchGenerator(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant());
 
             Tournament tournament = new Tournament()
             {
                 ID = 1,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Sets",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -38,7 +39,7 @@ namespace UnitTests
                 System = TournamentSystem.RoundRobin
             };
 
-            List<ContestantDTO> contestants = new List<ContestantDTO>() {
+            IEnumerable<ContestantDTO> contestants = new List<ContestantDTO>() {
                 new ContestantDTO(1, "Lex", "de Kort", 1, 0, 0),
                 new ContestantDTO(2, "Nick", "Blom", 1, 0, 0),
                 new ContestantDTO(3, "Sem", "Storms", 1, 0, 0),
@@ -49,7 +50,7 @@ namespace UnitTests
                 new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestantRegistry.GetContestants(tournament.ID)).ToList();
 
             Assert.AreEqual(28, matches.Count);
         }
@@ -57,14 +58,14 @@ namespace UnitTests
         [TestMethod]
         public void TestGenerateMatchesRoundRobinUnevenContestants()
         {
-            MatchGenerator matchGenerator = new MatchGenerator();
+            MatchGenerator matchGenerator = new MatchGenerator(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant());
 
             Tournament tournament = new Tournament()
             {
                 ID = 1,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Sets",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -87,7 +88,7 @@ namespace UnitTests
                 new ContestantDTO(9, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestantRegistry.GetContestants(tournament.ID)).ToList();
 
             Assert.AreEqual(36, matches.Count);
         }
@@ -96,13 +97,13 @@ namespace UnitTests
         public void TestGenerateMatchesSingleEliminationBaseTwoContestants()
         {
             MatchGenerator matchGenerator = new MatchGenerator(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant());
 
             Tournament tournament = new Tournament()
             {
                 ID = 1,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Sets",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -124,7 +125,7 @@ namespace UnitTests
                 new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestantRegistry.GetContestants(tournament.ID)).ToList();
 
             Assert.AreEqual(4, matches.Count);
         }
@@ -132,14 +133,14 @@ namespace UnitTests
         [TestMethod]
         public void TestGenerateMatchesSingleEliminationUnevenContestants()
         {
-            MatchGenerator matchGenerator = new MatchGenerator();
+            MatchGenerator matchGenerator = new MatchGenerator(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant());
 
             Tournament tournament = new Tournament()
             {
                 ID = 1,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Sets",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -166,7 +167,7 @@ namespace UnitTests
                 new ContestantDTO(12, "Emilia", "Stoyanova", 1, 0, 0),
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestantRegistry.GetContestants(tournament.ID)).ToList();
 
             Assert.AreEqual(4, matches.Count);
         }
@@ -174,14 +175,14 @@ namespace UnitTests
         [TestMethod]
         public void TestGenerateMatchesSingleEliminationNewBracket()
         {
-            MatchGenerator matchGenerator = new MatchGenerator();
+            MatchGenerator matchGenerator = new MatchGenerator(new MockMatch());
+            ContestantRegistry contestantRegistry = new ContestantRegistry(new MockContestant());
 
             Tournament tournament = new Tournament()
             {
                 ID = 1,
                 Title = "Average-Minton",
-                Sport = "Badminton",
-                Scoring = "Sets",
+                Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
                 MinContestants = 8,
@@ -203,7 +204,7 @@ namespace UnitTests
                 new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 1)
             };
 
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
+            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestantRegistry.GetContestants(tournament.ID)).ToList();
 
             Assert.AreEqual(2, matches.Count);
         }

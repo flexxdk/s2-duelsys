@@ -6,11 +6,13 @@ namespace BLL.Objects.Sports
     {
         public string Name { get; }
         public string Scoring { get; }
+        public int MaxScore { get; }
 
         public Badminton()
         {
             Name = "Badminton";
             Scoring = "Points";
+            MaxScore = 30;
         }
 
         public bool ScoreIsValid(object home, object away)
@@ -43,11 +45,6 @@ namespace BLL.Objects.Sports
                 return false;
             }
             throw new FormatException();
-        }
-
-        public override string ToString()
-        {
-            return Name;
         }
     }
 }

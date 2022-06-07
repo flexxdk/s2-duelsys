@@ -169,7 +169,6 @@ namespace BLL.Registries
                 ID = dto.ID,
                 Title = dto.Title,
                 Description = dto.Description,
-                //Sport = dto.Sport,
                 Sport = new Badminton(),
                 City = dto.City,
                 Address = dto.Address,
@@ -204,6 +203,31 @@ namespace BLL.Registries
                 errors.Add("End date must be set after start date");
             }
             base.ValidateModel(model, errors);
+        }
+
+        public bool StartTournament(int id, TournamentStatus status, int totalContestants)
+        {
+            Tournament? tournament = GetByID(id);
+            if (tournament != null)
+            {
+                if (tournament.CanStart(totalContestants))
+                {
+                    tournament.Status = status;
+                    return UpdateTournament(tournament);
+                }
+            }
+            return false;
+        }
+
+        public bool UpdateTournamentStatus(int id, TournamentStatus status)
+        {
+            Tournament? tournament = GetByID(id);
+            if (tournament != null)
+            {
+                tournament.Status = status;
+                return UpdateTournament(tournament);
+            }
+            return false;
         }
     }
 }

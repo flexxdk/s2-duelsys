@@ -448,7 +448,6 @@
             this.dgvTournaments.Size = new System.Drawing.Size(565, 383);
             this.dgvTournaments.TabIndex = 3;
             this.dgvTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTournaments_CellClick);
-            this.dgvTournaments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvTournaments_DataBindingComplete);
             // 
             // tournamentBindingSource
             // 
@@ -1260,8 +1259,7 @@
             this.Controls.Add(this.tabsControl);
             this.Controls.Add(this.navPanel);
             this.Name = "MainForm";
-            this.Text = " ";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Text = "DuelSys - Tournament Manager";
             this.navPanel.ResumeLayout(false);
             this.navPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -1344,7 +1342,6 @@
         private Label label13;
         private GroupBox groupBox2;
         private Button btnRegisterAccount;
-        private Button btnGeneratePassword;
         private Button btnGenerateMatches;
         private Button btnPlayMatch;
         private Label label20;

@@ -127,5 +127,11 @@ namespace UnitTests.RegistryTests
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void SaveResults()
+        {
+
+        }
     }
 }

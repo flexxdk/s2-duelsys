@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Validation.Exceptions
 {
-    internal class MatchNotPlayedException : Exception
+    public class MatchNotPlayedException : Exception
     {
         public MatchNotPlayedException(string message)
             : base(message)

@@ -29,19 +29,17 @@ namespace UnitTests.Mocks
                 new ContestantDTO(2, "Nick", "Blom", 1, 0, 0),
                 new ContestantDTO(3, "Sem", "Storms", 1, 0, 0),
                 new ContestantDTO(4, "Emilia", "Stoyanova", 1, 0, 0),
-                new ContestantDTO(5, "Lex", "de Kort", 1, 0, 0),
-                new ContestantDTO(6, "Nick", "Blom", 1, 0, 0),
-                new ContestantDTO(7, "Sem", "Storms", 1, 0, 0),
-                new ContestantDTO(8, "Emilia", "Stoyanova", 1, 0, 0),
+                new ContestantDTO(5, "John", "Doe", 1, 0, 0),
+                new ContestantDTO(6, "Pepe", "Silvia",  1, 0, 0),
+                new ContestantDTO(7, "Jochem", "van der Pol", 1, 0, 0),
+                new ContestantDTO(8, "Fontys", "Man",  1, 0, 0),
 
-                new ContestantDTO(9, "Lex", "de Kort", 2, 0, 0),
-                new ContestantDTO(10, "Nick", "Blom", 2, 0, 0),
-                new ContestantDTO(11, "Sem", "Storms", 2, 0, 0),
-                new ContestantDTO(12, "Emilia", "Stoyanova", 2, 0, 0),
-                new ContestantDTO(13, "Lex", "de Kort", 2, 0, 0),
-                new ContestantDTO(14, "Nick", "Blom", 2, 0, 0),
-                new ContestantDTO(15, "Sem", "Storms", 2, 0, 0),
-                new ContestantDTO(16, "Emilia", "Stoyanova", 2, 0, 0),
+                new ContestantDTO(9, "Mohammed", "Bouali", 2, 0, 0),
+                new ContestantDTO(10, "Paula", "Cortes", 2, 0, 0),
+                new ContestantDTO(11, "Mariela", "Gocheva", 2, 0, 0),
+                new ContestantDTO(12, "Julian", "Teulings", 2, 0, 0),
+                new ContestantDTO(13, "Ivar", "Faessen", 2, 0, 0),
+                new ContestantDTO(14, "Jane", "Doe", 2, 0, 0)
             };
         }
 

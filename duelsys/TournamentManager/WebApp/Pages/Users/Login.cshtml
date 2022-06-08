@@ -14,7 +14,7 @@
                 <input class="form-control" asp-for="LoginCredentials.Password" type="password"/>
                 <span asp-validation-for="LoginCredentials.Password"></span>
             </div>
-            <span>@Html.ValidationSummary(true)</span>
+            <span class="text-center">@Html.ValidationSummary(true)</span>
             <div class="text-center">
                 <input class="btn btn-primary col-5" type="submit" value="Login" />
                 <input class="btn btn-outline-primary col-5" type="reset" value="Cancel" />

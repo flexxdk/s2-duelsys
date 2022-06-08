@@ -31,7 +31,7 @@ namespace BLL.Registries
                 {
                     return account;
                 }
-                throw new AuthenticationException();
+                throw new AuthenticationException("This account does not have the proper rights.");
             }
             catch
             {
@@ -72,7 +72,7 @@ namespace BLL.Registries
                     };
                 }
             }
-            throw new AuthenticationException();
+            throw new AuthenticationException("The credentials are invalid.");
         }
     }
 }

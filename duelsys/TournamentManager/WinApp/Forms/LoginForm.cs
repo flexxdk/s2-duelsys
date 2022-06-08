@@ -43,9 +43,9 @@ namespace WinApp.Forms
                 mainForm.Show();
                 this.Hide();
             }
-            catch(AuthenticationException)
+            catch(AuthenticationException ex)
             {
-                MessageBox.Show("The credentials are invalid.");
+                MessageBox.Show(ex.Message);
             }
             catch(Exception ex)
             {

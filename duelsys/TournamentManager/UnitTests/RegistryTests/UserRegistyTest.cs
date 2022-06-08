@@ -56,8 +56,8 @@ namespace UnitTests.RegistryTests
 
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetByID(5)!.ID);
-            Assert.AreEqual(email, userRegistry.GetByID(5).Email);
-            Assert.AreEqual(TeamType.Solo, userRegistry.GetByID(5).Type);
+            Assert.AreEqual(email, userRegistry.GetByID(5)!.Email);
+            Assert.AreEqual(TeamType.Solo, userRegistry.GetByID(5)!.Type);
         }
 
         [TestMethod]
@@ -83,8 +83,8 @@ namespace UnitTests.RegistryTests
 
             Assert.IsTrue(result);
             Assert.AreEqual(5, userRegistry.GetByID(5)!.ID);
-            Assert.AreEqual(email, userRegistry.GetByID(5).Email);
-            Assert.AreEqual(TeamType.Team, userRegistry.GetByID(5).Type);
+            Assert.AreEqual(email, userRegistry.GetByID(5)!.Email);
+            Assert.AreEqual(TeamType.Team, userRegistry.GetByID(5)!.Type);
         }
 
         [TestMethod]

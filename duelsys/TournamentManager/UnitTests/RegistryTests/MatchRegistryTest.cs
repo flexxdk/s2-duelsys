@@ -14,7 +14,7 @@ using UnitTests.Mocks;
 namespace UnitTests.RegistryTests
 {
     [TestClass]
-    public class MatchSchedulerTest
+    public class MatchRegistryTest
     {
         [TestMethod]
         public void TestGetMatchByID()
@@ -62,7 +62,7 @@ namespace UnitTests.RegistryTests
                 Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
-                MinContestants = 8,
+                MinContestants = 6,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
@@ -73,7 +73,7 @@ namespace UnitTests.RegistryTests
             matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(tournament.ID));
             List<Match> matches = matchRegistry.GetMatches(tournament.ID).ToList();
 
-            Assert.AreEqual(10, matches.Count);
+            Assert.AreEqual(15, matches.Count);
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace UnitTests.RegistryTests
                 Sport = new Badminton(),
                 City = "Helmond",
                 Address = "Wethouder Ebbenlaan 30",
-                MinContestants = 8,
+                MinContestants = 6,
                 MaxContestants = 14,
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
@@ -100,7 +100,7 @@ namespace UnitTests.RegistryTests
             matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(tournament.ID));
             List<Match> matches = matchRegistry.GetMatches(tournament.ID).ToList();
 
-            Assert.AreEqual(4, matches.Count);
+            Assert.AreEqual(2, matches.Count);
         }
 
         [TestMethod]

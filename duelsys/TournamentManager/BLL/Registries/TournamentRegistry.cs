@@ -97,6 +97,31 @@ namespace BLL.Registries
             }
         }
 
+        public bool StartTournament(int id, TournamentStatus status, int totalContestants)
+        {
+            Tournament? tournament = GetByID(id);
+            if (tournament != null)
+            {
+                if (tournament.CanStart(totalContestants))
+                {
+                    tournament.Status = status;
+                    return UpdateTournament(tournament);
+                }
+            }
+            return false;
+        }
+
+        public bool UpdateTournamentStatus(int id, TournamentStatus status)
+        {
+            Tournament? tournament = GetByID(id);
+            if (tournament != null)
+            {
+                tournament.Status = status;
+                return UpdateTournament(tournament);
+            }
+            return false;
+        }
+
         public bool DeleteTournament(int id)
         {
             try
@@ -203,31 +228,6 @@ namespace BLL.Registries
                 errors.Add("End date must be set after start date");
             }
             base.ValidateModel(model, errors);
-        }
-
-        public bool StartTournament(int id, TournamentStatus status, int totalContestants)
-        {
-            Tournament? tournament = GetByID(id);
-            if (tournament != null)
-            {
-                if (tournament.CanStart(totalContestants))
-                {
-                    tournament.Status = status;
-                    return UpdateTournament(tournament);
-                }
-            }
-            return false;
-        }
-
-        public bool UpdateTournamentStatus(int id, TournamentStatus status)
-        {
-            Tournament? tournament = GetByID(id);
-            if (tournament != null)
-            {
-                tournament.Status = status;
-                return UpdateTournament(tournament);
-            }
-            return false;
         }
     }
 }

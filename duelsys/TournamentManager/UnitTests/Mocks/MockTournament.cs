@@ -12,15 +12,16 @@ namespace UnitTests.Mocks
     {
         private List<TournamentDTO> tournaments;
         private List<ContestantDTO> contestants;
-        private int trnSeeder = 0;
 
         public MockTournament()
         {
             tournaments = new List<TournamentDTO>()
             {
-                new TournamentDTO(++trnSeeder, "BAD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.UtcNow.ToString("d"), DateTime.UtcNow.AddDays(7).ToString("d"), "Planned", "SingleElimination"),
-                new TournamentDTO(++trnSeeder, "GOOD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 4, 16, DateTime.UtcNow.AddDays(8).ToString("d"), DateTime.UtcNow.AddDays(13).ToString("d"), "Planned", "RoundRobin"),
-                new TournamentDTO(++trnSeeder, "Regular-Minton Cup", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 10, 20, DateTime.UtcNow.AddDays(20).ToString("d"), DateTime.UtcNow.AddDays(30).ToString("d"), "Planned", "RoundRobin")
+                new TournamentDTO(1, "BAD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.UtcNow.ToString("d"), DateTime.UtcNow.AddDays(7).ToString("d"), "Planned", "SingleElimination"),
+                new TournamentDTO(2, "GOOD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 4, 16, DateTime.UtcNow.AddDays(8).ToString("d"), DateTime.UtcNow.AddDays(13).ToString("d"), "Planned", "RoundRobin"),
+                new TournamentDTO(3, "Regular-Minton Cup", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 10, 20, DateTime.UtcNow.AddDays(20).ToString("d"), DateTime.UtcNow.AddDays(30).ToString("d"), "Planned", "RoundRobin"),
+                new TournamentDTO(4, "It's-A-Minton Cup", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 5, 12, DateTime.UtcNow.AddDays(20).ToString("d"), DateTime.UtcNow.AddDays(30).ToString("d"), "Planned", "RoundRobin"),
+                new TournamentDTO(5, "It's-A-Minton Cup", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 5, 12, DateTime.UtcNow.AddDays(20).ToString("d"), DateTime.UtcNow.AddDays(30).ToString("d"), "Planned", "RoundRobin")
             };
 
             contestants = new List<ContestantDTO>()
@@ -39,14 +40,29 @@ namespace UnitTests.Mocks
                 new ContestantDTO(5, "Fontys", "Man",  3, 1, 2),
                 new ContestantDTO(6, "New", "Guy",  3, 0, 1),
                 new ContestantDTO(7, "Dew", "Guy",  3, 0, 0),
-                new ContestantDTO(8, "Kew", "Guy",  3, 0, 0)
+                new ContestantDTO(8, "Kew", "Guy",  3, 0, 0),
+
+                new ContestantDTO(3, "Sem", "Storms",  4, 0, 0),
+                new ContestantDTO(1, "Lex", "de Kort", 4, 0, 0),
+                new ContestantDTO(4, "Emilia", "Stoyanova", 4, 0, 0),
+                new ContestantDTO(2, "Nick", "Blom",  4, 0, 0),
+                new ContestantDTO(5, "Fontys", "Man",  4, 0, 0),
+                new ContestantDTO(6, "New", "Guy",  4, 0, 0),
+                new ContestantDTO(7, "Dew", "Guy",  4, 0, 0),
+                new ContestantDTO(8, "Kew", "Guy",  4, 0, 0),
+
+                new ContestantDTO(3, "Sem", "Storms",  5, 0, 0),
+                new ContestantDTO(1, "Lex", "de Kort", 5, 0, 0),
+                new ContestantDTO(4, "Emilia", "Stoyanova", 5, 0, 0),
+                new ContestantDTO(2, "Nick", "Blom",  5, 0, 0)
             };
         }
 
         public int Create(TournamentDTO dto)
         {
-            tournaments.Add(new TournamentDTO(++trnSeeder, dto.Title, dto.Description, dto.Sport, dto.Type, dto.City, dto.Address, dto.MinContestants, dto.MaxContestants, dto.StartDate, dto.EndDate, dto.Status, dto.System));
-            return trnSeeder;
+            int newID = tournaments.Count + 1;
+            tournaments.Add(new TournamentDTO(newID, dto.Title, dto.Description, dto.Sport, dto.Type, dto.City, dto.Address, dto.MinContestants, dto.MaxContestants, dto.StartDate, dto.EndDate, dto.Status, dto.System));
+            return newID;
         }
 
         public int Update(TournamentDTO dto)

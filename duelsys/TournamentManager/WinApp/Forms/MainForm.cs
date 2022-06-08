@@ -353,7 +353,7 @@ namespace WinApp.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Couldn't register account with given email.");
+                    MessageBox.Show("This email is already taken.");
                 }
             }
             catch (ValidationException ex)

@@ -58,7 +58,6 @@ namespace BLL.Registries
 
         public bool Register(int userID, string userType, int tournamentID)
         {
-            string error = string.Empty;
             if (Validate.AsEnum<TeamType>(userType))
             {
                 TournamentDTO? dto = repository.GetTournament(tournamentID);

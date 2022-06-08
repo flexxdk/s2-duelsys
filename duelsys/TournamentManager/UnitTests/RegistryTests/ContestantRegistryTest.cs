@@ -5,6 +5,7 @@ using System.Linq;
 using BLL.Objects.Users;
 using BLL.Registries;
 using UnitTests.Mocks;
+using System;
 
 namespace UnitTests.RegistryTests
 {
@@ -63,7 +64,7 @@ namespace UnitTests.RegistryTests
         }
 
         [TestMethod]
-        public void TestRegisterNewUser()
+        public void TestRegisterNewContestant()
         {
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
@@ -77,7 +78,7 @@ namespace UnitTests.RegistryTests
         }
 
         [TestMethod]
-        public void TestRegisterAlreadyRegisteredUser()
+        public void TestRegisterAlreadyRegisteredContestant()
         {
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
@@ -95,25 +96,11 @@ namespace UnitTests.RegistryTests
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
             int userID = 3;
-            string userType = "Solo";
+            string userType = "Team";
 
-            bool result = registry.Register(userID, userType, tournamentID);
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void TestRegisterNonexistentUser()
-        {
-            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
-            int tournamentID = 1;
-            int userID = 6;
-            string userType = "Duo";
-
-            bool result = registry.Register(userID, userType, tournamentID);
-
-            Assert.IsFalse(result);
-            Assert.AreNotEqual(userID, registry.GetContestants(tournamentID).Last().ID);
+            Assert.ThrowsException<Exception>(() =>
+                registry.Register(userID, userType, tournamentID)
+            );
         }
 
         [TestMethod]
@@ -135,18 +122,6 @@ namespace UnitTests.RegistryTests
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
             int tournamentID = 1;
             int userID = 5;
-
-            bool result = registry.Deregister(userID, tournamentID);
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void TestDeregisterNonexistentContestant()
-        {
-            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
-            int tournamentID = 1;
-            int userID = 6;
 
             bool result = registry.Deregister(userID, tournamentID);
 

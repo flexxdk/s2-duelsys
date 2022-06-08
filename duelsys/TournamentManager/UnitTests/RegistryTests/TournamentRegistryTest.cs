@@ -204,5 +204,12 @@ namespace UnitTests.RegistryTests
 
             Assert.AreEqual(0, rankings.Count);
         }
+
+        public void TestStartTournament()
+        {
+            TournamentRegistry tournamentRegistry = new TournamentRegistry(new MockTournament());
+
+
+        }
     }
 }

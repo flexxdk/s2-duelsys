@@ -90,7 +90,15 @@ namespace UnitTests.Mocks
 
         public void SaveResults(int tournamentID, int winnerID, int wins, int loserID, int losses)
         {
-            throw new NotImplementedException();
+            ContestantDTO? winner = GetContestant(tournamentID, winnerID);
+            ContestantDTO? loser = GetContestant(tournamentID, loserID);
+            if (winner != null && loser != null) 
+            { 
+                contestants.Remove(winner);
+                contestants.Remove(loser);
+                contestants.Add(new ContestantDTO(winner.ID, winner.Name, winner.SurName, winner.TournamentID, wins, winner.Losses));
+                contestants.Add(new ContestantDTO(loser.ID, loser.Name, loser.SurName, loser.TournamentID, loser.Wins, losses));
+            }
         }
     }
 }

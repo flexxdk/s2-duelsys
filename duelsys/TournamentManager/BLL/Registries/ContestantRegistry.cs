@@ -99,7 +99,7 @@ namespace BLL.Registries
             return false;
         }
 
-        public void SaveResults(int tournamentID, int winnerID, int loserID)
+        public bool SaveResults(int tournamentID, int winnerID, int loserID)
         {
             try
             {
@@ -110,7 +110,9 @@ namespace BLL.Registries
                     winner.Wins++;
                     loser.Losses++;
                     repository.SaveResults(tournamentID, winner.ID, winner.Wins, loser.ID, loser.Losses);
+                    return true;
                 }
+                return false;
             }
             catch
             {

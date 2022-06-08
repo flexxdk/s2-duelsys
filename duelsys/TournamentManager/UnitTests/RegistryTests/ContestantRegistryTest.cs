@@ -6,6 +6,7 @@ using BLL.Objects.Users;
 using BLL.Registries;
 using UnitTests.Mocks;
 using System;
+using BLL.Objects;
 
 namespace UnitTests.RegistryTests
 {
@@ -129,9 +130,60 @@ namespace UnitTests.RegistryTests
         }
 
         [TestMethod]
-        public void SaveResults()
+        public void TestSaveResults()
         {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
 
+            Match match = new Match()
+            {
+                ID = 1,
+                TournamentID = 2,
+                HomeID = 1,
+                HomeName = "Lex",
+                HomeScore = 5,
+                AwayID = 2,
+                AwayName = "Nick",
+                AwayScore = 0,
+                IsFinished = true
+            };
+            Contestant? playerOneBefore = registry.GetContestant(match.TournamentID, match.HomeID);
+            Contestant? playerTwoBefore = registry.GetContestant(match.TournamentID, match.AwayID);
+
+            bool result = registry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
+
+            Contestant? playerOneAfter = registry.GetContestant(match.TournamentID, match.HomeID);
+            Contestant? playerTwoAfter = registry.GetContestant(match.TournamentID, match.AwayID);
+
+            Assert.AreEqual(playerOneBefore!.Wins, playerTwoBefore!.Wins);
+            Assert.AreEqual(playerOneBefore!.Losses, playerTwoBefore!.Losses);
+
+            Assert.AreNotEqual(playerOneBefore!.Wins, playerOneAfter!.Wins);
+            Assert.AreNotEqual(playerTwoBefore!.Losses, playerTwoAfter!.Losses);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestSaveResultsNonexistentIDs()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+
+            Match match = new Match()
+            {
+                ID = 1,
+                TournamentID = 2,
+                HomeID = 10,
+                HomeName = "Lex",
+                HomeScore = 5,
+                AwayID = 12,
+                AwayName = "Nick",
+                AwayScore = 0,
+                IsFinished = true
+            };
+
+            bool result = registry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
+
+            Assert.IsFalse(result);
         }
     }
 }

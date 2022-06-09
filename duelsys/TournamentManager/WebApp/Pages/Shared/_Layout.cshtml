@@ -13,7 +13,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
             <div class="container">
                 <a class="navbar-brand fw-bold" asp-area="" asp-page="/Index">
-                    <img src="~/images/logo_small.png" alt="Logo"/>
+                    <img src="~/images/logo_small_color.png" alt="Logo"/>
                     Tournament Manager
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -33,7 +33,7 @@
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <div>Hello @User.Identity?.Name!</div>
+                                <div class="nav-link text-dark">Logged in as: @User.Identity?.Name</div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Users/Logout">Logout</a>

@@ -44,7 +44,7 @@ namespace UnitTests
                 Address = "Eindhovense Straat 1",
                 MinContestants = 8,
                 MaxContestants = 14,
-                StartDate = DateTime.Now.Date.AddDays(10),
+                StartDate = DateTime.Now.Date.AddDays(10).Date,
                 EndDate = DateTime.Now.AddDays(15).Date,
                 Status = TournamentStatus.Planned,
                 System = TournamentSystem.RoundRobin

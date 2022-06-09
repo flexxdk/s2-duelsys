@@ -54,22 +54,29 @@ namespace WebApp.Pages.Tournaments
                 Tournament = tournamentRegistry.GetByID(TournamentID.Value);
                 int userID = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 string userType = User.FindFirstValue("TeamType");
-                try
+                if(Tournament != null)
                 {
-                    if (contestantRegistry.Register(userID, userType, Tournament!.ID))
+                    try
                     {
-                        TempData["success"] = "You have succesfully registered for this tournament.";
+                        if (contestantRegistry.Register(userID, userType, Tournament))
+                        {
+                            TempData["success"] = "You have succesfully registered for this tournament.";
+                        }
+                        else
+                        {
+                            TempData["error"] = "You have already been registered.";
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        TempData["error"] = "You have already been registered.";
+                        TempData["error"] = ex.Message;
                     }
+                    return RedirectToPage("./Tournament", new { id = Tournament!.ID });
                 }
-                catch (Exception ex)
+                else
                 {
-                    TempData["error"] = ex.Message;
+                    TempData["error"] = "Could not retrieve tournament. Please contact system administrators.";
                 }
-                return RedirectToPage("./Tournament", new { id = Tournament!.ID });
             }
             return Page();
         }

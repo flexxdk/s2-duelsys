@@ -94,36 +94,6 @@ namespace DAL.Repositories
             }
         }
 
-        public TournamentDTO? GetTournament(int tournamentID)
-        {
-            try
-            {
-                string query = "SELECT * FROM syn_tournaments WHERE id = @ID;";
-                MySqlCommand cmd = new MySqlCommand(query);
-                cmd.Parameters.AddWithValue("@ID", tournamentID);
-                DataRow? row = ExecuteReader(cmd).Rows[0];
-                return new TournamentDTO(
-                    Convert.ToInt32(row["ID"]),
-                    row["title"].ToString()!,
-                    row["description"].ToString()!,
-                    row["sport"].ToString()!,
-                    row["team_type"].ToString()!,
-                    row["city"].ToString()!,
-                    row["address"].ToString()!,
-                    Convert.ToInt32(row["min_contestants"]),
-                    Convert.ToInt32(row["max_contestants"]),
-                    row["start_date"].ToString()!,
-                    row["end_date"].ToString()!,
-                    row["status"].ToString()!,
-                    row["system"].ToString()!
-                );
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         private ContestantDTO InstantiateDTO(DataRow row)
         {
             return new ContestantDTO(

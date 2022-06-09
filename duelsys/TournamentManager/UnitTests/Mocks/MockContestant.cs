@@ -42,12 +42,6 @@ namespace UnitTests.Mocks
                 new ContestantDTO(4, "Emilia", "Stoyanova", 3, 2, 2),
                 new ContestantDTO(2, "Nick", "Blom",  3, 1, 2),
             };
-
-            tournaments = new List<TournamentDTO>()
-            {
-                new TournamentDTO(1, "BAD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.Now.AddDays(8).ToString("d"), DateTime.UtcNow.AddDays(16).ToString("d"), "Planned", "RoundRobin"),
-                new TournamentDTO(1, "BAD!-Minton Championship", "It's badminton innit", "Badminton", "Solo", "Helmond", "Wethouder Ebbenlaan 30", 8, 32, DateTime.UtcNow.ToString("d"), DateTime.UtcNow.AddDays(7).ToString("d"), "Planned", "RoundRobin")
-            };
         }
 
         public ContestantDTO? GetContestant(int tournamentID, int contestantID)
@@ -58,11 +52,6 @@ namespace UnitTests.Mocks
         public IList<ContestantDTO> GetContestants(int tournamentID)
         {
             return contestants.FindAll(cont => cont.TournamentID == tournamentID);
-        }
-
-        public TournamentDTO? GetTournament(int tournamentID)
-        {
-            return tournaments.Find(trn => trn.ID == tournamentID);
         }
 
         public bool Register(int userID, int tournamentID)

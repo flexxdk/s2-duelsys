@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BLL.Objects.Sports;
+using BLL.Enums;
 using BLL.Objects.Users;
 using BLL.Registries;
 using UnitTests.Mocks;
@@ -68,25 +70,55 @@ namespace UnitTests.RegistryTests
         public void TestRegisterNewContestant()
         {
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
-            int tournamentID = 1;
             int userID = 5;
             string userType = "Solo";
 
-            bool result = registry.Register(userID, userType, tournamentID);
+            Tournament tournament = new Tournament()
+            {
+                ID = 1,
+                Title = "Average-Minton",
+                Description = "It's also badminton!",
+                Sport = new Badminton(),
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
+                MinContestants = 8,
+                MaxContestants = 14,
+                StartDate = DateTime.Now.AddDays(8).Date,
+                EndDate = DateTime.Now.AddDays(16).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.RoundRobin
+            };
+
+            bool result = registry.Register(userID, userType, tournament);
             
             Assert.IsTrue(result);
-            Assert.AreEqual(userID, registry.GetContestants(tournamentID).Last().ID);
+            Assert.AreEqual(userID, registry.GetContestants(tournament.ID).Last().ID);
         }
 
         [TestMethod]
         public void TestRegisterAlreadyRegisteredContestant()
         {
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
-            int tournamentID = 1;
             int userID = 3;
             string userType = "Solo";
 
-            bool result = registry.Register(userID, userType, tournamentID);
+            Tournament tournament = new Tournament()
+            {
+                ID = 1,
+                Title = "Average-Minton",
+                Description = "It's also badminton!",
+                Sport = new Badminton(),
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
+                MinContestants = 8,
+                MaxContestants = 14,
+                StartDate = DateTime.Now.AddDays(8).Date,
+                EndDate = DateTime.Now.AddDays(16).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.RoundRobin
+            };
+
+            bool result = registry.Register(userID, userType, tournament);
 
             Assert.IsFalse(result);
         }
@@ -95,12 +127,110 @@ namespace UnitTests.RegistryTests
         public void TestRegisterUserOfDifferentTeamType()
         {
             ContestantRegistry registry = new ContestantRegistry(new MockContestant());
-            int tournamentID = 1;
             int userID = 3;
             string userType = "Team";
 
+            Tournament tournament = new Tournament()
+            {
+                ID = 1,
+                Title = "Average-Minton",
+                Description = "It's also badminton!",
+                Sport = new Badminton(),
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
+                MinContestants = 8,
+                MaxContestants = 14,
+                StartDate = DateTime.Now.AddDays(8).Date,
+                EndDate = DateTime.Now.AddDays(16).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.RoundRobin
+            };
+
             Assert.ThrowsException<Exception>(() =>
-                registry.Register(userID, userType, tournamentID)
+                registry.Register(userID, userType, tournament)
+            );
+        }
+
+        [TestMethod]
+        public void TestRegisterUserWithinWeekOfTournamentStarting()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+            int userID = 3;
+            string userType = "Team";
+
+            Tournament tournament = new Tournament()
+            {
+                ID = 1,
+                Title = "Average-Minton",
+                Description = "It's also badminton!",
+                Sport = new Badminton(),
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
+                MinContestants = 8,
+                MaxContestants = 14,
+                StartDate = DateTime.Now.AddDays(2).Date,
+                EndDate = DateTime.Now.AddDays(9).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.RoundRobin
+            };
+
+            Assert.ThrowsException<Exception>(() =>
+                registry.Register(userID, userType, tournament)
+            );
+        }
+
+        [TestMethod]
+        public void TestRegisterUserTournamentFull()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+            int userID = 3;
+            string userType = "Team";
+
+            Tournament tournament = new Tournament()
+            {
+                ID = 1,
+                Title = "Average-Minton",
+                Description = "It's also badminton!",
+                Sport = new Badminton(),
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
+                MinContestants = 2,
+                MaxContestants = 3,
+                StartDate = DateTime.Now.AddDays(8).Date,
+                EndDate = DateTime.Now.AddDays(16).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.RoundRobin
+            };
+
+            Assert.ThrowsException<Exception>(() =>
+                registry.Register(userID, userType, tournament)
+            );
+        }
+        [TestMethod]
+        public void TestRegisterUserInvalidTeamType()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+            int userID = 3;
+            string userType = "Banana";
+
+            Tournament tournament = new Tournament()
+            {
+                ID = 1,
+                Title = "Average-Minton",
+                Description = "It's also badminton!",
+                Sport = new Badminton(),
+                City = "Eindhoven",
+                Address = "Eindhovense Straat 1",
+                MinContestants = 2,
+                MaxContestants = 8,
+                StartDate = DateTime.Now.AddDays(8).Date,
+                EndDate = DateTime.Now.AddDays(16).Date,
+                Status = TournamentStatus.Planned,
+                System = TournamentSystem.RoundRobin
+            };
+
+            Assert.ThrowsException<Exception>(() =>
+                registry.Register(userID, userType, tournament)
             );
         }
 

@@ -3,6 +3,7 @@ using BLL.Enums;
 using DAL.Interfaces;
 using DTO;
 using DTO.Users;
+using BLL.Objects;
 using BLL.Objects.Users;
 using System.Globalization;
 
@@ -53,45 +54,36 @@ namespace BLL.Registries
             return contestants;
         }
 
-        public bool Register(int userID, string userType, int tournamentID)
+        public bool Register(int userID, string teamType, Tournament tournament)
         {
-            if (Validate.AsEnum<TeamType>(userType))
+            if (Validate.AsEnum<TeamType>(teamType))
             {
-                TournamentDTO? dto = repository.GetTournament(tournamentID);
-                if (dto != null)
+                if(DateTime.Now.AddDays(7) < tournament.StartDate)
                 {
-                    if(DateTime.Now.AddDays(7) < DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")))
+                    if (GetContestants(tournament.ID).Count < tournament.MaxContestants)
                     {
-                        if (GetContestants(dto.ID).Count < dto.MaxContestants)
+                        if (tournament.Type == (TeamType)Enum.Parse(typeof(TeamType), teamType))
                         {
-                            if (dto.Type == userType)
+                            if (GetContestant(tournament.ID, userID) == null)
                             {
-                                if (GetContestant(tournamentID, userID) == null)
-                                {
-                                    return repository.Register(userID, tournamentID);
-                                }
-                                return false;
+                                return repository.Register(userID, tournament.ID);
                             }
-                            throw new Exception($"Cannot register {userType} account for a {dto.Type} tournament.");
+                            return false;
                         }
-                        throw new Exception("There are no more spots left in this tournament.");
+                        throw new Exception($"Cannot register {teamType} account for a {tournament.Type} tournament.");
                     }
-                    throw new Exception("Cannot register for a tournament that is starting in less than a week.");
+                    throw new Exception("There are no more spots left in this tournament.");
                 }
-                throw new Exception("Could not find tournament.");
+                throw new Exception("Cannot register for a tournament that is starting in less than a week.");
             }
             throw new Exception("Invalid team type, please contact website administrators.");
         }
 
         public bool Deregister(int userID, int tournamentID)
         {
-            TournamentDTO? dto = repository.GetTournament(tournamentID);
-            if(dto != null)
+            if (GetContestant(tournamentID, userID) != null)
             {
-                if (GetContestant(tournamentID, userID) != null)
-                {
-                    return repository.Deregister(userID, tournamentID);
-                }
+                return repository.Deregister(userID, tournamentID);
             }
             return false;
         }

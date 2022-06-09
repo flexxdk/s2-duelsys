@@ -9,7 +9,6 @@ namespace DAL.Interfaces
         public IList<ContestantDTO> GetContestants(int tournamentID);
         public bool Register(int userID, int tournamentID);
         public bool Deregister(int userID, int tournamentID);
-        public TournamentDTO? GetTournament(int tournamentID);
         public void SaveResults(int tournamentID, int winnerID, int wins, int loserID, int losses);
     }
 }

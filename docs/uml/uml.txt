@@ -1,4 +1,5 @@
 @startuml
+
 interface IMatchRepository{
 + GetByID(id : int) : MatchDTO?
 + GetMatches(tournamentID : int) : IList<MatchDTO>
@@ -111,10 +112,10 @@ Encryptor --> SaltKey
 class MatchGenerator{
 - repository : IMatchRepository
 + MatchGenerator(repository : IMatchRepository)
-+ GenerateMatches(system : TournamentSystem,\ntournamentID : int contestants : \nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
-+ CheckCanGenerate(tournamentID : int, system : TournamentSystem) : bool
-- RoundRobin(tournamentID : int, contestants : IEnumerable<Contestant>) :\nIEnumerable<MatchDTO>
-- RecursiveRoundRobin(tournamentID : int, contestants :\nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
++ GenerateMatches(system : TournamentSystem,\ntournamentID : int contestants : IEnumerable<Contestant>)\n: IEnumerable<MatchDTO>
++ CheckCanGenerate(tournamentID : int,\nsystem : TournamentSystem) : bool
+- RoundRobin(tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
+- RecursiveRoundRobin(start : int, tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
 - SingleElimination(tournamentID : int, contestants :\nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
 - CalculateNextPowerOfTwo(n : int) : int
 }
@@ -122,10 +123,10 @@ class MatchGenerator{
 class SportAssigner {
 - {static} sports : List<ISport?>
 + {static} SportAssigner()
-+ {static} RetrieveSport(index : int) : ISport?
-+ {static} RetrieveSport(name : string) : ISport?
-+ {static} GetSports() : List<ISport?>
-+ {static} GetNames() : List<string>
++ RetrieveSport(index : int) : ISport?
++ RetrieveSport(name : string) : ISport?
++ GetSports() : List<ISport?>
++ GetNames() : List<string>
 }
 
 class Validate{
@@ -205,12 +206,14 @@ ILoginRepository <--- LoginHandler
 
 BaseRegistry <|.. MatchRegistry 
 BaseRegistry <|.. TournamentRegistry 
-BaseRegistry <|.. ContestantRegistry 
 BaseRegistry <|.. UserRegistry 
+BaseRegistry <|.. ContestantRegistry 
 
 LoginHandler --> Encryptor : reference
 UserRegistry --> Encryptor : reference
 MatchRegistry --> MatchGenerator : reference
+
+BaseRepository --> DbContext 
 
 enum TournamentSystem{
 RoundRobin,
@@ -238,7 +241,7 @@ Team
 class DbContext{
 + DbConnectionString { get; }
 + DbContext()
-+ DbContext(server : string?, uid : string?, pwd : string?)
++ DbContext(server : string?, uid : string?,\ndatabase: string?, pwd : string?)
 }
 
 class Match{
@@ -251,6 +254,8 @@ class Match{
 + AwayName { get; set; } : string?
 + AwayScore { get; set; } : int
 + IsFinished { get; set; } : bool
++ GetWinner() : int
++ GetLoser() : int
 }
 
 class Tournament{
@@ -267,6 +272,7 @@ class Tournament{
 + Status { get; set; } : TournamentStatus
 + System { get; set; } : TournamentSystem 
 + Type { get; set; } : TeamType
++ CanStart(totalContestants : int) : bool
 }
 
 abstract class Person{
@@ -305,6 +311,7 @@ interface ISport{
 class Badminton{
 + Name { get; } : string
 + Scoring { get; } : string
++ MaxScoring { get; } : string
 + Badminton()
 + ScoreIsValid(object home, object away) : bool
 + ToString() : string
@@ -312,25 +319,63 @@ class Badminton{
 
 MatchRegistry --> Match
 TournamentRegistry --> Tournament
-UserRegistry --> Account
 ContestantRegistry --> Contestant
+UserRegistry --> Account
 LoginHandler --> Credentials
 
-Account --|> Person : inherits
 Contestant --|> Person : inherits
+Account --|> Person : inherits
 Account ..> UserRoles
 Account ..> TeamType
 Tournament ..> TeamType
 
 Tournament --> ISport
+SportAssigner --> ISport
 Tournament ..> TournamentSystem
 Tournament ..> TournamentStatus
 
-Badminton --> Validate
 BaseRegistry --> Validate
 ContestantRegistry --> Validate
-UserRegistry --> Validate
-
+Validate <-- Badminton 
+TournamentRegistry --> SportAssigner
 
 ISport <|.. Badminton : implements
+
+SportAssigner -[hidden]> Tournament
+ContestantRegistry -[hidden]> UserRegistry 
+MatchRegistry -[hidden]> ContestantRegistry
+ISport -[hidden]> TournamentStatus
+TournamentSystem -[hidden]> TeamType 
+
+TournamentDTO ... Tournament
+note right on link
+Objects share 
+the same properties
+end note
+
+MatchDTO ... Match 
+note right on link
+Objects share 
+the same properties
+end note
+
+AccountDTO ... Account 
+note left on link
+Objects share 
+the same
+properties
+end note
+
+ContestantDTO ... Contestant
+note right on link
+Objects share 
+the same
+properties
+end note
+
+TournamentRepository --> TournamentDTO
+MatchRepository --> MatchDTO
+ContestantRepository --> ContestantDTO
+UserRepository --> AccountDTO
+
 @enduml

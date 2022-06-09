@@ -10,6 +10,7 @@ using System.Data;
 using BLL.Objects.Sports;
 using System.Collections;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace WinApp.Forms
 {
@@ -60,10 +61,24 @@ namespace WinApp.Forms
             comboTeamType.DataSource = Enum.GetValues(typeof(TeamType));
             comboTournamentSystem.DataSource = Enum.GetValues(typeof(TournamentSystem));
             comboTypes.DataSource = Enum.GetValues(typeof(TeamType));
-            comboRoles.DataSource = Enum.GetValues(typeof(UserRole));
+            
+            //Any account that isn't an administrator cannot create administrator accounts
+            if(ActiveUser.Role == UserRole.Administrator)
+            {
+                comboRoles.DataSource = Enum.GetValues(typeof(UserRole));
+            }
+            else
+            {
+                comboRoles.DataSource = Enum.GetValues(typeof(UserRole))
+                    .Cast<UserRole>()
+                    .Where(role => role != UserRole.Administrator)
+                    .ToList();
+            }
+
             comboSport.DataSource = sportAssigner.GetNames();
 
-            lblUserName.Text = ActiveUser.Name;
+            lblUserName.Text = string.Concat(ActiveUser.Name, " ",ActiveUser.SurName);
+            lblWelcome.Text = $"Welcome {string.Concat(ActiveUser.Name, " ", ActiveUser.SurName)}!";
         }
         private void RefreshTournaments()
         {
@@ -495,6 +510,12 @@ namespace WinApp.Forms
                 if (result)
                 {
                     MessageBox.Show("Account successfully registered!");
+                    inputName.Clear();
+                    inputSurname.Clear();
+                    inputEmail.Clear();
+                    inputPassword.Clear();
+                    comboRoles.SelectedIndex = 0;
+                    comboTypes.SelectedIndex = 0;
                 }
                 else
                 {

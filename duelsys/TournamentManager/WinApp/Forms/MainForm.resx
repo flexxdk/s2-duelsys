@@ -57,8 +57,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label23.Text" xml:space="preserve">
+    <value>Quick Start:
+
+On the left is the navigation menu.
+The buttons take you to specific pages.
+
+To create new Tournaments, go to the
+Tournament Page.
+
+To generate and play any matches, go
+to the Matches Page.
+
+To register new accounts, go to the
+Account Registration Page.
+
+Click the Logout button to return to
+the log in screen.</value>
+  </data>
   <metadata name="tournamentBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>376, 17</value>
+  </metadata>
+  <metadata name="tournamentBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>376, 17</value>
+  </metadata>
+  <metadata name="matchBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>571, 17</value>
   </metadata>
   <metadata name="matchBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>571, 17</value>

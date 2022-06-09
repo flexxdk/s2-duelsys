@@ -44,6 +44,8 @@
             this.NavTournaments = new System.Windows.Forms.Button();
             this.tabsControl = new System.Windows.Forms.TabControl();
             this.tabHome = new System.Windows.Forms.TabPage();
+            this.label23 = new System.Windows.Forms.Label();
+            this.lblWelcome = new System.Windows.Forms.Label();
             this.tabTournaments = new System.Windows.Forms.TabPage();
             this.gpbTournamentUpdateStatus = new System.Windows.Forms.GroupBox();
             this.btnCancelTournament = new System.Windows.Forms.Button();
@@ -128,10 +130,12 @@
             this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label24 = new System.Windows.Forms.Label();
             this.navPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabsControl.SuspendLayout();
+            this.tabHome.SuspendLayout();
             this.tabTournaments.SuspendLayout();
             this.gpbTournamentUpdateStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).BeginInit();
@@ -205,7 +209,7 @@
             this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblUserName.ForeColor = System.Drawing.Color.Black;
-            this.lblUserName.Location = new System.Drawing.Point(92, 10);
+            this.lblUserName.Location = new System.Drawing.Point(41, 10);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(83, 17);
             this.lblUserName.TabIndex = 8;
@@ -218,9 +222,9 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(8, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 17);
+            this.label3.Size = new System.Drawing.Size(38, 17);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Logged in as:";
+            this.label3.Text = "User:";
             // 
             // label21
             // 
@@ -337,6 +341,8 @@
             // 
             // tabHome
             // 
+            this.tabHome.Controls.Add(this.label23);
+            this.tabHome.Controls.Add(this.lblWelcome);
             this.tabHome.Location = new System.Drawing.Point(4, 24);
             this.tabHome.Name = "tabHome";
             this.tabHome.Padding = new System.Windows.Forms.Padding(3);
@@ -344,6 +350,26 @@
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "Home";
             this.tabHome.UseVisualStyleBackColor = true;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label23.Location = new System.Drawing.Point(23, 108);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(375, 480);
+            this.label23.TabIndex = 1;
+            this.label23.Text = resources.GetString("label23.Text");
+            // 
+            // lblWelcome
+            // 
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Font = new System.Drawing.Font("Segoe UI Semibold", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblWelcome.Location = new System.Drawing.Point(258, 28);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(418, 50);
+            this.lblWelcome.TabIndex = 0;
+            this.lblWelcome.Text = "Welcome <username>!";
             // 
             // tabTournaments
             // 
@@ -1074,6 +1100,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label24);
             this.groupBox2.Controls.Add(this.btnRegisterAccount);
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label18);
@@ -1089,7 +1116,7 @@
             this.groupBox2.Controls.Add(this.comboTypes);
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(440, 375);
+            this.groupBox2.Size = new System.Drawing.Size(429, 399);
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Account Registration";
@@ -1102,7 +1129,7 @@
             this.btnRegisterAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegisterAccount.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnRegisterAccount.ForeColor = System.Drawing.Color.Green;
-            this.btnRegisterAccount.Location = new System.Drawing.Point(174, 251);
+            this.btnRegisterAccount.Location = new System.Drawing.Point(171, 305);
             this.btnRegisterAccount.Name = "btnRegisterAccount";
             this.btnRegisterAccount.Size = new System.Drawing.Size(149, 54);
             this.btnRegisterAccount.TabIndex = 24;
@@ -1114,7 +1141,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(66, 63);
+            this.label13.Location = new System.Drawing.Point(63, 117);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(102, 19);
             this.label13.TabIndex = 18;
@@ -1124,7 +1151,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label18.Location = new System.Drawing.Point(66, 208);
+            this.label18.Location = new System.Drawing.Point(63, 262);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(85, 19);
             this.label18.TabIndex = 23;
@@ -1132,7 +1159,7 @@
             // 
             // inputName
             // 
-            this.inputName.Location = new System.Drawing.Point(174, 62);
+            this.inputName.Location = new System.Drawing.Point(171, 116);
             this.inputName.Name = "inputName";
             this.inputName.Size = new System.Drawing.Size(149, 23);
             this.inputName.TabIndex = 0;
@@ -1141,7 +1168,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(66, 179);
+            this.label17.Location = new System.Drawing.Point(63, 233);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(48, 19);
             this.label17.TabIndex = 22;
@@ -1149,7 +1176,7 @@
             // 
             // inputSurname
             // 
-            this.inputSurname.Location = new System.Drawing.Point(174, 91);
+            this.inputSurname.Location = new System.Drawing.Point(171, 145);
             this.inputSurname.Name = "inputSurname";
             this.inputSurname.Size = new System.Drawing.Size(149, 23);
             this.inputSurname.TabIndex = 1;
@@ -1158,7 +1185,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label16.Location = new System.Drawing.Point(66, 150);
+            this.label16.Location = new System.Drawing.Point(63, 204);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(80, 19);
             this.label16.TabIndex = 21;
@@ -1166,7 +1193,7 @@
             // 
             // inputEmail
             // 
-            this.inputEmail.Location = new System.Drawing.Point(174, 120);
+            this.inputEmail.Location = new System.Drawing.Point(171, 174);
             this.inputEmail.Name = "inputEmail";
             this.inputEmail.Size = new System.Drawing.Size(149, 23);
             this.inputEmail.TabIndex = 2;
@@ -1175,7 +1202,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label15.Location = new System.Drawing.Point(66, 121);
+            this.label15.Location = new System.Drawing.Point(63, 175);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(54, 19);
             this.label15.TabIndex = 20;
@@ -1185,7 +1212,7 @@
             // 
             this.comboRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboRoles.FormattingEnabled = true;
-            this.comboRoles.Location = new System.Drawing.Point(174, 178);
+            this.comboRoles.Location = new System.Drawing.Point(171, 232);
             this.comboRoles.Name = "comboRoles";
             this.comboRoles.Size = new System.Drawing.Size(149, 23);
             this.comboRoles.TabIndex = 3;
@@ -1194,7 +1221,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label14.Location = new System.Drawing.Point(66, 92);
+            this.label14.Location = new System.Drawing.Point(63, 146);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 19);
             this.label14.TabIndex = 19;
@@ -1202,7 +1229,7 @@
             // 
             // inputPassword
             // 
-            this.inputPassword.Location = new System.Drawing.Point(174, 149);
+            this.inputPassword.Location = new System.Drawing.Point(171, 203);
             this.inputPassword.Name = "inputPassword";
             this.inputPassword.Size = new System.Drawing.Size(149, 23);
             this.inputPassword.TabIndex = 4;
@@ -1211,7 +1238,7 @@
             // 
             this.comboTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboTypes.FormattingEnabled = true;
-            this.comboTypes.Location = new System.Drawing.Point(174, 207);
+            this.comboTypes.Location = new System.Drawing.Point(171, 261);
             this.comboTypes.Name = "comboTypes";
             this.comboTypes.Size = new System.Drawing.Size(149, 23);
             this.comboTypes.TabIndex = 5;
@@ -1251,6 +1278,18 @@
             this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
             this.isFinishedDataGridViewCheckBoxColumn.Width = 516;
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label24.Location = new System.Drawing.Point(95, 29);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(236, 63);
+            this.label24.TabIndex = 25;
+            this.label24.Text = "To register a new account, fill out\r\nthe form below and click on \r\n\"Register Acco" +
+    "unt\".";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1268,6 +1307,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabsControl.ResumeLayout(false);
+            this.tabHome.ResumeLayout(false);
+            this.tabHome.PerformLayout();
             this.tabTournaments.ResumeLayout(false);
             this.gpbTournamentUpdateStatus.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).EndInit();
@@ -1389,5 +1430,8 @@
         private DataGridViewTextBoxColumn dgvColAllTournamentsEndDate;
         private DataGridViewTextBoxColumn dgvColAllTournamentsStatus;
         private DataGridViewTextBoxColumn dgvColAllTournamentsSystem;
+        private Label lblWelcome;
+        private Label label23;
+        private Label label24;
     }
 }

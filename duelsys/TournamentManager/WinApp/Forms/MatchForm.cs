@@ -55,7 +55,7 @@ namespace WinApp.Forms
             }
             catch (FormatException)
             {
-                MessageBox.Show("Invalid score entered");
+                MessageBox.Show("Please enter numeric-only characters in the score fields.");
             }
             catch(Exception ex)
             {

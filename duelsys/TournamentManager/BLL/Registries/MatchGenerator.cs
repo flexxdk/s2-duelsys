@@ -20,7 +20,6 @@ namespace BLL.Registries
 
         public IEnumerable<MatchDTO> GenerateMatches(TournamentSystem system, int tournamentID, IEnumerable<Contestant> contestants)
         {
-
             IEnumerable<MatchDTO> matches;
             switch (system)
             {

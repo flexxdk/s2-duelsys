@@ -7,44 +7,44 @@
     void RenderRowLeaderboard(Contestant contestant)
     {
     <tr>
-        <th scope="row">@contestant.Rank</th>
-        <td>@contestant.Name @contestant.SurName</td>
-        <td>@contestant.Wins</td>
-        <td>@contestant.Losses</td>
+            <th scope="row">@contestant.Rank</th>
+            <td>@contestant.Name @contestant.SurName</td>
+            <td>@contestant.Wins</td>
+            <td>@contestant.Losses</td>
     </tr>
     }
 
     void RenderMatch(Match match)
     {
     <div class="col-md-3  my-3 justify-content-center">
-        <div class="card">
-            <div class="card-header">
-                <div class="row align-items-center">
-                    <div class="col-lg-5 fw-bold text-center">
-                        @match.HomeName 
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 fw-bold text-center">
+                            @match.HomeName 
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            vs.
+                        </div>
+                        <div class="col-lg-5 fw-bold text-center">
+                            @match.AwayName 
+                        </div>
                     </div>
-                    <div class="col-lg-2 text-center">
-                        vs.
-                    </div>
-                    <div class="col-lg-5 fw-bold text-center">
-                        @match.AwayName 
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 text-center">
+                            @match.HomeScore
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            -
+                        </div>
+                        <div class="col-lg-5 text-center">
+                            @match.AwayScore
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-lg-5 text-center">
-                        @match.HomeScore
-                    </div>
-                    <div class="col-lg-2 text-center">
-                        -
-                    </div>
-                    <div class="col-lg-5 text-center">
-                        @match.AwayScore
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     }
 
@@ -62,51 +62,87 @@
 
 @if (Model.Tournament != null)
 {
-    <div class="">
-        <p>Title: @Model.Tournament?.Title</p>
-        <p>Description: @Model.Tournament?.Description</p>
-        <p>City: @Model.Tournament?.City</p>
-        <p>Address: @Model.Tournament?.Address</p>
-        <p>Start Date: @Model.Tournament?.StartDate.ToString("d")</p>
-        <p>End Date: @Model.Tournament?.EndDate.ToString("d")</p>
-        <p>Minium Contestants: @Model.Tournament?.MinContestants</p>
-        <p>Maximum Contestants: @Model.Tournament?.MaxContestants</p>
-        <p>Tournament Status: @Model.Tournament?.Status</p>
-        <p>Sport: @Model.Tournament?.Sport!.Name</p>
-        <p>Team Type: @Model.Tournament?.Type</p>
-     </div>
 
-    if (CheckDisplayRegisterOptions())
-    {
-        if(User.Identity?.IsAuthenticated == true)
-        {
-            <form method="post">
-                <button class="btn btn-primary" asp-page-handler="register">Register</button>
-                <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
-                <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
-                @if (TempData["success"] != null)
-                {
-                    <span class="field-validation-success">@TempData["success"]</span>
-                }
-                @if (TempData["error"] != null)
-                {
-                    <span class="field-validation-error">@TempData["error"]</span>
-                }
-            </form>
-        }
-        else
-        {
-            <div>
-                Log in to register for this tournament.
-            </div>
-        }
-    }
-    else
-    {
-        <div>
-            This tournament is closed for registration.
-        </div>
-    }
+    <table class="tournament table table-responsive table-hover table-bordered">
+        <tbody class="">
+            <tr>
+                <th scope="row">Title:</th>
+                <td>@Model.Tournament?.Title</td>
+            </tr>
+            <tr>
+                <th scope="row">Description:</th>
+                <td>@Model.Tournament?.Description</td>
+            </tr>
+            <tr>
+                <th scope="row">City:</th>
+                <td>@Model.Tournament?.City</td>
+            </tr>
+            <tr>
+                <th scope="row">Start Date:</th>
+                <td>@Model.Tournament?.StartDate.ToString("d")</td>
+            </tr>
+            <tr>
+                <th scope="row">End Date:</th>
+                <td>@Model.Tournament?.EndDate.ToString("d")</td>
+            </tr>
+            <tr>
+                <th scope="row">Minium Contestants:</th>
+                <td>@Model.Tournament?.MinContestants</td>
+            </tr>
+            <tr>
+                <th scope="row">Maximum Contestants:</th>
+                <td>@Model.Tournament?.MaxContestants</td>
+            </tr>
+            <tr>
+                <th scope="row">Current Tournament Status:</th>
+                <td>@Model.Tournament?.Status</td>
+            </tr>
+            <tr>
+                <th scope="row">Sport:</th>
+                <td>@Model.Tournament?.SportName</td>
+            </tr>
+            <tr>
+                <th scope="row">Team Type:</th>
+                <td>@Model.Tournament?.Type</td>
+            </tr>
+            <tr>
+                <th scope="row">Registration Options:</th>
+                <td colspan="4">
+                    @if (CheckDisplayRegisterOptions())
+                    {
+                        if(User.Identity?.IsAuthenticated == true)
+                        {
+                            <form method="post">
+                                <button class="btn btn-primary" asp-page-handler="register">Register</button>
+                                <button class="btn btn-primary" asp-page-handler="deregister">Deregister</button>
+                                <input type="hidden" value=@Model.Tournament?.ID asp-for="TournamentID" />
+                                @if (TempData["success"] != null)
+                                {
+                                    <div class="field-validation-success">@TempData["success"]</div>
+                                }
+                                @if (TempData["error"] != null)
+                                {
+                                    <div class="field-validation-error">@TempData["error"]</div>
+                                }
+                            </form>
+                        }
+                        else
+                        {
+                            <div>
+                                Log in to register for this tournament.
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            This tournament is closed for registration.
+                        </div>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
     if(Model.Matches.Count > 0)
     {

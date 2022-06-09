@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatchForm));
             this.numAwayScore = new System.Windows.Forms.NumericUpDown();
             this.numHomeScore = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -176,8 +177,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numHomeScore);
             this.Controls.Add(this.numAwayScore);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MatchForm";
-            this.Text = "MatchForm";
+            this.Text = "DuelSys - Play Match";
             ((System.ComponentModel.ISupportInitialize)(this.numAwayScore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHomeScore)).EndInit();
             this.ResumeLayout(false);

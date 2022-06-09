@@ -6,10 +6,15 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>Resources\logo_colored.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Properties\.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\logo_colored.ico" />
   </ItemGroup>
 
   <ItemGroup>

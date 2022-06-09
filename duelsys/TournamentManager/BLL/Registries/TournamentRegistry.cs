@@ -16,11 +16,13 @@ namespace BLL.Registries
     {
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
+        private SportAssigner sportAssigner;
 
         public TournamentRegistry(ITournamentRepository repository)
         {
             this.repository = repository;
             this.tournaments = new Dictionary<int, Tournament>();
+            this.sportAssigner = new SportAssigner();
             LoadTournaments();
         }
 
@@ -194,7 +196,7 @@ namespace BLL.Registries
                 ID = dto.ID,
                 Title = dto.Title,
                 Description = dto.Description,
-                Sport = SportAssigner.RetrieveSport(dto.Sport),
+                Sport = sportAssigner.RetrieveSport(dto.Sport),
                 City = dto.City,
                 Address = dto.Address,
                 MinContestants = dto.MinContestants,

@@ -23,20 +23,22 @@ namespace WinApp.Forms
         private UserRegistry userRegistry;
         private MatchRegistry matchRegistry;
         private ContestantRegistry contestantRegistry;
+        private SportAssigner sportAssigner;
 
         public MainForm(Account account)
         {
             InitializeComponent();
             ActiveUser = account;
 
-            SetupFormGUI();
-
             tournamentRegistry = new TournamentRegistry(new TournamentRepository(new DbContext()));
             userRegistry = new UserRegistry(new UserRepository(new DbContext()));
             matchRegistry = new MatchRegistry(new MatchRepository(new DbContext()));
             contestantRegistry = new ContestantRegistry(new ContestantRepository(new DbContext()));
 
+            sportAssigner = new SportAssigner();
+
             RefreshTournaments();
+            SetupFormGUI();
         }
 
         #region FORM GUI
@@ -59,7 +61,7 @@ namespace WinApp.Forms
             comboTournamentSystem.DataSource = Enum.GetValues(typeof(TournamentSystem));
             comboTypes.DataSource = Enum.GetValues(typeof(TeamType));
             comboRoles.DataSource = Enum.GetValues(typeof(UserRole));
-            comboSport.DataSource = SportAssigner.GetNames();
+            comboSport.DataSource = sportAssigner.GetNames();
 
             lblUserName.Text = ActiveUser.Name;
         }
@@ -188,7 +190,7 @@ namespace WinApp.Forms
                 {
                     Title = inputTitle.Text,
                     Description = inputDescription.Text,
-                    Sport = SportAssigner.RetrieveSport(comboSport.SelectedIndex),
+                    Sport = sportAssigner.RetrieveSport(comboSport.SelectedIndex),
                     City = inputCity.Text,
                     Address = inputAddress.Text,
                     StartDate = pickStartDate.Value,

@@ -2,7 +2,7 @@
 
 namespace BLL.Registries
 {
-    public static class SportAssigner
+    public class SportAssigner
     {
         private static List<ISport?> sports;
 
@@ -15,7 +15,7 @@ namespace BLL.Registries
             .ToList();
         }
 
-        public static ISport? RetrieveSport(int index)
+        public ISport? RetrieveSport(int index)
         {
             if(index < 0 || index >= sports.Count)
             {
@@ -25,7 +25,7 @@ namespace BLL.Registries
         }
 
 
-        public static ISport? RetrieveSport(string name)
+        public ISport? RetrieveSport(string name)
         {
             foreach(var sport in sports)
             {
@@ -37,12 +37,12 @@ namespace BLL.Registries
             return null;
         }
 
-        public static List<ISport?> GetSports()
+        public List<ISport?> GetSports()
         {
             return sports;
         }
 
-        public static List<string> GetNames()
+        public List<string> GetNames()
         {
             return sports.Select(s => s!.Name).ToList();
         }

@@ -11,9 +11,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestRetrieveSportByIndex()
         {
+            SportAssigner sportAssigner = new SportAssigner();
             int index = 0;
 
-            ISport? sport = SportAssigner.RetrieveSport(index);
+            ISport? sport = sportAssigner.RetrieveSport(index);
 
             Assert.IsNotNull(sport);
             Assert.IsInstanceOfType(sport, typeof(Badminton));
@@ -22,9 +23,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestRetrieveSportByIndexInvalidIndex()
         {
+            SportAssigner sportAssigner = new SportAssigner();
             int index = 5;
 
-            ISport? sport = SportAssigner.RetrieveSport(index);
+            ISport? sport = sportAssigner.RetrieveSport(index);
 
             Assert.IsNull(sport);
         }
@@ -32,9 +34,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestRetrieveSportByName()
         {
+            SportAssigner sportAssigner = new SportAssigner();
             string name = "badminton";
 
-            ISport? sport = SportAssigner.RetrieveSport(name);
+            ISport? sport = sportAssigner.RetrieveSport(name);
 
             Assert.IsNotNull(sport);
             Assert.IsInstanceOfType(sport, typeof(Badminton));
@@ -43,9 +46,10 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestRetrieveSportByNameInvalidName()
         {
+            SportAssigner sportAssigner = new SportAssigner();
             string name = "tennis";
 
-            ISport? sport = SportAssigner.RetrieveSport(name);
+            ISport? sport = sportAssigner.RetrieveSport(name);
 
             Assert.IsNull(sport);
         }
@@ -53,7 +57,8 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetSportsAsISport()
         {
-            List<ISport?> sports = SportAssigner.GetSports();
+            SportAssigner sportAssigner = new SportAssigner();
+            List<ISport?> sports = sportAssigner.GetSports();
 
             Assert.IsNotNull(sports);
             Assert.IsInstanceOfType(sports, typeof(List<ISport?>));
@@ -63,7 +68,8 @@ namespace UnitTests.RegistryTests
         [TestMethod]
         public void TestGetSportsAsString()
         {
-            List<string> sports = SportAssigner.GetNames();
+            SportAssigner sportAssigner = new SportAssigner();
+            List<string> sports = sportAssigner.GetNames();
 
             Assert.IsNotNull(sports);
             Assert.IsInstanceOfType(sports, typeof(List<string>));

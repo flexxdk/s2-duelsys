@@ -59,7 +59,7 @@ namespace BLL.Objects
 
         public bool CanStart(int totalContestants)
         {
-            return totalContestants >= MinContestants;
+            return totalContestants >= MinContestants && DateTime.Now.AddDays(7) >= StartDate;
         }
     }
 }

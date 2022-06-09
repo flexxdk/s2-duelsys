@@ -204,7 +204,8 @@ namespace BLL.Registries
                 StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
                 EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
                 Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
-                System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System)
+                System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System),
+                Type = (TeamType)Enum.Parse(typeof(TeamType), dto.Type)
             };
         }
 

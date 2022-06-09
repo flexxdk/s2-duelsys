@@ -308,6 +308,7 @@ namespace WinApp.Forms
                     btnCreateTournament.Enabled = false;
                     btnUpdateTournament.Enabled = true;
                     comboTeamType.Enabled = false;
+                    comboTeamType.SelectedItem = tournament.Type;
                     comboSport.Enabled = false;
                     comboSport.SelectedItem = tournament.Sport!;
                     gpbTournamentCreation.Text = "Adjust Tournament";
@@ -326,6 +327,7 @@ namespace WinApp.Forms
                     if (tournament.Status != TournamentStatus.Planned)
                     {
                         comboTournamentSystem.Enabled = false;
+                        comboTournamentSystem.SelectedItem = tournament.System;
                         numMinContestants.Enabled = false;
                         numMaxContestants.Enabled = false;
                     }
@@ -373,7 +375,7 @@ namespace WinApp.Forms
                     }
                     else
                     {
-                        MessageBox.Show("Cannot start a tournament that has less than minimum contestants.");
+                        MessageBox.Show("This tournament cannot be started as there are either not enough contestants or the tournament is more than a week away from starting.");
                     }
                     RefreshTournaments();
                 }

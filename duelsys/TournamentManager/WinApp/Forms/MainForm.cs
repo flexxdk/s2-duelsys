@@ -440,7 +440,7 @@ namespace WinApp.Forms
                         }
                         else
                         {
-                            MessageBox.Show("Could not generate matches.");
+                            MessageBox.Show("Cannot generate any more matches as all possible matches have been generated.");
                         }
                         Cursor.Current = Cursors.Default;
                     }

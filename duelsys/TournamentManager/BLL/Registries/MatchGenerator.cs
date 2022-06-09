@@ -40,10 +40,11 @@ namespace BLL.Registries
             IEnumerable<MatchDTO> matches = repository.GetMatches(tournamentID);
             switch (system)
             {
-                //RoundRobin should always be default
+                // RoundRobin should always be default
                 default:
                     return !matches.Any();
                 case TournamentSystem.SingleElimination:
+                    // If matches already exist, check if they're all finished
                     return !matches.Any() || !matches.Any(match => match.IsFinished == false);
             }
         }
@@ -52,6 +53,8 @@ namespace BLL.Registries
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 
+            // Dequeue next contestant in line and iterate over other contestants
+            // to generate matches
             Queue<Contestant> contestantQueue = new Queue<Contestant>(contestants);
             while(contestantQueue.Count > 0)
             {
@@ -68,12 +71,16 @@ namespace BLL.Registries
         private IEnumerable<MatchDTO> RecursiveRoundRobin(int start, int tournamentID, IList<Contestant> contestants)
         {
             List<MatchDTO> generated = new List<MatchDTO>();
+
+            // Start at passed position, make sure the start position is within range of list
             if(start + 1 <= contestants.Count())
             {
                 for(int i = start + 1; i < contestants.Count(); i++)
                 {
                     generated.Add(new MatchDTO(0, tournamentID, false, contestants[start].ID, contestants[start].Name!, 0, contestants[i].ID, contestants[i].Name!, 0));
                 }
+                // Increase start position of loop by one for each subsequent recursive loop
+                // and add the returned list to the caller's list
                 generated.AddRange(RecursiveRoundRobin(start + 1, tournamentID, contestants));
             }
             return generated;
@@ -83,20 +90,20 @@ namespace BLL.Registries
         {
             IList<MatchDTO> generated = new List<MatchDTO>();
 
-            //Remove all contestants that have lost a match and thus have been eliminated
+            // Remove all contestants that have lost a match and thus have been eliminated
             IEnumerable<Contestant> validContestants = contestants.Where(c => c.Losses == 0);
 
-            //Calculate the nearest power of two based on the list size
+            // Calculate the nearest power of two based on the list size
             int validCount = validContestants.Count();
             int pow = CalculateNextPowerOfTwo(validCount);
 
-            //Calculate the for-loop start position
-            //based on the previously evaluated power
+            // Calculate the for-loop start position
+            // based on the previously evaluated power
             int range = pow - validCount;
 
             for(int i = range; i < validCount; i += 2)
             {
-                //Ensure we never go out of bounds of the list
+                // Ensure we never go out of bounds of the list
                 if (i < validCount - 1)
                 {
                     Contestant home = validContestants.ElementAt(i);
@@ -108,16 +115,19 @@ namespace BLL.Registries
             return generated;
         }
 
-        private int CalculateNextPowerOfTwo(int n)
+        private int CalculateNextPowerOfTwo(int value)
         {
-            int count = 1;
+            // Start n at first bit
+            int n = 1;
 
-            while(n > count)
+            // If value is larger than n, shift bit to the left
+            // Keep shifting until we find the nearest upper power of two
+            while(value > n)
             {
-                count <<= 1;
+                n <<= 1;
             }
 
-            return count;
+            return n;
         }
     }
 }

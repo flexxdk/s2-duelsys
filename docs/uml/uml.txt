@@ -4,7 +4,7 @@ interface IMatchRepository{
 + GetByID(id : int) : MatchDTO?
 + GetMatches(tournamentID : int) : IList<MatchDTO>
 + Create(dto : MatchDTO) : int
-+ Update(dto : MatchDTO) : int
++ SaveResults(dto : MatchDTO) : int
 }
 
 interface ITournamentRepository{
@@ -29,6 +29,7 @@ interface IContestantRepository{
 + Register(userID : int, tournamentID : int) : bool
 + Deregister(userID : int, tournamentID : int) : bool
 + GetTournament(tournamentID : int) : TournamentDTO?
++ SaveResults(tournamentID : int, winnerID : int, wins : int,\nloserID : int, losses : int) : void
 }
 
 interface ILoginRepository{
@@ -38,7 +39,7 @@ interface ILoginRepository{
 abstract class BaseRepository{
 + BaseRepository(dbContext : DbContext)
 # GetConnection() : MySqlConnection
-# OpenConnection(connection : MySqlConnection)
+# OpenConnection(connection : MySqlConnection) : void
 # ExecuteNonQuery(command : MySqlCommand) : int
 # ExecuteScalar(command : MySqlCommand) : object?
 # ExecuteReader(command : MySqlCommand) : DataTable
@@ -48,14 +49,14 @@ class MatchRepository{
 + GetByID(id : int) : MatchDTO?
 + GetMatches(tournamentID : int) : IList<MatchDTO>
 + Create(dto : MatchDTO) : int
-+ Update(dto : MatchDTO) : int
++ SaveResults(dto : MatchDTO) : int
 - InstantiateDTO(row : DataRow) : MatchDTO
 }
 
 class TournamentRepository{
 + Load() : IList<TournamentDTO>
 + GetStandings(tournamentID : int) : IList<ContestantDTO>
-+ FilterTournamentsOnStatus(status : string) : IList<TournamentDTO>
++ FilterTournamentsOnStatus(status : string) : IEnumerable<TournamentDTO>
 + GetByID(int id) : TournamentDTO?
 + Create(dto : TournamentDTO) : int
 + Update(dto : TournamentDTO) : int
@@ -75,17 +76,18 @@ class ContestantRepository{
 + Register(userID : int, tournamentID : int) : bool
 + Deregister(userID : int, tournamentID : int) : bool
 + GetTournament(tournamentID : int) : TournamentDTO?
++ SaveResults(tournamentID : int, winnerID : int, wins : int,\nloserID : int, losses : int) : void
 }
 
 class LoginRepository{
 + GetCredentials(email : string) : AccountDTO?
 }
 
-MatchRepository ..|> IMatchRepository : implements
-TournamentRepository ..|> ITournamentRepository  : implements
-UserRepository ..|> IUserRepository : implements
-ContestantRepository ..|> IContestantRepository : implements
-LoginRepository ..|> ILoginRepository : implements
+MatchRepository ...|> IMatchRepository : implements
+TournamentRepository ...|> ITournamentRepository  : implements
+UserRepository ...|> IUserRepository : implements
+ContestantRepository ...|> IContestantRepository : implements
+LoginRepository ...|> ILoginRepository : implements
 
 BaseRepository <|.. MatchRepository : inherits
 BaseRepository <|.. UserRepository : inherits
@@ -146,11 +148,12 @@ abstract class BaseRegistry{
 class MatchRegistry{
 - repository : IMatchRepository
 - matchGenerator : MatchGenerator
++ MatchRegistry(repository : IMatchRepository)
 + GetByID(id : int) : Match?
 + GetMatches(tournamentID : int) : IList<Match>
 + GenerateMatches(tournament : Tournament,\ncontestants : IEnumerable<Contestant>) : bool
 + CheckCanGenerate(tournamentID : int,\nsystem : TournamentSystem) : bool
-+ SaveResults(match : Match) : void
++ SaveMatch(match : Match) : void
 }
 
 class TournamentRegistry{
@@ -167,7 +170,8 @@ class TournamentRegistry{
 + GetLeaderboard(tournamentID : int) : IList<Contestant>
 - CalculateRankings(contestants : IList<Contestants>) : void
 - InstantiateTournament(dto : TournamentDTO) : Tournament
-- InstantiateDTO(tournament : Tournament) : TournamentDTO
+- InstantiateDTO(obj : Tournament) : TournamentDTO
+- AddToDictionary(tournament : Tournament) : bool
 - ValidateModel(Tournament model) : void
 }
 
@@ -181,24 +185,25 @@ class UserRegistry{
 
 class ContestantRegistry{
 - repository : IContestantRepository
-+ ContestantRegistry()
++ ContestantRegistry(repository : IContestantRepository)
 + GetContestant(tournamentID : int, contestantID : int) : Contestant?
 + GetContestants(tournamentID : int) : IList<Contestant>
 + Register(userID : int, userType : string, tournamentID : int) : bool
 + Deregister(userID : int, tournamentID : int) : bool
++ SaveResults(tournamentID : int\nwinnerID : int, loserID : int) : bool
 }
 
 class LoginHandler{
 - repository : ILoginRepository
 - encryptor : Encryptor
-+ LoginHandler(repository : IRepository)
++ LoginHandler(repository : ILoginRepository)
 + AuthenticateForm(creds : Credentials) : Account
 + AuthenticateWebsite(creds : Credentials) : Account
 + VerifyCredential(email : string, password : string) : Account
 }
 
 IMatchRepository <--- MatchRegistry 
-IMatchRepository <--- MatchGenerator
+IMatchRepository <-- MatchGenerator
 IUserRepository <--- UserRegistry
 IContestantRepository <--- ContestantRegistry  
 ITournamentRepository <--- TournamentRegistry
@@ -294,6 +299,7 @@ class Contestant {
 + Rank { get; set; } : int
 + Wins { get; set; } : int
 + Losses { get; set; } : int
++ CompareTo(other : Contestant?) : int
 }
 
 class Credentials {
@@ -304,6 +310,7 @@ class Credentials {
 interface ISport{
 + Name { get; } : string
 + Scoring { get; } : string
++ MaxScore { get; } : int
 + ScoreIsValid(object home, object away) : bool
 + ToString() : string
 }
@@ -311,7 +318,7 @@ interface ISport{
 class Badminton{
 + Name { get; } : string
 + Scoring { get; } : string
-+ MaxScoring { get; } : string
++ MaxScoring { get; } : int
 + Badminton()
 + ScoreIsValid(object home, object away) : bool
 + ToString() : string
@@ -333,6 +340,10 @@ Tournament --> ISport
 SportAssigner --> ISport
 Tournament ..> TournamentSystem
 Tournament ..> TournamentStatus
+Contestant ..|> IComparable : implements
+
+interface IComparable<T>{
+}
 
 BaseRegistry --> Validate
 ContestantRegistry --> Validate
@@ -347,35 +358,39 @@ MatchRegistry -[hidden]> ContestantRegistry
 ISport -[hidden]> TournamentStatus
 TournamentSystem -[hidden]> TeamType 
 
-TournamentDTO ... Tournament
+TournamentDTO .. Tournament
 note right on link
-Objects share 
-the same properties
+Object shares 
+the same 
+properties
 end note
 
-MatchDTO ... Match 
+MatchDTO . Match 
 note right on link
-Objects share 
-the same properties
+Object shares 
+the same 
+properties
 end note
 
-AccountDTO ... Account 
+AccountDTO .. Account 
 note left on link
-Objects share 
+Object shares
 the same
 properties
 end note
 
-ContestantDTO ... Contestant
+ContestantDTO .. Contestant
 note right on link
-Objects share 
+Object shares 
 the same
 properties
 end note
 
 TournamentRepository --> TournamentDTO
+TournamentRepository  --> ContestantDTO
 MatchRepository --> MatchDTO
 ContestantRepository --> ContestantDTO
+ContestantRepository --> TournamentDTO
 UserRepository --> AccountDTO
 
 @enduml

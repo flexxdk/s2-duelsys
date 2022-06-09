@@ -44,7 +44,7 @@ namespace BLL.Registries
                 default:
                     return !matches.Any();
                 case TournamentSystem.SingleElimination:
-                    return !matches.Any() || (!matches.Any(match => match.IsFinished == false) && matches.Count() > 1);
+                    return !matches.Any() || !matches.Any(match => match.IsFinished == false);
             }
         }
 

@@ -109,7 +109,7 @@ namespace UnitTests.RegistryTests
             MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
             Match? match = matchRegistry.GetByID(1);
 
-            matchRegistry.SaveMatch(new Match()
+            bool result = matchRegistry.SaveMatch(new Match()
             {
                 ID = match!.ID,
                 TournamentID = match!.TournamentID,
@@ -123,8 +123,31 @@ namespace UnitTests.RegistryTests
             });
             Match? updatedMatch = matchRegistry.GetByID(1);
 
+            Assert.IsTrue(result);
             Assert.IsNotNull(updatedMatch);
             Assert.AreEqual(updatedMatch.ID, match!.ID);
+        }
+
+        [TestMethod]
+        public void TestSaveMatchResultsInvalidMatchID()
+        {
+            MatchRegistry matchRegistry = new MatchRegistry(new MockMatch());
+            Match? match = matchRegistry.GetByID(1);
+
+            bool result = matchRegistry.SaveMatch(new Match()
+            {
+                ID = 99999,
+                TournamentID = match!.TournamentID,
+                IsFinished = true,
+                HomeID = match!.HomeID,
+                HomeName = match!.HomeName,
+                HomeScore = 2,
+                AwayID = match!.AwayID,
+                AwayName = match!.AwayName,
+                AwayScore = 1
+            });
+
+            Assert.IsFalse(result);
         }
     }
 }

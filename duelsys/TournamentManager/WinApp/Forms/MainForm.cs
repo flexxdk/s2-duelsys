@@ -413,7 +413,7 @@ namespace WinApp.Forms
                 Tournament? tournament = tournamentRegistry.GetByID(id);
                 if (tournament != null)
                 {
-                    bool possible = matchRegistry.CheckCanGenerate(tournament);
+                    bool possible = matchRegistry.CheckCanGenerate(tournament.ID, tournament.System);
                     if (possible)
                     {
                         Cursor.Current = Cursors.WaitCursor;
@@ -454,9 +454,16 @@ namespace WinApp.Forms
                     {
                         Match result = matchForm.CurrentMatch;
                         contestantRegistry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
-                        matchRegistry.SaveMatch(result);
-                        MessageBox.Show("Match results saved!");
-                        RefreshMatches(result.TournamentID);
+                        bool success = matchRegistry.SaveMatch(result);
+                        if (success)
+                        {
+                            MessageBox.Show("Match results saved!");
+                            RefreshMatches(result.TournamentID);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Could not update match, please contact system administrators.");
+                        }
                     }
 
                     matchForm.Dispose();

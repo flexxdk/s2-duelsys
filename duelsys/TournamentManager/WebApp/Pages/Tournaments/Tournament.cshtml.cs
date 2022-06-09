@@ -104,9 +104,19 @@ namespace WebApp.Pages.Tournaments
         {
             if(Tournament != null)
             {
-                return contestantRegistry.GetContestants(Tournament.ID).Count < Tournament.MaxContestants;
+                return FreeSpotsLeft() > 0;
             }
             return false;
+        }
+
+        public int FreeSpotsLeft()
+        {
+            if(Tournament != null)
+            {
+                int spotsLeft = Tournament.MaxContestants - contestantRegistry.GetContestants(Tournament.ID).Count;
+                return spotsLeft > 0 ? spotsLeft : 0;
+            }
+            return 0;
         }
     }
 }

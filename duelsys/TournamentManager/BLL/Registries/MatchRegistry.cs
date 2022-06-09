@@ -69,17 +69,23 @@ namespace BLL.Registries
             return matches.Any();
         }
 
-        public bool CheckCanGenerate(Tournament tournament)
+        public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
         {
-            return matchGenerator.CheckCanGenerate(tournament.ID, tournament.System);
+            return matchGenerator.CheckCanGenerate(tournamentID, system);
         }
 
-        public void SaveMatch(Match match)
+        public bool SaveMatch(Match match)
         {
             try
             {
                 ValidateModel(match);
-                repository.SaveResults(new MatchDTO(match.ID, match.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
+                Match? obj = GetByID(match.ID);
+                if(obj != null)
+                {
+                    repository.SaveResults(new MatchDTO(obj.ID, obj.TournamentID, true, match.HomeID, match.HomeName!, match.HomeScore, match.AwayID, match.AwayName!, match.AwayScore));
+                    return true;
+                }
+                return false;
             }
             catch
             {

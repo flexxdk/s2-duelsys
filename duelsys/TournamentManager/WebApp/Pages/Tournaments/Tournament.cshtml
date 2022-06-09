@@ -86,24 +86,24 @@
                 <td>@Model.Tournament?.EndDate.ToString("d")</td>
             </tr>
             <tr>
-                <th scope="row">Minium Contestants:</th>
-                <td>@Model.Tournament?.MinContestants</td>
-            </tr>
-            <tr>
-                <th scope="row">Maximum Contestants:</th>
-                <td>@Model.Tournament?.MaxContestants</td>
-            </tr>
-            <tr>
-                <th scope="row">Current Tournament Status:</th>
-                <td>@Model.Tournament?.Status</td>
-            </tr>
-            <tr>
                 <th scope="row">Sport:</th>
                 <td>@Model.Tournament?.SportName</td>
             </tr>
             <tr>
                 <th scope="row">Team Type:</th>
                 <td>@Model.Tournament?.Type</td>
+            </tr>
+            <tr>
+                <th scope="row">Total Open Spots:</th>
+                <td>Minimum registrants needed: @Model.Tournament?.MinContestants <br> Maximum registrants allowed: @Model.Tournament?.MaxContestants</td>
+            </tr>
+            <tr>
+                <th scope="row">Spots Left:</th>
+                <td>@Model.FreeSpotsLeft()</td>
+            </tr>
+            <tr>
+                <th scope="row">Current Tournament Status:</th>
+                <td>@Model.Tournament?.Status</td>
             </tr>
             <tr>
                 <th scope="row">Registration Options:</th>

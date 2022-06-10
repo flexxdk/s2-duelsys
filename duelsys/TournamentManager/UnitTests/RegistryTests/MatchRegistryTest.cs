@@ -10,6 +10,7 @@ using DTO;
 using DTO.Users;
 using BLL.Enums;
 using UnitTests.Mocks;
+using BLL.Objects.TournamentSystem;
 
 namespace UnitTests.RegistryTests
 {
@@ -67,10 +68,10 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
-            matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(tournament.ID));
+            matchRegistry.CreateMatches(tournament.System.GenerateMatches(2, contestantRegistry.GetContestants(tournament.ID)));
             List<Match> matches = matchRegistry.GetMatches(tournament.ID).ToList();
 
             Assert.AreEqual(15, matches.Count);
@@ -94,10 +95,10 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.SingleElimination
+                System = new SingleElimination()
             };
 
-            matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(tournament.ID));
+            matchRegistry.CreateMatches(tournament.System.GenerateMatches(2, contestantRegistry.GetContestants(tournament.ID)));
             List<Match> matches = matchRegistry.GetMatches(tournament.ID).ToList();
 
             Assert.AreEqual(2, matches.Count);

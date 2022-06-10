@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 using BLL.Objects.Sports;
+using BLL.Objects.TournamentSystem;
 using BLL.Enums;
 
 namespace BLL.Objects
@@ -52,14 +52,19 @@ namespace BLL.Objects
         public TournamentStatus Status { get; set; }
 
         [Required(ErrorMessage = "No tournament system was given")]
-        public TournamentSystem System { get; set; }
+        public ITournamentSystem? System { get; set; }
+
+        public string? SystemName { get => System?.Name; }
 
         [Required(ErrorMessage = "Invalid team type")]
         public TeamType Type { get; set; }
 
         public bool CanStart(int totalContestants)
         {
-            return totalContestants >= MinContestants && DateTime.Now.AddDays(7) >= StartDate;
+            bool one = totalContestants >= MinContestants;
+            bool two = DateTime.Now.AddDays(7) >= StartDate;
+
+            return one && two;
         }
     }
 }

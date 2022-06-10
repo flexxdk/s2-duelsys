@@ -1,5 +1,4 @@
 @startuml
-
 interface IMatchRepository{
 + GetByID(id : int) : MatchDTO?
 + GetMatches(tournamentID : int) : IList<MatchDTO>
@@ -9,7 +8,6 @@ interface IMatchRepository{
 
 interface ITournamentRepository{
 + Load() : IList<TournamentDTO>
-+ GetStandings(tournamentID : int) : IList<ContestantDTO>
 + FilterTournamentsOnStatus(status : string) : IList<TournamentDTO>
 + GetByID(int id) : TournamentDTO?
 + Create(dto : TournamentDTO) : int
@@ -26,9 +24,9 @@ interface IUserRepository{
 interface IContestantRepository{
 + GetContestant(tournamentID : int, contestantID : int) : ContestantDTO?
 + GetContestants(tournamentID : int) : IList<ContestantDTO>
++ GetStandings(tournamentID : int) : IList<ContestantDTO>
 + Register(userID : int, tournamentID : int) : bool
 + Deregister(userID : int, tournamentID : int) : bool
-+ GetTournament(tournamentID : int) : TournamentDTO?
 + SaveResults(tournamentID : int, winnerID : int, wins : int,\nloserID : int, losses : int) : void
 }
 
@@ -55,7 +53,6 @@ class MatchRepository{
 
 class TournamentRepository{
 + Load() : IList<TournamentDTO>
-+ GetStandings(tournamentID : int) : IList<ContestantDTO>
 + FilterTournamentsOnStatus(status : string) : IEnumerable<TournamentDTO>
 + GetByID(int id) : TournamentDTO?
 + Create(dto : TournamentDTO) : int
@@ -73,9 +70,9 @@ class UserRepository{
 class ContestantRepository{
 + GetContestant(tournamentID : int, contestantID : int) : ContestantDTO?
 + GetContestants(tournamentID : int) : IList<ContestantDTO>
++ GetStandings(tournamentID : int) : IList<ContestantDTO>
 + Register(userID : int, tournamentID : int) : bool
 + Deregister(userID : int, tournamentID : int) : bool
-+ GetTournament(tournamentID : int) : TournamentDTO?
 + SaveResults(tournamentID : int, winnerID : int, wins : int,\nloserID : int, losses : int) : void
 }
 
@@ -111,23 +108,21 @@ class SaltKey {
 
 Encryptor --> SaltKey
 
-class MatchGenerator{
-- repository : IMatchRepository
-+ MatchGenerator(repository : IMatchRepository)
-+ GenerateMatches(system : TournamentSystem,\ntournamentID : int contestants : IEnumerable<Contestant>)\n: IEnumerable<MatchDTO>
-+ CheckCanGenerate(tournamentID : int,\nsystem : TournamentSystem) : bool
-- RoundRobin(tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
-- RecursiveRoundRobin(start : int, tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
-- SingleElimination(tournamentID : int, contestants :\nIEnumerable<Contestant>) : IEnumerable<MatchDTO>
-- CalculateNextPowerOfTwo(n : int) : int
-}
-
 class SportAssigner {
 - {static} sports : List<ISport?>
 + {static} SportAssigner()
-+ RetrieveSport(index : int) : ISport?
-+ RetrieveSport(name : string) : ISport?
-+ GetSports() : List<ISport?>
++ Retrieve(index : int) : ISport?
++ Retrieve(name : string) : ISport?
++ GetObjects() : List<ISport?>
++ GetNames() : List<string>
+}
+
+class TournamentSystemAssigner{
+- {static} systems: List<ITournamentSystem?>
++ {static} TournamentSystemAssigner()
++ Retrieve(index : int) : ITournamentSystem?
++ Retrieve(name : string) : ITournamentSystem?
++ GetObjects() : List<ITournamentSystem?>
 + GetNames() : List<string>
 }
 
@@ -147,13 +142,12 @@ abstract class BaseRegistry{
 
 class MatchRegistry{
 - repository : IMatchRepository
-- matchGenerator : MatchGenerator
 + MatchRegistry(repository : IMatchRepository)
 + GetByID(id : int) : Match?
 + GetMatches(tournamentID : int) : IList<Match>
 + GenerateMatches(tournament : Tournament,\ncontestants : IEnumerable<Contestant>) : bool
 + CheckCanGenerate(tournamentID : int,\nsystem : TournamentSystem) : bool
-+ SaveMatch(match : Match) : void
++ SaveMatch(match : Match) : bool
 }
 
 class TournamentRegistry{
@@ -167,8 +161,6 @@ class TournamentRegistry{
 + UpdateTournament(tournament : Tournament) : bool
 + DeleteTournament(id : int) : bool
 + GetActiveTournaments() : IEnumerable<Tournament>
-+ GetLeaderboard(tournamentID : int) : IList<Contestant>
-- CalculateRankings(contestants : IList<Contestants>) : void
 - InstantiateTournament(dto : TournamentDTO) : Tournament
 - InstantiateDTO(obj : Tournament) : TournamentDTO
 - AddToDictionary(tournament : Tournament) : bool
@@ -191,6 +183,8 @@ class ContestantRegistry{
 + Register(userID : int, userType : string, tournamentID : int) : bool
 + Deregister(userID : int, tournamentID : int) : bool
 + SaveResults(tournamentID : int\nwinnerID : int, loserID : int) : bool
++ GetLeaderboard(tournamentID : int) : IList<Contestant>
+- CalculateRankings(contestants : IList<Contestants>) : void
 }
 
 class LoginHandler{
@@ -202,12 +196,11 @@ class LoginHandler{
 + VerifyCredential(email : string, password : string) : Account
 }
 
-IMatchRepository <--- MatchRegistry 
-IMatchRepository <-- MatchGenerator
-IUserRepository <--- UserRegistry
-IContestantRepository <--- ContestantRegistry  
-ITournamentRepository <--- TournamentRegistry
-ILoginRepository <--- LoginHandler
+IMatchRepository <---- MatchRegistry 
+IUserRepository <---- UserRegistry
+IContestantRepository <---- ContestantRegistry  
+ITournamentRepository <---- TournamentRegistry
+ILoginRepository <---- LoginHandler
 
 BaseRegistry <|.. MatchRegistry 
 BaseRegistry <|.. TournamentRegistry 
@@ -216,14 +209,8 @@ BaseRegistry <|.. ContestantRegistry
 
 LoginHandler --> Encryptor : reference
 UserRegistry --> Encryptor : reference
-MatchRegistry --> MatchGenerator : reference
 
 BaseRepository --> DbContext 
-
-enum TournamentSystem{
-RoundRobin,
-SingleElimination
-}
 
 enum TournamentStatus{
 Planned,
@@ -268,6 +255,7 @@ class Tournament{
 + Title { get; set; } : string?
 + Description { get; set; } : string?
 + Sport { get; set; } : ISport?
++ SportName { get => Sport!.Name; } : string
 + City { get; set; } : string?
 + Address { get; set; } : string?
 + MinContestants { get; set; } : int
@@ -275,7 +263,8 @@ class Tournament{
 + StartDate { get; set; } : DateTime
 + EndDate { get; set; } : DateTime
 + Status { get; set; } : TournamentStatus
-+ System { get; set; } : TournamentSystem 
++ System { get; set; } : ITournamentSystem
++ SystemName { get => System!.Name; } : string
 + Type { get; set; } : TeamType
 + CanStart(totalContestants : int) : bool
 }
@@ -324,6 +313,26 @@ class Badminton{
 + ToString() : string
 }
 
+interface ITournamentSystem{
++ Name { get; } : string
++ CanGenerateMatches(matches : IEnumerable<Match>) : bool
++ GenerateMatches(tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
+}
+
+class RoundRobin{
++ Name { get; }
++ RoundRobin()
++ CanGenerateMatches(matches : IEnumerable<Match>) : bool
++ GenerateMatches(tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
+}
+
+class SingleElimination{
++ Name { get; }
++ SingleElimination()
++ CanGenerateMatches(matches : IEnumerable<Match>) : bool
++ GenerateMatches(tournamentID : int,\ncontestants : IEnumerable<Contestant>) : IEnumerable<MatchDTO>
+}
+
 MatchRegistry --> Match
 TournamentRegistry --> Tournament
 ContestantRegistry --> Contestant
@@ -337,8 +346,9 @@ Account ..> TeamType
 Tournament ..> TeamType
 
 Tournament --> ISport
+Tournament --> ITournamentSystem
 SportAssigner --> ISport
-Tournament ..> TournamentSystem
+TournamentSystemAssigner --> ITournamentSystem
 Tournament ..> TournamentStatus
 Contestant ..|> IComparable : implements
 
@@ -349,14 +359,11 @@ BaseRegistry --> Validate
 ContestantRegistry --> Validate
 Validate <-- Badminton 
 TournamentRegistry --> SportAssigner
+TournamentRegistry --> TournamentSystemAssigner 
 
 ISport <|.. Badminton : implements
-
-SportAssigner -[hidden]> Tournament
-ContestantRegistry -[hidden]> UserRegistry 
-MatchRegistry -[hidden]> ContestantRegistry
-ISport -[hidden]> TournamentStatus
-TournamentSystem -[hidden]> TeamType 
+ITournamentSystem <|.. RoundRobin : implements
+ITournamentSystem <|.. SingleElimination: implements
 
 TournamentDTO .. Tournament
 note right on link
@@ -386,11 +393,28 @@ the same
 properties
 end note
 
-TournamentRepository --> TournamentDTO
-TournamentRepository  --> ContestantDTO
-MatchRepository --> MatchDTO
-ContestantRepository --> ContestantDTO
-ContestantRepository --> TournamentDTO
-UserRepository --> AccountDTO
+ContestantRepository ..> ContestantDTO
+TournamentRepository ..> TournamentDTO
+
+ContestantDTO <.. ContestantRegistry
+TournamentDTO <.. TournamentRegistry
+
+IContestantRepository ..> ContestantDTO 
+ITournamentRepository ..> TournamentDTO 
+
+UserRepository ..> AccountDTO
+ContestantRegistry --> Tournament
+
+MatchRepository ..> MatchDTO
+IMatchRepository ..> MatchDTO 
+MatchDTO <.. MatchRegistry
+
+ILoginRepository ..> AccountDTO 
+IUserRepository ..> AccountDTO
+AccountDTO <.. LoginHandler 
+AccountDTO <.. UserRegistry
+LoginRepository ..> AccountDTO 
+
+ISport -[hidden]> TournamentStatus
 
 @enduml

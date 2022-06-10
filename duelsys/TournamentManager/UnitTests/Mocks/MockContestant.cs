@@ -10,7 +10,6 @@ namespace UnitTests.Mocks
     {
         private List<ContestantDTO> contestants;
         private List<AccountDTO> users;
-        private List<TournamentDTO> tournaments;
 
         public MockContestant()
         {
@@ -41,6 +40,24 @@ namespace UnitTests.Mocks
                 new ContestantDTO(1, "Lex", "de Kort", 3, 2, 1),
                 new ContestantDTO(4, "Emilia", "Stoyanova", 3, 2, 2),
                 new ContestantDTO(2, "Nick", "Blom",  3, 1, 2),
+                new ContestantDTO(5, "Fontys", "Man",  3, 1, 2),
+                new ContestantDTO(6, "New", "Guy",  3, 0, 1),
+                new ContestantDTO(7, "Dew", "Guy",  3, 0, 0),
+                new ContestantDTO(8, "Kew", "Guy",  3, 0, 0),
+
+                new ContestantDTO(3, "Sem", "Storms",  4, 0, 0),
+                new ContestantDTO(1, "Lex", "de Kort", 4, 0, 0),
+                new ContestantDTO(4, "Emilia", "Stoyanova", 4, 0, 0),
+                new ContestantDTO(2, "Nick", "Blom",  4, 0, 0),
+                new ContestantDTO(5, "Fontys", "Man",  4, 0, 0),
+                new ContestantDTO(6, "New", "Guy",  4, 0, 0),
+                new ContestantDTO(7, "Dew", "Guy",  4, 0, 0),
+                new ContestantDTO(8, "Kew", "Guy",  4, 0, 0),
+
+                new ContestantDTO(3, "Sem", "Storms",  5, 0, 0),
+                new ContestantDTO(1, "Lex", "de Kort", 5, 0, 0),
+                new ContestantDTO(4, "Emilia", "Stoyanova", 5, 0, 0),
+                new ContestantDTO(2, "Nick", "Blom",  5, 0, 0)
             };
         }
 
@@ -52,6 +69,13 @@ namespace UnitTests.Mocks
         public IList<ContestantDTO> GetContestants(int tournamentID)
         {
             return contestants.FindAll(cont => cont.TournamentID == tournamentID);
+        }
+
+        public IList<ContestantDTO> GetStandings(int tournamentID)
+        {
+            List<ContestantDTO> ordered = new List<ContestantDTO>();
+            ordered = contestants.FindAll(contestant => contestant.TournamentID == tournamentID);
+            return ordered;
         }
 
         public bool Register(int userID, int tournamentID)

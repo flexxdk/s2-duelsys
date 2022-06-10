@@ -3,6 +3,7 @@ using BLL.Objects;
 using BLL.Objects.Sports;
 using BLL.Enums;
 using System;
+using BLL.Objects.TournamentSystem;
 
 namespace UnitTests
 {
@@ -10,7 +11,7 @@ namespace UnitTests
     public class TournamentTest
     {
         [TestMethod]
-        public void TestTournamentCanStartTrue()
+        public void TestTournamentCanStartValidDate()
         {
             Tournament tournament = new Tournament()
             {
@@ -24,7 +25,7 @@ namespace UnitTests
                 StartDate = DateTime.Now.Date,
                 EndDate = DateTime.Now.AddDays(7).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             bool result = tournament.CanStart(10);
@@ -47,13 +48,14 @@ namespace UnitTests
                 StartDate = DateTime.Now.Date.AddDays(10).Date,
                 EndDate = DateTime.Now.AddDays(15).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             bool result = tournament.CanStart(10);
 
             Assert.IsFalse(result);
         }
+
 
         [TestMethod]
         public void TestTournamentCanStartNotEnoughContestants()
@@ -70,7 +72,7 @@ namespace UnitTests
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(7).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             bool result = tournament.CanStart(2);
@@ -93,7 +95,7 @@ namespace UnitTests
                 StartDate = DateTime.Now.Date.AddDays(10),
                 EndDate = DateTime.Now.AddDays(15).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             bool result = tournament.CanStart(2);

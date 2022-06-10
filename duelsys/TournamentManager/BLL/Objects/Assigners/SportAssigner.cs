@@ -1,6 +1,6 @@
 ﻿using BLL.Objects.Sports;
 
-namespace BLL.Registries
+namespace BLL.Objects.Assigners
 {
     public class SportAssigner
     {
@@ -15,29 +15,35 @@ namespace BLL.Registries
             .ToList();
         }
 
-        public ISport? RetrieveSport(int index)
+        public ISport? Retrieve(int index)
         {
-            if(index < 0 || index >= sports.Count)
+            if (index >= 0 && index < sports.Count)
             {
-                return null;
-            }
-            return sports[index];
-        }
-
-
-        public ISport? RetrieveSport(string name)
-        {
-            foreach(var sport in sports)
-            {
-                if(sport!.Name.ToLower() == name.ToLower())
+                if (sports[index] != null)
                 {
-                    return sport;
+                    return Activator.CreateInstance(sports[index]!.GetType()) as ISport;
                 }
             }
             return null;
         }
 
-        public List<ISport?> GetSports()
+
+        public ISport? Retrieve(string name)
+        {
+            foreach (ISport? sport in sports)
+            {
+                if (sport != null)
+                {
+                    if (sport!.Name.ToLower() == name.ToLower())
+                    {
+                        return Activator.CreateInstance(sport.GetType()) as ISport;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public List<ISport?> GetObjects()
         {
             return sports;
         }

@@ -9,12 +9,10 @@ namespace BLL.Registries
     public class MatchRegistry : BaseRegistry
     {
         private readonly IMatchRepository repository;
-        private MatchGenerator matchGenerator;
 
         public MatchRegistry(IMatchRepository repository)
         {
             this.repository = repository;
-            matchGenerator = new MatchGenerator(repository);
         }
 
         public Match? GetByID(int id)
@@ -59,19 +57,13 @@ namespace BLL.Registries
             return matches;
         }
 
-        public bool GenerateMatches(Tournament tournament, IEnumerable<Contestant> contestants)
+        public bool CreateMatches(IEnumerable<MatchDTO> matches)
         {
-            List<MatchDTO> matches = matchGenerator.GenerateMatches(tournament.System, tournament.ID, contestants).ToList();
             foreach (MatchDTO match in matches)
             {
                 repository.Create(match);
             }
             return matches.Any();
-        }
-
-        public bool CheckCanGenerate(int tournamentID, TournamentSystem system)
-        {
-            return matchGenerator.CheckCanGenerate(tournamentID, system);
         }
 
         public bool SaveMatch(Match match)

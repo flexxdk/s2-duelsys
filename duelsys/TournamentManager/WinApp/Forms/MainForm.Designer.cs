@@ -112,6 +112,7 @@
             this.btnGenerateMatches = new System.Windows.Forms.Button();
             this.tabAccounts = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.btnRegisterAccount = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -130,7 +131,6 @@
             this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.label24 = new System.Windows.Forms.Label();
             this.navPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -475,6 +475,7 @@
             this.dgvTournaments.Size = new System.Drawing.Size(565, 383);
             this.dgvTournaments.TabIndex = 3;
             this.dgvTournaments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTournaments_CellClick);
+            this.dgvTournaments.SelectionChanged += new System.EventHandler(this.dgvTournaments_SelectionChanged);
             // 
             // dgvColAllTournamentsID
             // 
@@ -544,7 +545,7 @@
             // 
             // dgvColAllTournamentsSystem
             // 
-            this.dgvColAllTournamentsSystem.DataPropertyName = "System";
+            this.dgvColAllTournamentsSystem.DataPropertyName = "SystemName";
             this.dgvColAllTournamentsSystem.HeaderText = "System";
             this.dgvColAllTournamentsSystem.Name = "dgvColAllTournamentsSystem";
             this.dgvColAllTournamentsSystem.ReadOnly = true;
@@ -1031,7 +1032,7 @@
             // 
             // dgvColActiveTournamentsSystem
             // 
-            this.dgvColActiveTournamentsSystem.DataPropertyName = "System";
+            this.dgvColActiveTournamentsSystem.DataPropertyName = "SystemName";
             this.dgvColActiveTournamentsSystem.HeaderText = "System";
             this.dgvColActiveTournamentsSystem.Name = "dgvColActiveTournamentsSystem";
             this.dgvColActiveTournamentsSystem.ReadOnly = true;
@@ -1120,6 +1121,18 @@
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Account Registration";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label24.Location = new System.Drawing.Point(95, 29);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(236, 63);
+            this.label24.TabIndex = 25;
+            this.label24.Text = "To register a new account, fill out\r\nthe form below and click on \r\n\"Register Acco" +
+    "unt\".";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // btnRegisterAccount
             // 
@@ -1278,18 +1291,6 @@
             this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
             this.isFinishedDataGridViewCheckBoxColumn.Width = 516;
             // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label24.Location = new System.Drawing.Point(95, 29);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(236, 63);
-            this.label24.TabIndex = 25;
-            this.label24.Text = "To register a new account, fill out\r\nthe form below and click on \r\n\"Register Acco" +
-    "unt\".";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1413,13 +1414,16 @@
         private DataGridViewTextBoxColumn dgvColMatchesAwayScore;
         private DataGridViewCheckBoxColumn dgvColMatchesMatchPlayed;
         private BindingSource matchBindingSource;
+        private ComboBox comboSport;
+        private Label lblUserName;
+        private Label label3;
+        private Label lblWelcome;
+        private Label label23;
+        private Label label24;
         private DataGridViewTextBoxColumn dgvColActiveTournamentsID;
         private DataGridViewTextBoxColumn dgvColActiveTournamentsTitle;
         private DataGridViewTextBoxColumn dgvColActiveTournamentsType;
         private DataGridViewTextBoxColumn dgvColActiveTournamentsSystem;
-        private ComboBox comboSport;
-        private Label lblUserName;
-        private Label label3;
         private DataGridViewTextBoxColumn dgvColAllTournamentsID;
         private DataGridViewTextBoxColumn dgvColAllTournamentsTitle;
         private DataGridViewTextBoxColumn dgvColAllTournamentsSport;
@@ -1430,8 +1434,5 @@
         private DataGridViewTextBoxColumn dgvColAllTournamentsEndDate;
         private DataGridViewTextBoxColumn dgvColAllTournamentsStatus;
         private DataGridViewTextBoxColumn dgvColAllTournamentsSystem;
-        private Label lblWelcome;
-        private Label label23;
-        private Label label24;
     }
 }

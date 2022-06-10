@@ -74,6 +74,38 @@ namespace DAL.Repositories
                 throw;
             }
         }
+        public IList<ContestantDTO> GetStandings(int tournamentID)
+        {
+            try
+            {
+                string query = @"SELECT c.user_id, a.name, a.surname, c.tournament_id, c.wins, c.losses
+                                    FROM syn_contestants AS c
+                                    INNER JOIN syn_accounts AS a
+                                    ON c.user_id = a.id
+                                    WHERE c.tournament_id = @ID;";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@ID", tournamentID);
+                DataTable results = ExecuteReader(cmd);
+                List<ContestantDTO> contestants = new List<ContestantDTO>();
+                foreach (DataRow row in results.Rows)
+                {
+                    contestants.Add(new ContestantDTO(
+                            Convert.ToInt32(row["user_id"]),
+                            row["name"].ToString()!,
+                            row["surname"].ToString(),
+                            Convert.ToInt32(row["tournament_id"]),
+                            Convert.ToInt32(row["wins"]),
+                            Convert.ToInt32(row["losses"])
+                        )
+                    );
+                }
+                return contestants;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public bool Register(int userID, int tournamentID)
         {

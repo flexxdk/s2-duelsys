@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BLL.Objects.Sports;
 
-namespace UnitTests
+namespace UnitTests.SportsTests
 {
     [TestClass]
     public class BadmintonTest

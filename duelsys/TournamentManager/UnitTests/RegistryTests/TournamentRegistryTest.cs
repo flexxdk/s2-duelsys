@@ -10,6 +10,7 @@ using BLL.Objects.Sports;
 using BLL.Objects.Users;
 using UnitTests.Mocks;
 using System.ComponentModel.DataAnnotations;
+using BLL.Objects.TournamentSystem;
 
 namespace UnitTests.RegistryTests
 {
@@ -63,7 +64,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.UtcNow.Date,
                 EndDate = DateTime.UtcNow.AddDays(7).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             });
             int afterCount = registry.GetAll(true).Count;
 
@@ -89,7 +90,7 @@ namespace UnitTests.RegistryTests
                     StartDate = DateTime.UtcNow.Date,
                     EndDate = DateTime.UtcNow.AddDays(7).Date,
                     Status = TournamentStatus.Planned,
-                    System = TournamentSystem.RoundRobin
+                    System = new RoundRobin()
                 }), "All input is correct"
             );
         }
@@ -113,7 +114,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.UtcNow.Date.AddDays(1),
                 EndDate = DateTime.UtcNow.Date.AddDays(2),
                 Status = TournamentStatus.Finished,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             });
             Tournament? updatedTournament = registry.GetByID(1);
 
@@ -151,7 +152,7 @@ namespace UnitTests.RegistryTests
                     StartDate = DateTime.UtcNow.Date,
                     EndDate = DateTime.UtcNow.Date,
                     Status = TournamentStatus.Planned,
-                    System = TournamentSystem.RoundRobin
+                    System = new RoundRobin()
                 })
             ); ;
         }
@@ -183,26 +184,6 @@ namespace UnitTests.RegistryTests
 
             Assert.IsFalse(result);
             Assert.AreEqual(beforeCount, afterCount);
-        }
-
-        [TestMethod]
-        public void TestGetLeaderboard()
-        {
-            TournamentRegistry registry = new TournamentRegistry(new MockTournament());
-
-            List<Contestant> rankings = registry.GetLeaderboard(3).ToList();
-
-            Assert.IsNotNull(rankings);
-        }
-
-        [TestMethod]
-        public void TestGetLeaderboardNonexistentID()
-        {
-            TournamentRegistry registry = new TournamentRegistry(new MockTournament());
-
-            List<Contestant> rankings = registry.GetLeaderboard(20).ToList();
-
-            Assert.AreEqual(0, rankings.Count);
         }
 
         [TestMethod]

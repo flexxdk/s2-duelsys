@@ -104,7 +104,7 @@ namespace WebApp.Pages.Tournaments
         {
             Tournament = tournamentRegistry.GetByID(id);
             Matches = matchRegistry.GetMatches(id).ToList();
-            Leaderboard = tournamentRegistry.GetLeaderboard(id).ToList();
+            Leaderboard = contestantRegistry.GetLeaderboard(id).ToList();
         }
 
         public bool CheckForFreeSpots()

@@ -1,5 +1,4 @@
 ﻿using BLL.Enums;
-using BLL;
 using BLL.Registries;
 using DAL.Repositories;
 using DAL;
@@ -7,10 +6,8 @@ using BLL.Objects;
 using BLL.Objects.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using BLL.Objects.Sports;
-using System.Collections;
-using System.Windows.Forms;
-using System.Linq;
+using BLL.Objects.Assigners;
+using BLL.Validation.Exceptions;
 
 namespace WinApp.Forms
 {
@@ -25,6 +22,7 @@ namespace WinApp.Forms
         private MatchRegistry matchRegistry;
         private ContestantRegistry contestantRegistry;
         private SportAssigner sportAssigner;
+        private TournamentSystemAssigner tournamentSystemAssigner;
 
         public MainForm(Account account)
         {
@@ -37,6 +35,7 @@ namespace WinApp.Forms
             contestantRegistry = new ContestantRegistry(new ContestantRepository(new DbContext()));
 
             sportAssigner = new SportAssigner();
+            tournamentSystemAssigner = new TournamentSystemAssigner();
 
             RefreshTournaments();
             SetupFormGUI();
@@ -52,14 +51,13 @@ namespace WinApp.Forms
             tabsControl.SizeMode = TabSizeMode.Fixed;
 
             //Set format of datetime pickers
-            pickStartDate.MinDate = DateTime.Now;
+            pickStartDate.MinDate = DateTime.Now.Date;
             pickStartDate.CustomFormat = "dddd dd MMMM";
-            pickEndDate.MinDate = DateTime.Now;
+            pickEndDate.MinDate = DateTime.Now.Date;
             pickEndDate.CustomFormat = "dddd dd MMMM";
 
             //Setup combo boxes with enum values
             comboTeamType.DataSource = Enum.GetValues(typeof(TeamType));
-            comboTournamentSystem.DataSource = Enum.GetValues(typeof(TournamentSystem));
             comboTypes.DataSource = Enum.GetValues(typeof(TeamType));
             
             //Any account that isn't an administrator cannot create administrator accounts
@@ -76,6 +74,7 @@ namespace WinApp.Forms
             }
 
             comboSport.DataSource = sportAssigner.GetNames();
+            comboTournamentSystem.DataSource = tournamentSystemAssigner.GetNames();
 
             lblUserName.Text = string.Concat(ActiveUser.Name, " ",ActiveUser.SurName);
             lblWelcome.Text = $"Welcome {string.Concat(ActiveUser.Name, " ", ActiveUser.SurName)}!";
@@ -91,26 +90,31 @@ namespace WinApp.Forms
             dgvTournamentMatches.DataSource = matchRegistry.GetMatches(tournamentID);
         }
 
-        private void CancelTournamentUpdating()
+        private void ResetTournamentInputFields()
         {
-            tournamentBindingSource.DataSource = typeof(Tournament);
-            btnUpdateTournament.Enabled = false;
-            btnCreateTournament.Enabled = true;
-            gpbTournamentUpdateStatus.Enabled = true;
-            gpbModifyTournament.Enabled = true;
+            if (btnUpdateTournament.Enabled)
+            {
+                btnUpdateTournament.Enabled = false;
+                btnCreateTournament.Enabled = true;
+                numMinContestants.Enabled = true;
+                numMaxContestants.Enabled = true;
+                gpbTournamentUpdateStatus.Enabled = true;
+                gpbModifyTournament.Enabled = true;
+                pickStartDate.MinDate = DateTime.Now;
+                pickEndDate.MinDate = DateTime.Now;
+                comboTeamType.Enabled = true;
+                comboTournamentSystem.Enabled = true;
+                comboSport.Enabled = true;
+                gpbTournamentCreation.Text = "Create Tournament";
+            }
+
             numMinContestants.Value = numMinContestants.Minimum;
-            numMinContestants.Enabled = true;
             numMaxContestants.Value = numMaxContestants.Minimum;
-            numMaxContestants.Enabled = true;
             pickStartDate.Value = DateTime.Now;
             pickEndDate.Value = DateTime.Now;
-            comboTeamType.Enabled = true;
             comboTeamType.SelectedIndex = 0;
-            comboTournamentSystem.Enabled = true;
             comboTournamentSystem.SelectedIndex = 0;
             comboSport.SelectedIndex = 0;
-            comboSport.Enabled = true;
-            gpbTournamentCreation.Text = "Create Tournament";
 
             inputTitle.Clear();
             inputDescription.Clear();
@@ -169,13 +173,13 @@ namespace WinApp.Forms
 
         private void dgvTournaments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 ToggleTournamentStatusButtons(tournamentRegistry.GetByID(id)!.Status);
                 if (btnUpdateTournament.Enabled)
                 {
-                    CancelTournamentUpdating();
+                    ResetTournamentInputFields();
                 }
             }
             else
@@ -187,11 +191,15 @@ namespace WinApp.Forms
 
         private void dgvActiveTournaments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvActiveTournaments.SelectedRows[0] != null)
+            if (dgvActiveTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvActiveTournaments, "dgvColActiveTournamentsID");
                 RefreshMatches(id);
             }
+        }
+        private void dgvTournaments_SelectionChanged(object sender, EventArgs e)
+        {
+            if (!gpbTournamentUpdateStatus.Enabled) gpbTournamentUpdateStatus.Enabled = true;
         }
 
         #endregion
@@ -205,20 +213,21 @@ namespace WinApp.Forms
                 {
                     Title = inputTitle.Text,
                     Description = inputDescription.Text,
-                    Sport = sportAssigner.RetrieveSport(comboSport.SelectedIndex),
+                    Sport = sportAssigner.Retrieve(comboSport.SelectedIndex),
                     City = inputCity.Text,
                     Address = inputAddress.Text,
-                    StartDate = pickStartDate.Value,
-                    EndDate = pickEndDate.Value,
+                    StartDate = pickStartDate.Value.Date,
+                    EndDate = pickEndDate.Value.Date,
                     MinContestants = Convert.ToInt32(numMinContestants.Value),
                     MaxContestants = Convert.ToInt32(numMaxContestants.Value),
-                    System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), comboTournamentSystem.Text),
+                    System = tournamentSystemAssigner.Retrieve(comboTournamentSystem.SelectedIndex),
                     Type = (TeamType)Enum.Parse(typeof(TeamType), comboTeamType.Text),
                     Status = TournamentStatus.Planned
-                });
+                }); ;
                 if (result)
                 {
                     MessageBox.Show("Tournament successfully created!");
+                    ResetTournamentInputFields();
                     RefreshTournaments();
                 }
                 else
@@ -238,11 +247,12 @@ namespace WinApp.Forms
             {
                 MessageBox.Show(ex.Message, "An unknown error occured:");
             }
+            gpbTournamentUpdateStatus.Enabled = false;
         }
 
         private void btnUpdateTournament_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 Tournament? tournament = tournamentRegistry.GetByID(id);
@@ -263,14 +273,14 @@ namespace WinApp.Forms
                             EndDate = pickEndDate.Value,
                             MinContestants = Convert.ToInt32(numMinContestants.Value),
                             MaxContestants = Convert.ToInt32(numMaxContestants.Value),
-                            System = tournament.System,
+                            System = comboTournamentSystem.Enabled ? tournamentSystemAssigner.Retrieve(comboTournamentSystem.SelectedIndex) : tournament.System,
                             Type = tournament.Type,
                             Status = tournament.Status
                         });
                         if (result)
                         {
                             MessageBox.Show("Tournament updated!");
-                            CancelTournamentUpdating();
+                            ResetTournamentInputFields();
                             RefreshTournaments();
                         }
                         else
@@ -292,12 +302,13 @@ namespace WinApp.Forms
                     }
                 }
             }
+            gpbTournamentUpdateStatus.Enabled = false;
         }
 
 
         private void btnAdjustTournament_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 Tournament? tournament = tournamentRegistry.GetByID(id);
@@ -310,7 +321,8 @@ namespace WinApp.Forms
                     comboTeamType.Enabled = false;
                     comboTeamType.SelectedItem = tournament.Type;
                     comboSport.Enabled = false;
-                    comboSport.SelectedItem = tournament.Sport!;
+                    comboSport.SelectedItem = tournament.SportName;
+                    comboTournamentSystem.SelectedItem = tournament.SystemName;
                     gpbTournamentCreation.Text = "Adjust Tournament";
 
                     inputTitle.Text = tournament.Title;
@@ -327,7 +339,7 @@ namespace WinApp.Forms
                     if (tournament.Status != TournamentStatus.Planned)
                     {
                         comboTournamentSystem.Enabled = false;
-                        comboTournamentSystem.SelectedItem = tournament.System;
+                        comboTournamentSystem.SelectedItem = tournament.System!.Name;
                         numMinContestants.Enabled = false;
                         numMaxContestants.Enabled = false;
                     }
@@ -337,7 +349,7 @@ namespace WinApp.Forms
 
         private void btnDeleteTournament_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 DialogResult confirmation = MessageBox.Show("Are you sure you want to delete this tournament? This action cannot be undone!", "Confirm Deletion?", MessageBoxButtons.YesNo);
@@ -354,6 +366,7 @@ namespace WinApp.Forms
                     }
                 }
             }
+            gpbTournamentUpdateStatus.Enabled = false;
             RefreshTournaments();
         }
 
@@ -363,7 +376,7 @@ namespace WinApp.Forms
 
         private void btnStartTournament_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 Tournament? tournament = tournamentRegistry.GetByID(id);
@@ -380,11 +393,12 @@ namespace WinApp.Forms
                     RefreshTournaments();
                 }
             }
+            gpbTournamentUpdateStatus.Enabled = false;
         }
 
         private void btnFinishTournament_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 bool result = tournamentRegistry.UpdateTournamentStatus(id, TournamentStatus.Finished);
@@ -398,11 +412,12 @@ namespace WinApp.Forms
                 }
                 RefreshTournaments();
             }
+            gpbTournamentUpdateStatus.Enabled = false;
         }
 
         private void btnCancelTournament_Click(object sender, EventArgs e)
         {
-            if (dgvTournaments.SelectedRows[0] != null)
+            if (dgvTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvTournaments, "dgvColAllTournamentsID");
                 bool result = tournamentRegistry.UpdateTournamentStatus(id, TournamentStatus.Cancelled);
@@ -416,6 +431,7 @@ namespace WinApp.Forms
                 }
                 RefreshTournaments();
             }
+            gpbTournamentUpdateStatus.Enabled = false;
         }
 
         #endregion
@@ -424,25 +440,33 @@ namespace WinApp.Forms
 
         private void btnGenerateMatches_Click(object sender, EventArgs e)
         {
-            if (dgvActiveTournaments.SelectedRows[0] != null)
+            if (dgvActiveTournaments.SelectedRows.Count > 0)
             {
                 int id = GetIDFromDataGridView(dgvActiveTournaments, "dgvColActiveTournamentsID");
                 Tournament? tournament = tournamentRegistry.GetByID(id);
                 if (tournament != null)
                 {
-                    bool possible = matchRegistry.CheckCanGenerate(tournament.ID, tournament.System);
+                    bool possible = tournament.System!.CanGenerateMatches(matchRegistry.GetMatches(tournament.ID));
                     if (possible)
                     {
                         Cursor.Current = Cursors.WaitCursor;
-                        bool result = matchRegistry.GenerateMatches(tournament, contestantRegistry.GetContestants(id));
-                        if (result)
+                        try
                         {
-                            MessageBox.Show("Matches have been generated");
-                            RefreshMatches(id);
+                            bool result = matchRegistry.CreateMatches(tournament.System!.GenerateMatches(tournament.ID, contestantRegistry.GetContestants(tournament.ID)));
+
+                            if (result)
+                            {
+                                MessageBox.Show("Matches have been generated");
+                                RefreshMatches(id);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Cannot generate any more matches as all possible matches have been generated.");
+                            }
                         }
-                        else
+                        catch(NoValidContestantsException ex)
                         {
-                            MessageBox.Show("Cannot generate any more matches as all possible matches have been generated.");
+                            MessageBox.Show(ex.Message);
                         }
                         Cursor.Current = Cursors.Default;
                     }
@@ -456,7 +480,7 @@ namespace WinApp.Forms
 
         private void btnPlayMatch_Click(object sender, EventArgs e)
         {
-            if (dgvTournamentMatches.SelectedRows[0] != null)
+            if (dgvTournamentMatches.SelectedRows.Count > 0)
             {
                 int matchID = GetIDFromDataGridView(dgvTournamentMatches, "dgvColMatchesID");
                 int tournamentID = GetIDFromDataGridView(dgvTournamentMatches, "dgvColMatchesTournamentID");
@@ -489,6 +513,10 @@ namespace WinApp.Forms
                 {
                     MessageBox.Show("This match has already been finished.");
                 }
+            }
+            else
+            {
+                MessageBox.Show("No match selected, select a match first.");
             }
         }
 
@@ -539,5 +567,6 @@ namespace WinApp.Forms
         }
 
         #endregion
+
     }
 }

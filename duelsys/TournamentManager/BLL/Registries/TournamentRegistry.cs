@@ -1,14 +1,9 @@
-﻿using BLL.Validation;
-using BLL.Enums;
+﻿using BLL.Enums;
 using BLL.Objects;
+using BLL.Objects.Assigners;
 using DAL.Interfaces;
 using DTO;
-using DTO.Users;
-using BLL.Objects.Users;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Globalization;
-using BLL.Objects.Sports;
 
 namespace BLL.Registries
 {
@@ -17,12 +12,15 @@ namespace BLL.Registries
         private readonly ITournamentRepository repository;
         private Dictionary<int, Tournament> tournaments;
         private SportAssigner sportAssigner;
+        private TournamentSystemAssigner tournamentSystemAssigner;
 
         public TournamentRegistry(ITournamentRepository repository)
         {
             this.repository = repository;
             this.tournaments = new Dictionary<int, Tournament>();
             this.sportAssigner = new SportAssigner();
+            this.tournamentSystemAssigner = new TournamentSystemAssigner();
+
             LoadTournaments();
         }
 
@@ -64,8 +62,7 @@ namespace BLL.Registries
             try
             {
                 ValidateModel(tournament);
-                TournamentDTO dto = new TournamentDTO(0, tournament.Title!, tournament.Description!, tournament.Sport!.Name, tournament.Type.ToString(), tournament.City!, tournament.Address!, tournament.MinContestants, tournament.MaxContestants, tournament.StartDate.ToString("d"), tournament.EndDate.ToString("d"), tournament.Status.ToString(), tournament.System.ToString());
-                int ID = repository.Create(dto);
+                int ID = repository.Create(InstantiateDTO(tournament));
                 if(ID == 0)
                 {
                     return false;
@@ -154,41 +151,6 @@ namespace BLL.Registries
             return tournaments;
         }
 
-        public IList<Contestant> GetLeaderboard(int tournamentID)
-        {
-            List<Contestant> contestants = new List<Contestant>();
-            foreach (ContestantDTO dto in repository.GetStandings(tournamentID))
-            {
-                contestants.Add(new Contestant()
-                {
-                    ID = dto.ID,
-                    Name = dto.Name,
-                    SurName = dto.SurName,
-                    TournamentID = dto.TournamentID,
-                    Wins = dto.Wins,
-                    Losses = dto.Losses,
-                });
-            }
-            contestants.Sort();
-            CalculateRankings(contestants);
-            return contestants;
-        }
-
-        private void CalculateRankings(List<Contestant> contestants)
-        {
-            for (int i = 0; i < contestants.Count; i++)
-            {
-                contestants[i].Rank = i + 1;
-                if (i > 0)
-                {
-                    if (contestants[i].Wins == contestants[i - 1].Wins && contestants[i].Losses == contestants[i - 1].Losses)
-                    {
-                        contestants[i].Rank = contestants[i - 1].Rank;
-                    }
-                }
-            }
-        }
-
         private Tournament InstantiateTournament(TournamentDTO dto)
         {
             return new Tournament()
@@ -196,7 +158,7 @@ namespace BLL.Registries
                 ID = dto.ID,
                 Title = dto.Title,
                 Description = dto.Description,
-                Sport = sportAssigner.RetrieveSport(dto.Sport),
+                Sport = sportAssigner.Retrieve(dto.Sport),
                 City = dto.City,
                 Address = dto.Address,
                 MinContestants = dto.MinContestants,
@@ -204,14 +166,14 @@ namespace BLL.Registries
                 StartDate = DateTime.Parse(dto.StartDate, new CultureInfo("nl-NL")),
                 EndDate = DateTime.Parse(dto.EndDate, new CultureInfo("nl-NL")),
                 Status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), dto.Status),
-                System = (TournamentSystem)Enum.Parse(typeof(TournamentSystem), dto.System),
+                System = tournamentSystemAssigner.Retrieve(dto.System),
                 Type = (TeamType)Enum.Parse(typeof(TeamType), dto.Type)
             };
         }
 
         private TournamentDTO InstantiateDTO(Tournament obj)
         {
-            return new TournamentDTO(obj.ID, obj.Title!, obj.Description!, obj.SportName!, obj.Type.ToString(), obj.City!, obj.Address!, obj.MinContestants, obj.MaxContestants, obj.StartDate.ToString("d"), obj.EndDate.ToString("d"), obj.Status.ToString(), obj.System.ToString());
+            return new TournamentDTO(obj.ID, obj.Title!, obj.Description!, obj.SportName!, obj.Type.ToString(), obj.City!, obj.Address!, obj.MinContestants, obj.MaxContestants, obj.StartDate.Date.ToString("d"), obj.EndDate.Date.ToString("d"), obj.Status.ToString(), obj.SystemName!);
         }
 
         private bool AddToDictionary(Tournament tournament)

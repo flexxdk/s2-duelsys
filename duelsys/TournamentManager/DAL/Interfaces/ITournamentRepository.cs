@@ -6,7 +6,6 @@ namespace DAL.Interfaces
     public interface ITournamentRepository
     {
         public IList<TournamentDTO> Load();
-        public IList<ContestantDTO> GetStandings(int tournamentID);
         public IEnumerable<TournamentDTO> FilterTournamentsOnStatus(string filter);
         public TournamentDTO? GetByID(int id);
         public int Create(TournamentDTO dto);

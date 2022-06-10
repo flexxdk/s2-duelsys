@@ -108,5 +108,40 @@ namespace BLL.Registries
                 throw;
             }
         }
+
+        public IList<Contestant> GetLeaderboard(int tournamentID)
+        {
+            List<Contestant> contestants = new List<Contestant>();
+            foreach (ContestantDTO dto in repository.GetStandings(tournamentID))
+            {
+                contestants.Add(new Contestant()
+                {
+                    ID = dto.ID,
+                    Name = dto.Name,
+                    SurName = dto.SurName,
+                    TournamentID = dto.TournamentID,
+                    Wins = dto.Wins,
+                    Losses = dto.Losses,
+                });
+            }
+            contestants.Sort();
+            CalculateRankings(contestants);
+            return contestants;
+        }
+
+        private void CalculateRankings(List<Contestant> contestants)
+        {
+            for (int i = 0; i < contestants.Count; i++)
+            {
+                contestants[i].Rank = i + 1;
+                if (i > 0)
+                {
+                    if (contestants[i].Wins == contestants[i - 1].Wins && contestants[i].Losses == contestants[i - 1].Losses)
+                    {
+                        contestants[i].Rank = contestants[i - 1].Rank;
+                    }
+                }
+            }
+        }
     }
 }

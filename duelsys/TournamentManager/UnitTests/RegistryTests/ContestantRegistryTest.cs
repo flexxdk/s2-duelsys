@@ -9,6 +9,7 @@ using BLL.Registries;
 using UnitTests.Mocks;
 using System;
 using BLL.Objects;
+using BLL.Objects.TournamentSystem;
 
 namespace UnitTests.RegistryTests
 {
@@ -86,7 +87,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.Now.AddDays(8).Date,
                 EndDate = DateTime.Now.AddDays(16).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             bool result = registry.Register(userID, userType, tournament);
@@ -115,7 +116,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.Now.AddDays(8).Date,
                 EndDate = DateTime.Now.AddDays(16).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             bool result = registry.Register(userID, userType, tournament);
@@ -143,7 +144,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.Now.AddDays(8).Date,
                 EndDate = DateTime.Now.AddDays(16).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             Assert.ThrowsException<Exception>(() =>
@@ -171,7 +172,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.Now.AddDays(2).Date,
                 EndDate = DateTime.Now.AddDays(9).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             Assert.ThrowsException<Exception>(() =>
@@ -199,7 +200,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.Now.AddDays(8).Date,
                 EndDate = DateTime.Now.AddDays(16).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             Assert.ThrowsException<Exception>(() =>
@@ -226,7 +227,7 @@ namespace UnitTests.RegistryTests
                 StartDate = DateTime.Now.AddDays(8).Date,
                 EndDate = DateTime.Now.AddDays(16).Date,
                 Status = TournamentStatus.Planned,
-                System = TournamentSystem.RoundRobin
+                System = new RoundRobin()
             };
 
             Assert.ThrowsException<Exception>(() =>
@@ -314,6 +315,26 @@ namespace UnitTests.RegistryTests
             bool result = registry.SaveResults(match.TournamentID, match.GetWinner(), match.GetLoser());
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TestGetLeaderboard()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+
+            List<Contestant> rankings = registry.GetLeaderboard(3).ToList();
+
+            Assert.IsNotNull(rankings);
+        }
+
+        [TestMethod]
+        public void TestGetLeaderboardNonexistentID()
+        {
+            ContestantRegistry registry = new ContestantRegistry(new MockContestant());
+
+            List<Contestant> rankings = registry.GetLeaderboard(20).ToList();
+
+            Assert.AreEqual(0, rankings.Count);
         }
     }
 }

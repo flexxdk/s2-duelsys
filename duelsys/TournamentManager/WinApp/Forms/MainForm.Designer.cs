@@ -131,6 +131,10 @@
             this.homeScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.awayScoreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isFinishedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.navPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -387,6 +391,7 @@
             // 
             // gpbTournamentUpdateStatus
             // 
+            this.gpbTournamentUpdateStatus.Controls.Add(this.label25);
             this.gpbTournamentUpdateStatus.Controls.Add(this.btnCancelTournament);
             this.gpbTournamentUpdateStatus.Controls.Add(this.btnFinishTournament);
             this.gpbTournamentUpdateStatus.Controls.Add(this.btnStartTournament);
@@ -406,7 +411,7 @@
             this.btnCancelTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancelTournament.ForeColor = System.Drawing.Color.Red;
-            this.btnCancelTournament.Location = new System.Drawing.Point(49, 151);
+            this.btnCancelTournament.Location = new System.Drawing.Point(45, 179);
             this.btnCancelTournament.Name = "btnCancelTournament";
             this.btnCancelTournament.Size = new System.Drawing.Size(165, 41);
             this.btnCancelTournament.TabIndex = 28;
@@ -423,7 +428,7 @@
             this.btnFinishTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFinishTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnFinishTournament.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnFinishTournament.Location = new System.Drawing.Point(49, 104);
+            this.btnFinishTournament.Location = new System.Drawing.Point(45, 132);
             this.btnFinishTournament.Name = "btnFinishTournament";
             this.btnFinishTournament.Size = new System.Drawing.Size(165, 41);
             this.btnFinishTournament.TabIndex = 26;
@@ -440,7 +445,7 @@
             this.btnStartTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStartTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnStartTournament.ForeColor = System.Drawing.Color.Green;
-            this.btnStartTournament.Location = new System.Drawing.Point(49, 57);
+            this.btnStartTournament.Location = new System.Drawing.Point(45, 85);
             this.btnStartTournament.Name = "btnStartTournament";
             this.btnStartTournament.Size = new System.Drawing.Size(165, 41);
             this.btnStartTournament.TabIndex = 26;
@@ -556,6 +561,7 @@
             // 
             // gpbModifyTournament
             // 
+            this.gpbModifyTournament.Controls.Add(this.label26);
             this.gpbModifyTournament.Controls.Add(this.btnAdjustTournament);
             this.gpbModifyTournament.Controls.Add(this.btnDeleteTournament);
             this.gpbModifyTournament.Location = new System.Drawing.Point(300, 395);
@@ -573,7 +579,7 @@
             this.btnAdjustTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdjustTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAdjustTournament.ForeColor = System.Drawing.Color.DarkOrange;
-            this.btnAdjustTournament.Location = new System.Drawing.Point(49, 57);
+            this.btnAdjustTournament.Location = new System.Drawing.Point(47, 116);
             this.btnAdjustTournament.Name = "btnAdjustTournament";
             this.btnAdjustTournament.Size = new System.Drawing.Size(165, 41);
             this.btnAdjustTournament.TabIndex = 24;
@@ -589,7 +595,7 @@
             this.btnDeleteTournament.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteTournament.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnDeleteTournament.ForeColor = System.Drawing.Color.Red;
-            this.btnDeleteTournament.Location = new System.Drawing.Point(49, 151);
+            this.btnDeleteTournament.Location = new System.Drawing.Point(47, 163);
             this.btnDeleteTournament.Name = "btnDeleteTournament";
             this.btnDeleteTournament.Size = new System.Drawing.Size(165, 41);
             this.btnDeleteTournament.TabIndex = 25;
@@ -891,6 +897,8 @@
             // 
             // tabMatches
             // 
+            this.tabMatches.Controls.Add(this.label28);
+            this.tabMatches.Controls.Add(this.label27);
             this.tabMatches.Controls.Add(this.dgvTournamentMatches);
             this.tabMatches.Controls.Add(this.dgvActiveTournaments);
             this.tabMatches.Controls.Add(this.label20);
@@ -1291,6 +1299,53 @@
             this.isFinishedDataGridViewCheckBoxColumn.Name = "isFinishedDataGridViewCheckBoxColumn";
             this.isFinishedDataGridViewCheckBoxColumn.Width = 516;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label25.Location = new System.Drawing.Point(2, 19);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(257, 60);
+            this.label25.TabIndex = 29;
+            this.label25.Text = "To update tournament status select a \r\ntournament from the list above and \r\nclick" +
+    " one of the buttons below.";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label26.Location = new System.Drawing.Point(6, 19);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(242, 80);
+            this.label26.TabIndex = 30;
+            this.label26.Text = "To delete or remove a tournament \r\nselect a tournament from the list\r\nabove and c" +
+    "lick one of the buttons \r\nbelow.";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label27.Location = new System.Drawing.Point(39, 528);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(389, 80);
+            this.label27.TabIndex = 30;
+            this.label27.Text = resources.GetString("label27.Text");
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label28.Location = new System.Drawing.Point(487, 528);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(396, 80);
+            this.label28.TabIndex = 31;
+            this.label28.Text = "To play a match, select a match from the matches list and\r\nclick the \"Play Match\"" +
+    " button. When you save match results\r\nthe match will be marked as finished and c" +
+    "annot be\r\nupdated again.";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1312,9 +1367,11 @@
             this.tabHome.PerformLayout();
             this.tabTournaments.ResumeLayout(false);
             this.gpbTournamentUpdateStatus.ResumeLayout(false);
+            this.gpbTournamentUpdateStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTournaments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tournamentBindingSource)).EndInit();
             this.gpbModifyTournament.ResumeLayout(false);
+            this.gpbModifyTournament.PerformLayout();
             this.gpbTournamentCreation.ResumeLayout(false);
             this.gpbTournamentCreation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxContestants)).EndInit();
@@ -1434,5 +1491,9 @@
         private DataGridViewTextBoxColumn dgvColAllTournamentsEndDate;
         private DataGridViewTextBoxColumn dgvColAllTournamentsStatus;
         private DataGridViewTextBoxColumn dgvColAllTournamentsSystem;
+        private Label label25;
+        private Label label26;
+        private Label label28;
+        private Label label27;
     }
 }

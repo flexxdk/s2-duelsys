@@ -57,6 +57,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label27.Text" xml:space="preserve">
+    <value>Matches can be generated and played out on this page.
+To generate matches, ensure that you have a tournament
+that has started, select them from the list, and click on the
+"Generate Matches" button.
+</value>
+  </data>
+  <metadata name="matchBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>571, 17</value>
+  </metadata>
   <data name="label23.Text" xml:space="preserve">
     <value>Quick Start:
 
@@ -75,6 +85,9 @@ Account Registration Page.
 Click the Logout button to return to
 the log in screen.</value>
   </data>
+  <metadata name="tournamentBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>376, 17</value>
+  </metadata>
   <metadata name="tournamentBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>376, 17</value>
   </metadata>

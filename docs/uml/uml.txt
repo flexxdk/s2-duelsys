@@ -416,5 +416,6 @@ AccountDTO <.. UserRegistry
 LoginRepository ..> AccountDTO 
 
 ISport -[hidden]> TournamentStatus
+ILoginRepository -[hidden]> IUserRepository
 
 @enduml
